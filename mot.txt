@@ -1,20 +1,74 @@
 ire : Colère
 esse : Crochet en forme de S
-apanage : Privilège exclusif
-guet-apens : Piège tendu à quelqu’un
-saillie : Avancée brusque ou trait d’esprit
-goule : Monstre ou fantôme dévoreur de cadavres
-carmin : Rouge vif
-lambin : Personne lente, paresseuse
-étai : Pièce servant à soutenir une structure
-nitescence : Éclat brillant, lueur
-bistre : Brun foncé tirant sur le gris
-ébrouer : Se secouer pour se nettoyer (par un animal)
-muser : Perdre son temps, flâner
-ourdir : Organiser en secret (souvent une mauvaise action)
-quérir : Aller chercher, demander
-luette : Petite excroissance au fond de la gorge
-salubre : Bon pour la santé
-dard : Aiguillon ou trait lancé rapidement
-suaire : Linceul, drap mortuaire
-torsade : Fil ou ruban tordu en spirale
+borborygmes
+aphasi
+kyrielle
+anain
+parangon
+expier
+proroger
+pisaller
+embauchoire
+acrimonie
+fragrence
+hapax
+absoudre
+adjuvent
+syncretisme
+tessiture
+alluvions
+affeterie
+saynete 
+timorer
+hanaher
+pileus
+senstre
+succins
+mulet
+fat
+irmis
+circonspet
+diacre
+endémi
+godiche
+efficient
+gadin
+suranné
+capiteuse
+confusianisme
+barbiturique
+flamines
+immanence
+conde
+etrusque
+ad libitum
+gageur
+aporir
+opignatre
+indolente
+turpitude
+bakelite
+cosmopolite
+digerido
+mausade
+regalien
+patibulaire
+lingua franca
+asserbe
+lavasse
+goemon
+varech
+galurin
+ephemeride
+farder
+comparse
+interlope
+couffin
+couvin
+erg
+emoluments
+zelote
+belfroi
+patriar
+lemure
+diligence
