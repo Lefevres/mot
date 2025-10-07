@@ -1,7 +1,12 @@
 use std::{fs, io};
+use colored::Colorize;
 use rand::RngCore;
-
+use std::process::Command;
 fn main() {
+    // Clear le terminal
+    Command::new("clear")
+        .status()
+        .expect("Échec de la commande clear");
     let fichier = fs::read_to_string("mot.txt").unwrap();
     let mut autorisation: Vec<&str> = vec!();
     let prep_autorisation:Vec<&str> = fichier.lines().collect();
@@ -9,7 +14,10 @@ fn main() {
         autorisation.push(element)
     }
     let mut point:u32 = 0;
-
+    println!("\n\n{} \n\n
+    {} pour avoir le nombre de lettre\n
+    {} pour changer de mot \n
+    {} pour arreter \n\n","les mots sont sans majuscule mais avec accent".green(),"indice".red(),"passe".red(),"stop".red());
     loop {
         let mot = choisi_mot(autorisation);
         let separer = mot.0.split(":").collect::<Vec<&str>>();
@@ -81,7 +89,7 @@ fn choisi_mot(mut autorisation:Vec<&str>) -> (&str,Vec<&str>) {
         } else {
             autorisation.len()-1
         }) as u32;
-    let mot = autorisation[int_aleatoire as usize].clone();
+    let mot = autorisation[int_aleatoire as usize];
 
     autorisation.retain(|m| m != &mot);
 
