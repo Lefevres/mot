@@ -38,7 +38,7 @@ godiche : Benêt, maladroit
 gadin : chute
 suranné : Qui a cessé d'être en usage, qui évoque une époque révolue
 capiteux : Qui monte à la tête, qui produit une certaine ivresse
-confusianisme : Courant majeur de la pensée chinoise,qui repose essentiellement sur des préceptes défendant une morale humaniste sans recours à une métaphysique
+confucianisme : Courant majeur de la pensée chinoise,qui repose essentiellement sur des préceptes défendant une morale humaniste sans recours à une métaphysique
 barbiturique : Représentent un groupe de dépresseurs du système nerveux central qui exercent des effets allant de la sédation légère à l'anesthésie générale
 flamine : Prêtre attaché au service d'une divinité
 immanence : Opposée à la transcendance, caractérise ce qui est intérieur à un être ou à une pensée

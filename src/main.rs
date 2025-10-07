@@ -1,13 +1,18 @@
-use std::{fs, io};
+use std::{fs,io};
 use colored::Colorize;
 use rand::RngCore;
 use std::process::Command;
+
+
+//const DEFAULT_DATA: &str = include_str!("../mot.txt"); //pour raphou
 fn main() {
+    //let fichier = DEFAULT_DATA; //pour raphou
     // Clear le terminal
     Command::new("clear")
         .status()
         .expect("Échec de la commande clear");
     let fichier = fs::read_to_string("mot.txt").unwrap();
+
     let mut autorisation: Vec<&str> = vec!();
     let prep_autorisation:Vec<&str> = fichier.lines().collect();
     for element in  prep_autorisation {
@@ -24,12 +29,18 @@ fn main() {
         autorisation = mot.1;
         let mot = separer[0];
         let def = separer[1];
-        if essai(mot,def,&point) == false || autorisation.len() == 0 {
-            println!("fini !");
-            break;
-        }
-        else{
-            point += 1;
+        match essai(mot,def,&point){
+            "stop" => {
+                println!("fini !");
+                break;
+            },
+            //"passe" => ,
+            "trouver" => {
+                point = point+1;
+            }
+
+            _ => {},
+
         }
     }
 
@@ -37,9 +48,8 @@ fn main() {
 
 
 
-fn essai(mot: &str,def: &str, point: &u32) -> bool{
+fn essai<'a>(mot: &str,def: &str, point: &u32) -> &'a str{
     let mut saisie = String::new();
-    let mut sortie ="";
     let phrase = format!("Tu as actuellement {} points !", point);
     let longueur:usize = phrase.len();
     loop {
@@ -48,10 +58,10 @@ fn essai(mot: &str,def: &str, point: &u32) -> bool{
         io::stdin()
             .read_line(&mut saisie)
             .expect("Erreur lors de la lecture");
+
         if saisie.trim().to_lowercase() == mot.trim().to_lowercase() {
             println!("bravo tu as trouver !");
-            sortie = "trouver";
-            break;
+            return "trouver";
         }
 
 
@@ -60,22 +70,16 @@ fn essai(mot: &str,def: &str, point: &u32) -> bool{
         }
 
         if saisie.trim().to_lowercase() == "passe"{
-            sortie = "passe";
             println!("le mot étais : {}", mot);
-            break;
+            return "passe";
+
         }
 
         if saisie.trim().to_lowercase() == "stop"{
-            sortie = "abandon";
-            break;
+            return "stop";
         }
 
     }
-    match sortie{
-        "abandon" => false,
-        _ => true
-    }
-
 
 }
 
