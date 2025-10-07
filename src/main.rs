@@ -1,23 +1,15 @@
-use std::{fs,io};
+use std::{io};
 use colored::Colorize;
 use rand::RngCore;
 use std::process::Command;
 
 
-//const DEFAULT_DATA: &str = include_str!("../mot.txt"); //pour raphou
+const DEFAULT_DATA: &str = include_str!("../mot.txt");
 fn main() {
-    //let fichier = DEFAULT_DATA; //pour raphou
-    // Clear le terminal
-
-    let fichier = fs::read_to_string("mot.txt").unwrap();
-
-    let mut autorisation: Vec<&str> = vec!();
-    let prep_autorisation:Vec<&str> = fichier.lines().collect();
-    for element in  prep_autorisation {
-        autorisation.push(element)
-    }
+    let fichier = DEFAULT_DATA;
+    let mut autorisation:Vec<&str> = fichier.lines().collect();
     let mut point:u32 = 0;
-
+    let mut mot_avant:String = String::new();
     loop {
         Command::new("clear")
             .status()
@@ -26,7 +18,15 @@ fn main() {
         println!("\n\n{} \n\n +1 points pour une bonne réponse, -1 points pour une mauvaise \n
     {} pour avoir le nombre de lettre\n
     {} pour changer de mot \n
-    {} pour arreter \n\n","les mots sont sans majuscule mais avec accent".green(),"indice".red(),"passe".red(),"stop".red());
+    {} pour arreter \n\n"
+     ,"les mots sont sans majuscule mais avec accent".green(),"indice".red(),"passe".red(),"stop".red());
+
+
+        if mot_avant != ""{
+            println!("{} \n", mot_avant);
+        }else {
+            println!("\n");
+        }
 
         let mot = choisi_mot(autorisation);
         let separer = mot.0.split(":").collect::<Vec<&str>>();
@@ -38,14 +38,24 @@ fn main() {
                 println!("fini !");
                 break;
             },
-            "passe" => point = point-1,
+            "passe" => {
+                if point > 0 {
+                    point = point-1;
+                }
+                mot_avant = format!("Le mot étais {}", mot);
 
-            "trouver" => point = point+1,
+            },
+
+            "trouver" => {
+                point = point+1;
+                mot_avant = "Bravo tu as trouvé le mot !".to_string();
+            },
 
 
             _ => {},
 
         }
+        
     }
 
 }
@@ -57,14 +67,17 @@ fn essai<'a>(mot: &str,def: &str, point: &u32) -> &'a str{
     let phrase = format!("Tu as actuellement {} points !", point);
     let longueur:usize = phrase.len();
     loop {
-        println!("Definition : {}.     {:<longueur$}", def,phrase, longueur = longueur );
+        
+        
+        println!("Definition : {}.                 {:<longueur$}", def,phrase, longueur = longueur );
         saisie.clear();
         io::stdin()
             .read_line(&mut saisie)
             .expect("Erreur lors de la lecture");
 
+        
+
         if saisie.trim().to_lowercase() == mot.trim().to_lowercase() {
-            println!("bravo tu as trouver !");
             return "trouver";
         }
 
@@ -74,7 +87,6 @@ fn essai<'a>(mot: &str,def: &str, point: &u32) -> &'a str{
         }
 
         if saisie.trim().to_lowercase() == "passe"{
-            println!("le mot étais : {}", mot);
             return "passe";
 
         }

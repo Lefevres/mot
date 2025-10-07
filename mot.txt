@@ -24,7 +24,7 @@ tessiture : Étendue des sons qui peuvent être émis normalement par une voix, 
 alluvion : Dépôts (cailloux, sables, boues) provenant d'un transport par les eaux courantes
 saynete : Courte pièce comique avec peu de personnages
 timorer : Qui est trop méfiant, trop attaché à ses habitudes, qui craint le risque, les responsabilités, l'imprévu
-anaher :Faire entendre des ahans
+ahaner :Faire entendre des ahans
 pileus : À l'époque hellénistique et romaine, un petit bonnet rond, emboîtant bien le crâne
 senestre : La main gauche
 succin : Ambre jaune
