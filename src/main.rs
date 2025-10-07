@@ -8,9 +8,7 @@ use std::process::Command;
 fn main() {
     //let fichier = DEFAULT_DATA; //pour raphou
     // Clear le terminal
-    Command::new("clear")
-        .status()
-        .expect("Échec de la commande clear");
+
     let fichier = fs::read_to_string("mot.txt").unwrap();
 
     let mut autorisation: Vec<&str> = vec!();
@@ -19,11 +17,17 @@ fn main() {
         autorisation.push(element)
     }
     let mut point:u32 = 0;
-    println!("\n\n{} \n\n
+
+    loop {
+        Command::new("clear")
+            .status()
+            .expect("Échec de la commande clear");
+
+        println!("\n\n{} \n\n +1 points pour une bonne réponse, -1 points pour une mauvaise \n
     {} pour avoir le nombre de lettre\n
     {} pour changer de mot \n
     {} pour arreter \n\n","les mots sont sans majuscule mais avec accent".green(),"indice".red(),"passe".red(),"stop".red());
-    loop {
+
         let mot = choisi_mot(autorisation);
         let separer = mot.0.split(":").collect::<Vec<&str>>();
         autorisation = mot.1;
@@ -34,10 +38,10 @@ fn main() {
                 println!("fini !");
                 break;
             },
-            //"passe" => ,
-            "trouver" => {
-                point = point+1;
-            }
+            "passe" => point = point-1,
+
+            "trouver" => point = point+1,
+
 
             _ => {},
 
