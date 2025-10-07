@@ -35,7 +35,7 @@ fn essai(mot: &str,def: &str, point: &u32) -> bool{
     let phrase = format!("Tu as actuellement {} points !", point);
     let longueur:usize = phrase.len();
     loop {
-        println!("Definition : {}  {:<longueur$}", def,phrase, longueur = longueur );
+        println!("Definition : {}.     {:<longueur$}", def,phrase, longueur = longueur );
         saisie.clear();
         io::stdin()
             .read_line(&mut saisie)
