@@ -1,58 +1,72 @@
 use std::io;
-use colored::Colorize;
+use crate::affichage::affichage::Affichage;
 use crate::joueur::Joueur;
 
-
-pub fn jouer(joueur: &mut Joueur, liste: &Vec<String>, nb_manche : usize) {
-    while joueur.question() < nb_manche {
-        manche(joueur, liste);
+pub fn jouer(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>, nb_manche : usize) {
+    let mut stop = false;
+    while !joueur.fin(nb_manche) && !stop{
+        stop = manche(joueur,affichage, liste);
     }
 }
-fn manche(joueur : &mut Joueur, liste : &Vec<String>){
-    let mut essai = false;
-    afficherLEnTete();
-    let mot = afficherQuestion(joueur.question(),&liste);
+fn manche(joueur : &mut Joueur,affichage: &dyn Affichage, liste : &Vec<String>) -> bool{
+    let mut essai = false;  //essai incorrecte
+    affichage.afficher_en_tete();  //pas de retour donc je peux utiliser afficher_en_tete en méthode sans problème
+    let mot = affichage.afficher_question(joueur.question(),&liste);  //retour donc pénible
     while !essai {
-        essai = attendreReponse(&mot);
-        reagir(joueur,essai);
+        let reponse = attendreReponse();
+        let reaction = reagir(joueur,affichage,&reponse,&mot);
+
+        match reaction.as_str() {
+            "stop" => {
+                essai = true;
+                return true;  //on arrete bel et bien
+            }
+
+            "suivant" => {
+                essai = true;  //l'essai est correcte
+            }
+
+            "reposer" => {
+
+            }
+
+            _ => {
+                println!("comment on en est arrivé là ?");
+            }
+        }
     }
+    false
 
 }
 
-fn afficherLEnTete(){
-    println!("\n\n{} \n\n +1 points pour une bonne réponse, -1 points pour une mauvaise \n
-    {} pour avoir le nombre de lettre\n
-    {} pour changer de mot \n
-    {} pour arreter \n\n"
-             ,"les mots sont sans majuscule mais avec accent".green(),"indice".red(),"passe".red(),"stop".red());
-
-}
-fn afficherQuestion(nbQuestion : usize, liste : &Vec<String>) -> &String{  //renvoie le mot attendu
-    println!("{}", liste[nbQuestion+1]); //nbQuestion est la réponse, nbQuestion +1 est la question
-    &liste[nbQuestion]
-}
-
-fn  attendreReponse(attendue :&String) -> bool{
+fn  attendreReponse() -> String{
     let mut saisie = String :: new();
     io::stdin()
         .read_line(&mut saisie)
         .expect("Erreur lors de la lecture");
 
-    saisie = saisie.trim().to_lowercase();
-
-    attendue.as_str() == saisie
+    saisie.trim().to_string()
 }
 
-fn reagir(joueur: &mut Joueur,reponse :bool){
-    match reponse{
-        true => {
+fn reagir(joueur: &mut Joueur,affichage : &dyn Affichage, reponse: &String, mot: &String) -> String {
+    match reponse.as_str() {
+        "stop" => {
+            "stop".to_string()
+        }
+        "indice" => {
+            affichage.afficher_indice(mot);
+            "reposer".to_string()
+        }
+        _ if reponse == mot => { // Si la réponse est égale au mot attention au \n
             joueur.bonneReponseAj();
             joueur.questionSuivante();
-            println!("bonne réponse");
+            println!("Bonne réponse");
+            "suivant".to_string()
         }
-        false => {
+        _ => {  // Cas pour mauvaise réponse
             joueur.mauvaiseReponseAj();
-            println!("mauvaise réponse");
+            println!("Mauvaise réponse");
+            "reposer".to_string()
         }
     }
 }

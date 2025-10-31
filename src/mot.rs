@@ -1,7 +1,6 @@
 use std::fs;
 use rand::prelude::SliceRandom;
 
-
 const FICHIER: &str = "mot.txt";
 pub fn cree_liste() -> Vec<String>{
     let fichier = lis_fichier();
