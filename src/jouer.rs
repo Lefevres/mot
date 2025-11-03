@@ -1,16 +1,19 @@
  use std::io;
-use crate::affichage::affichage::Affichage;
-use crate::joueur::Joueur;
+ use std::io::stdout;
+ use crate::affichage::affichage::Affichage;
+ use crate::joueur::Joueur;
 
-pub fn jouer(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>, nb_manche : usize) {
+ pub fn jouer(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>, nb_manche : usize) {
     let mut stop = false;
     while !joueur.fin(nb_manche) && !stop{
+        crossterm::execute!(stdout(), crossterm::terminal::Clear(crossterm::terminal::ClearType::All)).unwrap();
         stop = manche(joueur,affichage, liste);
     }
 }
 fn manche(joueur : &mut Joueur,affichage: &dyn Affichage, liste : &Vec<String>) -> bool{
     let mut essai = false;  //essai incorrecte
     affichage.afficher_en_tete();  //pas de retour donc je peux utiliser afficher_en_tete en méthode sans problème
+    joueur.afficher_score();
     let mot = affichage.afficher_question(joueur.question(),&liste);  //retour donc pénible
     while !essai {
         let reponse = attendre_reponse();
@@ -55,6 +58,10 @@ fn reagir(joueur: &mut Joueur,affichage : &dyn Affichage, reponse: &String, mot:
         "indice" => {
             affichage.afficher_indice(mot);
             "reposer".to_string()
+        }
+        "passe" => {
+            joueur.question_suivante();
+            "suivant".to_string()
         }
         _ if reponse == mot => { // Si la réponse est égale au mot attention au \n
             joueur.bonne_reponse_aj();

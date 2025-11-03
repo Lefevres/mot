@@ -38,4 +38,18 @@ impl Joueur {
     pub fn fin(&self, manche:usize) -> bool {
         self.question / 2 == manche
     } //renvoie true si on a fais manche tour
+
+    pub fn afficher_score(&self) {
+        let total = self.bonne_reponse + self.mauvaise_reponse;
+        let ratio = if total > 0 {
+            (self.bonne_reponse as f32 / total as f32) * 100.0
+        } else {
+            0.0
+        };
+
+        println!(
+            "\nScore : {} bonne(s) réponse(s), {} mauvaise(s) réponse(s) — Ratio : {:.1}%",
+            self.bonne_reponse, self.mauvaise_reponse, ratio
+        );
+    }
 }
