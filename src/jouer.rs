@@ -1,4 +1,4 @@
-use std::io;
+ use std::io;
 use crate::affichage::affichage::Affichage;
 use crate::joueur::Joueur;
 
@@ -13,12 +13,11 @@ fn manche(joueur : &mut Joueur,affichage: &dyn Affichage, liste : &Vec<String>) 
     affichage.afficher_en_tete();  //pas de retour donc je peux utiliser afficher_en_tete en méthode sans problème
     let mot = affichage.afficher_question(joueur.question(),&liste);  //retour donc pénible
     while !essai {
-        let reponse = attendreReponse();
+        let reponse = attendre_reponse();
         let reaction = reagir(joueur,affichage,&reponse,&mot);
 
         match reaction.as_str() {
             "stop" => {
-                essai = true;
                 return true;  //on arrete bel et bien
             }
 
@@ -39,7 +38,7 @@ fn manche(joueur : &mut Joueur,affichage: &dyn Affichage, liste : &Vec<String>) 
 
 }
 
-fn  attendreReponse() -> String{
+fn  attendre_reponse() -> String{
     let mut saisie = String :: new();
     io::stdin()
         .read_line(&mut saisie)
@@ -58,13 +57,13 @@ fn reagir(joueur: &mut Joueur,affichage : &dyn Affichage, reponse: &String, mot:
             "reposer".to_string()
         }
         _ if reponse == mot => { // Si la réponse est égale au mot attention au \n
-            joueur.bonneReponseAj();
-            joueur.questionSuivante();
+            joueur.bonne_reponse_aj();
+            joueur.question_suivante();
             println!("Bonne réponse");
             "suivant".to_string()
         }
         _ => {  // Cas pour mauvaise réponse
-            joueur.mauvaiseReponseAj();
+            joueur.mauvaise_reponse_aj();
             println!("Mauvaise réponse");
             "reposer".to_string()
         }

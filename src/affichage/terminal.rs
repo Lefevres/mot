@@ -11,9 +11,9 @@ impl Affichage for AffichageTerminal {
         println!("{en_tete}\n{instruction}\n{indices}");
     }
 
-    fn afficher_question<'a>(&self, nbQuestion : usize, liste : &'a Vec<String>) -> &'a String{  //renvoie le mot attendu
-        println!("{}", liste[nbQuestion+1]); //nbQuestion est la réponse, nbQuestion +1 est la question
-        &liste[nbQuestion]
+    fn afficher_question<'a>(&self, nb_question : usize, liste : &'a Vec<String>) -> &'a String{  //renvoie le mot attendu
+        println!("{}", liste[nb_question+1]); //nb_question est la réponse, nb_question +1 est la question
+        &liste[nb_question]
     }
 
     fn afficher_indice(&self, mot:&String){
