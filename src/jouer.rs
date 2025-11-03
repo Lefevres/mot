@@ -61,6 +61,7 @@ fn reagir(joueur: &mut Joueur,affichage : &dyn Affichage, reponse: &String, mot:
         }
         "passe" => {
             joueur.question_suivante();
+            joueur.mauvaise_reponse_aj();
             "suivant".to_string()
         }
         _ if reponse == mot => { // Si la réponse est égale au mot attention au \n
