@@ -2,7 +2,7 @@ use std::fs;
 use std::path::PathBuf;
 use rand::prelude::SliceRandom;
 
-const FICHIER: &str = "truc_utile/mot.txt";
+const FICHIER: &str = ".local/bin/mot.txt";
 pub fn cree_liste() -> Vec<String>{
     let fichier = lis_fichier();
     let liste = melange_liste(fichier);
