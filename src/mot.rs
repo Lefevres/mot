@@ -2,7 +2,7 @@ use std::{env, fs};
 use std::path::{Path, PathBuf};
 use rand::prelude::SliceRandom;
 
-const FICHIER: &str = ".local/bin/mot.txt";
+const FICHIER: &str = "mot.txt"; //".local/bin/mot.txt";
 pub fn cree_liste() -> Vec<String>{
     let fichier = lis_fichier();
     let liste = melange_liste(fichier);
@@ -14,7 +14,7 @@ fn lis_fichier() -> Vec<String>{
     let home = std::env::var("HOME").expect("Pas de variable HOME !");
     let mut chemin = PathBuf::from(home);
     chemin.push(FICHIER);
-    mise_en_place(&chemin);
+    //mise_en_place(&chemin);
     let contenu = fs::read_to_string(&chemin)
         .expect("Erreur lecture fichier")
         .lines()  // découpe en lignes
