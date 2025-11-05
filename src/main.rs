@@ -28,10 +28,10 @@ fn main() {  //il faudra faire attention a ce que le numéro de la question ne d
 
 fn demander_nb_manche() -> usize {
     loop {
-        //crossterm::execute!(stdout(), crossterm::terminal::Clear(crossterm::terminal::ClearType::All)).unwrap();
+        crossterm::execute!(stdout(), crossterm::terminal::Clear(crossterm::terminal::ClearType::All)).unwrap();
         let mut entree = String::new(); // Crée une nouvelle chaîne à chaque itération
-        println!("Combien de manche ? ");
-        println!("Nombre max de manches : {} ", usize::MAX.to_string());
+        println!("Combien de manche ? \n");
+        println!("Nombre max de manches : {} \n\n\n", usize::MAX.to_string());
 
         io::stdin()
             .read_line(&mut entree)
