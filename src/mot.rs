@@ -1,5 +1,5 @@
-use std::fs;
-use std::path::PathBuf;
+use std::{env, fs};
+use std::path::{Path, PathBuf};
 use rand::prelude::SliceRandom;
 
 const FICHIER: &str = ".local/bin/mot.txt";
@@ -10,16 +10,36 @@ pub fn cree_liste() -> Vec<String>{
 }
 
 fn lis_fichier() -> Vec<String>{
+
     let home = std::env::var("HOME").expect("Pas de variable HOME !");
-    let mut path = PathBuf::from(home);
-    path.push(FICHIER);
-    let contenu = fs::read_to_string(&path)
+    let mut chemin = PathBuf::from(home);
+    chemin.push(FICHIER);
+    mise_en_place(&chemin);
+    let contenu = fs::read_to_string(&chemin)
         .expect("Erreur lecture fichier")
         .lines()  // découpe en lignes
         .map(|s| s.to_string())
         .collect::<Vec<String>>();
 
     contenu
+}
+
+fn mise_en_place(chemin: &Path){
+    if !Path::new(chemin).exists() {
+        let source = "mot.txt";
+
+        let home = env::var("HOME").expect("Pas de variable HOME !");
+        let mut destination = PathBuf::from(home);
+        destination.push(".local/bin/mot.txt");
+
+
+        match fs::copy(source, destination) {
+            Ok(bytes) => println!("Fichier copié avec succès ({} octets)", bytes),
+            Err(e) => eprintln!("Erreur lors de la copie : {}", e),
+        }
+    }
+
+
 }
 
 fn melange_liste(mut liste:Vec<String>) -> Vec<String>{

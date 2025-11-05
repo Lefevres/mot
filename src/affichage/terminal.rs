@@ -17,6 +17,6 @@ impl Affichage for AffichageTerminal {
     }
 
     fn afficher_indice(&self, mot:&String){
-        println!("Le mot a {} lettres",mot);
+        println!("Le mot a {} lettres",mot.len());
     }
 }
