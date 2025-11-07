@@ -1,3 +1,5 @@
+use crate::joueur::Joueur;
+
 pub trait Affichage {
     fn afficher_en_tete(&self);
     fn afficher_question<'a>(&self, nb_question: usize, liste: &'a Vec<String>) -> &'a String;
@@ -8,4 +10,6 @@ pub trait Affichage {
     fn afficher_bonne_reponse(&self);
 
     fn afficher_mauvaise_reponse(&self);
+
+    fn afficher_score(&self, joueur: &mut Joueur);
 }

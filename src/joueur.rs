@@ -8,18 +8,18 @@ impl Joueur {
     Joueur {bonne_reponse : 0, mauvaise_reponse : 0, question : 0}
     } //crée un nouveau Joueur avec les valeurs de base
 
-    /*pub fn bonne_reponse(&self) -> usize{
+    pub fn bonne_reponse(&self) -> usize{
         self.bonne_reponse
-    } */ //renvoie le nombre de bonne réponse
+    }  //renvoie le nombre de bonne réponse
 
     pub fn bonne_reponse_aj(&mut self) -> usize{
         self.bonne_reponse +=1;
         self.bonne_reponse
     }  //ajoute un au nombre de bonne réponse puis le renvoie
 
-    /*pub fn mauvaise_reponse(&self) -> usize{
+    pub fn mauvaise_reponse(&self) -> usize{
         self.mauvaise_reponse
-    }*/  //renvoie le nombre de mauvaise réponse
+    }  //renvoie le nombre de mauvaise réponse
 
     pub fn mauvaise_reponse_aj(&mut self) -> usize{
         self.mauvaise_reponse +=1;
@@ -39,17 +39,5 @@ impl Joueur {
         self.question / 2 == manche
     } //renvoie true si on a fais manche tour
 
-    pub fn afficher_score(&self) {
-        let total = self.bonne_reponse + self.mauvaise_reponse;
-        let ratio = if total > 0 {
-            (self.bonne_reponse as f32 / total as f32) * 100.0
-        } else {
-            0.0
-        };
 
-        println!(
-            "\nScore : {} bonne(s) réponse(s), {} mauvaise(s) réponse(s) — Ratio : {:.1}%",
-            self.bonne_reponse, self.mauvaise_reponse, ratio
-        );
-    }
 }

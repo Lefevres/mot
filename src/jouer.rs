@@ -7,16 +7,16 @@
     while !joueur.fin(nb_manche) && !stop{
         stop = manche(joueur,affichage, liste);
     }
+     affichage.afficher_score(joueur);
 }
 fn manche(joueur : &mut Joueur,affichage: &dyn Affichage, liste : &Vec<String>) -> bool{
     let mut essai = false;
     affichage.afficher_en_tete();
-    joueur.afficher_score();
+    affichage.afficher_score(joueur);
     let mot = affichage.afficher_question(joueur.question(),&liste);
     while !essai {
         let reponse = attendre_reponse();
         let reaction = reagir(joueur,affichage,&reponse,&mot);
-
         match reaction.as_str() {
             "stop" => {
                 return true;  //on arrete bel et bien

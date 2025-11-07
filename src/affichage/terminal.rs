@@ -2,6 +2,7 @@ use std::io;
 use std::io::stdout;
 use colored::Colorize;
 use crate::affichage::affichage::Affichage;
+use crate::joueur::Joueur;
 
 pub struct AffichageTerminal;
 
@@ -42,4 +43,20 @@ impl Affichage for AffichageTerminal {
     fn afficher_mauvaise_reponse(&self) {
         println!("Ça n'est malheureusement pas ça \n");
     }
+
+    fn afficher_score(&self, joueur: &mut Joueur) {
+
+        let total = joueur.bonne_reponse() + joueur.mauvaise_reponse();
+        let ratio = if total > 0 {
+            (joueur.bonne_reponse() as f32 / total as f32) * 100.0
+        } else {
+            0.0
+        };
+        println!(
+            "\nScore : {} bonne(s) réponse(s), {} mauvaise(s) réponse(s) — Ratio : {:.1}%",
+            joueur.bonne_reponse(), joueur.mauvaise_reponse(), ratio
+        );
+
+    }
+
 }
