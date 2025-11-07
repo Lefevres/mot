@@ -10,14 +10,12 @@ mod joueur;
 mod jouer;
 mod mot;
 mod affichage;
-//const DEFAULT_DATA: &str = include_str!("../mot.txt"); //pas besoin je pense
 
-fn main() {  //il faudra faire attention a ce que le numéro de la question ne dépasse pas le nombre de question
-    //placer correctement les fichier, installateur     ?
-    //il faut absolument cmake
-    let mut joueur = Joueur::nouveau();  //crée le nouveau joueur
-    let liste = cree_liste();  //crée la liste des questions
-    let nb_manche: usize = demander_nb_manche();
+
+fn main() {
+    let mut joueur = Joueur::nouveau();
+    let liste = cree_liste();
+    let nb_manche: usize = demander_nb_manche(liste.len());
 
 
     let affichage: Box<dyn Affichage> = Box::new(AffichageTerminal);
@@ -26,19 +24,28 @@ fn main() {  //il faudra faire attention a ce que le numéro de la question ne d
     jouer(&mut joueur, &*affichage, &liste, nb_manche);
 }
 
-fn demander_nb_manche() -> usize {
+fn demander_nb_manche(taille_liste: usize) -> usize {
     loop {
         crossterm::execute!(stdout(), crossterm::terminal::Clear(crossterm::terminal::ClearType::All)).unwrap();
         let mut entree = String::new(); // Crée une nouvelle chaîne à chaque itération
         println!("Combien de manche ? \n");
-        println!("Nombre max de manches : {} \n\n\n", usize::MAX.to_string());
+        let min = if taille_liste/2 < usize::MAX {  // les questions et les réponses sont déjà séparer, donc on divise par deux
+            taille_liste/2
+        } else {
+            usize::MAX
+        };
+        println!("Nombre max de manches : {} \n\n\n", min.to_string());
 
         io::stdin()
             .read_line(&mut entree)
             .expect("Erreur lors de la lecture du nombre de manches");
 
         match entree.trim().parse::<usize>() {
-            Ok(num) => return num, // ✅ Retourne le nombre valide et quitte la boucle
+            Ok(num) => {
+                if num <= min {
+                return num
+                }
+            }, //  Retourne le nombre valide et quitte la boucle si le nombre n’est pas trop grand, sinon on va dépasser la taille de la liste
             Err(_) => println!("Entrée invalide, veuillez entrer un nombre entier positif."),
         }
     }

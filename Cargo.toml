@@ -7,4 +7,5 @@ edition = "2024"
 rand = "0.10.0-rc.0"
 colored = "2.0"
 crossterm = "0.29.0"
+once_cell = "1.21.3"
 
