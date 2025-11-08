@@ -78,7 +78,7 @@ idiomatique : Spécifique à une langue
 méridional : Qui est au sud
 vaudeville : Chanson populaire à thème satirique
 vaudeville : Comédie légère, divertissante, fertile en intrigues et rebondissements
-ad nutum : De manière immédiate, sans formalités
+ad nutum : De manière immédiate, sans formalités (locution latine)
 convoler : Aller rapidement (vers autre chose), passer (à autre chose, à un autre état)
 moribond : Qui est près de mourir
 fruste : Usé, altéré par le temps, le frottement
@@ -120,3 +120,13 @@ ommeyyade : Dynastie de califes arabes qui a régné sur l’ensemble de l’Emp
 paredre : nom ou adjectif signifiant littéralement « assis près », « qui est assis à côté de ». Il s'emploie pour qualifier une divinité souvent inférieure en prérogative, habituellement associée dans le culte à un dieu ou une déesse plus influent
 diocèse : Circonscription ecclésiastique placée sous la juridiction d'un évêque ou d'un archevêque
 sérendipité : Capacité, aptitude à faire par hasard une découverte inattendue et à en saisir l'utilité (scientifique, pratique) (anglisisme)
+gymnopédies : festivités religieuses tenues à Sparte, au cours de l'été
+état-providence : st une forme de politique adoptée par certains États qui se dotent de larges compétences réglementaires, économiques et sociales en vue de financer un ensemble plus ou moins étendue de dépenses sociales au bénéfice de leurs citoyens
+toponymie : Étude des noms de lieux, de leur étymologie
+gradient : Taux de variation spatiale (d'une grandeur physique)
+lagune : Étendue d'eau de mer, comprise entre la terre ferme et un cordon littoral
+lido : Lagune derrière un cordon littoral
+tombolo : Cordon littoral constitué par une levée de galets ou de sable, reliant une île au continent
+ibéromaurusien :  culture archéologique préhistorique qui s'est développée sur l'actuel Maghreb, occupant une bande littorale allant du nord de la Tunisie au sud du Maroc
+capsien : culture archéologique du Maghreb, qui apparait durant l'Holocène dans la région allant de Gafsa à Tébessa, et qui s'étend ensuite jusqu'à l'ouest de l'Algérie
+aghlabides : dynastie d'émirs de la tribu arabe des Banu Tamim[4], qui gouvernent, depuis Kairouan, l'Ifriqiya (actuelle Tunisie, le constantinois en Algérie actuelle et la Tripolitaine dans l'actuelle Libye) nominalement, au nom du calife abbasside, à partir de 800, puis la Sicile, après sa conquête, jusqu'à son renversement par le nouveau pouvoir des Fatimides, en 909
