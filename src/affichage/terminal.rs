@@ -28,6 +28,7 @@ impl Affichage for AffichageTerminal {
         for _ in 0..mot.len() - revelation{
             indice = indice+ "_ ".to_string().as_str();
         }
+        println!("Le mot a {} lettres",mot.len());
         println!("{}",indice);
     }
 
