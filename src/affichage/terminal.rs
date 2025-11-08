@@ -21,6 +21,16 @@ impl Affichage for AffichageTerminal {
         &liste[nb_question]
     }
 
+
+    fn afficher_indice(&self, mot:&String){
+        let revelation = mot.len()/3;
+        let mut indice = format!("{}",&mot[0..revelation]);
+        for _ in 0..mot.len() - revelation{
+            indice = indice+ "_ ".to_string().as_str();
+        }
+        println!("{}",indice);
+    }
+
     fn afficher_reponse_precedante(&self, mot : &String){
         println!("La réponse étais {}\n",mot.green());
         println!("Entrer pour continuer : \n");
@@ -30,10 +40,6 @@ impl Affichage for AffichageTerminal {
             .expect("Erreur lors de la lecture");
 
 
-    }
-
-    fn afficher_indice(&self, mot:&String){
-        println!("Le mot a {} lettres \n",mot.len());
     }
 
     fn afficher_bonne_reponse(&self) {

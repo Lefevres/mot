@@ -106,7 +106,7 @@ cambuse : Magasin du bord, sur un bateau
 ambage : Circonlocution, hésitation à s'exprimer, marquant de l'embarras et parfois de l'habileté
 ouaille : Les chrétiens, par rapport au prêtre
 truelle : Outil de maçon, à manche coudé, servant à étendre le mortier, l'enduit
-manu militari : En employant la force armée, la force publique
+manu militari : En employant la force armée, la force publique (locution latine)
 ipso facto : Par voie de conséquence, automatiquementpr
 proactif : Qui anticipe les attentes, prend l'initiative de l'action
 éponyme : Qui donne son nom à
@@ -119,3 +119,4 @@ loisible : est permis, possible ou envisageable de faire
 ommeyyade : Dynastie de califes arabes qui a régné sur l’ensemble de l’Empire musulman
 paredre : nom ou adjectif signifiant littéralement « assis près », « qui est assis à côté de ». Il s'emploie pour qualifier une divinité souvent inférieure en prérogative, habituellement associée dans le culte à un dieu ou une déesse plus influent
 diocèse : Circonscription ecclésiastique placée sous la juridiction d'un évêque ou d'un archevêque
+sérendipité : Capacité, aptitude à faire par hasard une découverte inattendue et à en saisir l'utilité (scientifique, pratique) (anglisisme)
