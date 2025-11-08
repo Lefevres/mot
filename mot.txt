@@ -5,7 +5,7 @@ blezimarder : Se couper mutuallement la réplique, empêcher le dialogue
 sybarite : Se dit d'une personne qui recherche les plaisirs de la vie dans une atmosphère de luxe et de raffinement
 quidam : Un certain individu, une personne
 altermoiement : Action de différer, de remettre à un autre temps
-borborygmes : Bruit produit par le déplacement des gaz dans l'intestin ou l'estomac
+borborygme : Bruit produit par le déplacement des gaz dans l'intestin ou l'estomac
 aphasi : Perte totale ou partielle de la capacité de parler ou de comprendre le langage parlé ou écrit, due à une lésion cérébrale
 kyrielle : Longue suite (de paroles) interminable
 andain : Rangée régulière d'herbe fauchée
@@ -110,7 +110,6 @@ manu militari : En employant la force armée, la force publique (locution latine
 ipso facto : Par voie de conséquence, automatiquementpr
 proactif : Qui anticipe les attentes, prend l'initiative de l'action
 éponyme : Qui donne son nom à
-avoriaz :  est une station de sports d'hiver située à 1 800 m d'altitude, sur le territoire de la commune de Morzine, en Haute-Savoie
 barbouze : Agent secret (police, espionnage)
 sanctionner : Confirmer par une sanction
 pandémonium : Lieu où règne la corruption, un désordre infernal
@@ -121,7 +120,7 @@ paredre : nom ou adjectif signifiant littéralement « assis près », « qui es
 diocèse : Circonscription ecclésiastique placée sous la juridiction d'un évêque ou d'un archevêque
 sérendipité : Capacité, aptitude à faire par hasard une découverte inattendue et à en saisir l'utilité (scientifique, pratique) (anglisisme)
 gymnopédies : festivités religieuses tenues à Sparte, au cours de l'été
-état-providence : st une forme de politique adoptée par certains États qui se dotent de larges compétences réglementaires, économiques et sociales en vue de financer un ensemble plus ou moins étendue de dépenses sociales au bénéfice de leurs citoyens
+état-providence : est une forme de politique adoptée par certains États qui se dotent de larges compétences réglementaires, économiques et sociales en vue de financer un ensemble plus ou moins étendue de dépenses sociales au bénéfice de leurs citoyens
 toponymie : Étude des noms de lieux, de leur étymologie
 gradient : Taux de variation spatiale (d'une grandeur physique)
 lagune : Étendue d'eau de mer, comprise entre la terre ferme et un cordon littoral
