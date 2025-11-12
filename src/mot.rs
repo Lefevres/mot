@@ -1,5 +1,4 @@
-use std::{fs};
-use std::path::{PathBuf};
+use std::{fs, path::PathBuf};
 use std::string::ToString;
 use std::sync::LazyLock;
 use rand::prelude::SliceRandom;
