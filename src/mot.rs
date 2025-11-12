@@ -1,10 +1,14 @@
 use std::{fs, path::PathBuf};
+use std::env::home_dir;
 use std::string::ToString;
 use std::sync::LazyLock;
 use rand::prelude::SliceRandom;
 
+static CHEMIN: LazyLock<PathBuf> = LazyLock::new(|| {
+    home_dir().expect("Impossible de trouver le dossier home").join(".mot")
+});
+static FICHIER: LazyLock<PathBuf> = LazyLock::new(|| CHEMIN.join("mot.txt"));
 
-static FICHIER: LazyLock<PathBuf> = LazyLock::new(|| PathBuf::from("mot.txt"));
 pub fn cree_liste() -> Vec<String>{
     let fichier = lis_fichier();
     let liste = melange_liste(fichier);
