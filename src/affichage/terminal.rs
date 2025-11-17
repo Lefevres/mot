@@ -22,7 +22,7 @@ impl Affichage for AffichageTerminal {
     }
 
 
-    fn afficher_indice(&self, mot: &str) {
+    fn afficher_indice(&self, mot: &String) {
     let len = mot.chars().count();
     let revelation = len / 3;
 
