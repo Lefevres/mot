@@ -22,15 +22,20 @@ impl Affichage for AffichageTerminal {
     }
 
 
-    fn afficher_indice(&self, mot:&String){
-        let revelation = mot.len()/3;
-        let mut indice = format!("{}",&mot[0..revelation]);
-        for _ in 0..mot.len() - revelation{
-            indice = indice+ "_ ".to_string().as_str();
-        }
-        println!("Le mot a {} lettres",mot.len());
-        println!("{}",indice);
+    fn afficher_indice(&self, mot: &str) {
+    let len = mot.chars().count();
+    let revelation = len / 3;
+
+    let prefix: String = mot.chars().take(revelation).collect();
+
+    let mut indice = prefix;
+    for _ in 0..(len - revelation) {
+        indice.push_str("_ ");
     }
+
+    println!("Le mot a {} lettres", len);
+    println!("{}", indice);
+}
 
     fn afficher_reponse_precedante(&self, mot : &String){
         println!("La réponse étais {}\n",mot.green());
