@@ -1,7 +1,5 @@
 use crate::affichage::affichage::Affichage;
-use crate::multi_joueur::multi_joueur;
-use crate::solitaire::solitaire;
-
+use crate::multi_joueur::multi_joueur::multi_joueur;
 
 mod joueur;
 mod jouer;

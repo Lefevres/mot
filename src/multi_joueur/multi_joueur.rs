@@ -1,18 +1,13 @@
 use std::io;
 use crate::affichage::affichage::Affichage;
 use crate::affichage::terminal::AffichageTerminal;
-use crate::preparation::crée_joueur;
 
 static  affichage: AffichageTerminal = AffichageTerminal;
 pub fn multi_joueur(){
     let role = choix_role();
     println!("Tu as choisie {}!", role);
-    let mut joueur = crée_joueur();
-    //crée joueur 
-    //si client se connecter et attendre
-    //si h proposer la connection et attendre mon bon vouloir
-    //si h crée la liste et la partager
-    
+
+
 }
 
 
