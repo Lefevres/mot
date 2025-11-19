@@ -9,6 +9,7 @@ mod mot;
 mod affichage;
 mod solitaire;
 mod multi_joueur;
+mod preparation;
 
 fn main() {
     multi_joueur();
