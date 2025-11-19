@@ -66,4 +66,11 @@ impl Affichage for AffichageTerminal {
 
     }
 
+
+    fn afficher(&self, texte : String){
+        println!("{}", texte);
+    }
+    
+
+
 }

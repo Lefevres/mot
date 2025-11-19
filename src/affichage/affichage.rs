@@ -12,4 +12,6 @@ pub trait Affichage {
     fn afficher_mauvaise_reponse(&self);
 
     fn afficher_score(&self, joueur: &mut Joueur);
+
+    fn afficher(&self, texte : String);
 }

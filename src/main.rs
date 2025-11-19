@@ -1,18 +1,15 @@
-use std::io;
-use std::io::stdout;
 use crate::affichage::affichage::Affichage;
+use crate::multi_joueur::multi_joueur;
 use crate::solitaire::solitaire;
-use crate::affichage::terminal::AffichageTerminal;
-use crate::jouer::jouer;
-use crate::joueur::Joueur;
-use crate::mot::cree_liste;
+
 
 mod joueur;
 mod jouer;
 mod mot;
 mod affichage;
 mod solitaire;
+mod multi_joueur;
 
 fn main() {
-    solitaire();   
+    multi_joueur();
 }

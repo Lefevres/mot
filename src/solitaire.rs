@@ -7,17 +7,21 @@ use crate::joueur::Joueur;
 use crate::mot::cree_liste;
 
 pub fn solitaire(){
-    let mut joueur = Joueur::nouveau();
+    let mut joueur = crée_joueur();
     let liste = cree_liste();
     let nb_manche: usize = demander_nb_manche(liste.len());
 
 
-    let affichage: Box<dyn Affichage> = Box::new(AffichageTerminal);
+    let affichage  = AffichageTerminal;
 
     // Lance la partie
-    jouer(&mut joueur, &*affichage, &liste, nb_manche);
+    jouer(&mut joueur, &affichage, &liste, nb_manche);
 }
 
+
+fn crée_joueur() -> Joueur {
+    Joueur::nouveau()
+}
 
 fn demander_nb_manche(taille_liste: usize) -> usize {
     loop {
