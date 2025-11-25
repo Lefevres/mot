@@ -7,29 +7,36 @@ use crate::jouer::jouer;
 use crate::mot::cree_liste;
 use crate::preparation::{crée_joueur, demander_nb_manche};
 
-pub fn hote(){
+
+#[tokio::main]
+pub async fn hote(){
 
     let mut joueur = crée_joueur(true);
     let liste = cree_liste();
     let nb_client:usize= demander_nb_joueur();
 
-    let nom: Vec<String> = tokio::runtime::Runtime::new()
-        .unwrap()
-        .block_on(async {
-            connextion_au_client(nb_client).await.unwrap()
-        });
+    let clients = connextion_au_client(nb_client).await.unwrap();
 
 
-    for joueur in nom {
+    let nom = clients.0;
+    let mut sockets = clients.1;
+
+
+    for joueur in &nom {
         println!("Bonjour {}",joueur);
     }
 
     let nb_manche: usize = demander_nb_manche(liste.len());
+    envoie_message(&mut sockets[0],nb_manche.to_string()).await;
 
-    let affichage  = AffichageTerminal;
+
+
+    //envoie les nb_manche première question
+
+    //let affichage  = AffichageTerminal;
 
     // Lance la partie
-    jouer(&mut joueur, &affichage, &liste, nb_manche);
+    //jouer(&mut joueur, &affichage, &liste, nb_manche);
 
 }
 
@@ -48,7 +55,7 @@ fn demander_nb_joueur() -> usize {
 }
 
 
-async fn lis_buffer(mut socket:TcpStream) -> Result<String,Box<dyn std::error::Error>>{
+async fn lis_buffer(socket:&mut TcpStream) -> Result<String,Box<dyn std::error::Error>>{
     let mut buffer = vec![0u8; 1024];
     let n = socket.read(&mut buffer).await?;
     if n == 0 {
@@ -59,17 +66,24 @@ async fn lis_buffer(mut socket:TcpStream) -> Result<String,Box<dyn std::error::E
 }
 
 
+async fn envoie_message(socket:&mut TcpStream, message:String){
+    let message_bytes = message.as_bytes();
+    socket.write_all(message_bytes).await.unwrap();
+    println!("J'envoie le message : {}", message);
+}
 
-async fn connextion_au_client(nb_client: usize) -> Result<Vec<String>, Box<dyn std::error::Error>> {
+
+
+async fn connextion_au_client(nb_client: usize) -> Result<(Vec<String>,Vec<TcpStream>), Box<dyn std::error::Error>> {
     let listener = TcpListener::bind("0.0.0.0:9000").await?;
     let mut noms_joueurs = Vec::new();
-
+    let mut sockets = Vec::new();
     for _ in 0..nb_client {
         println!("En attente d'un client...");
         let (mut socket, adresse) = listener.accept().await?;
         println!("Client connecté : {}", adresse);
 
-        let nom = lis_buffer(socket).await?;
+        let nom = lis_buffer(&mut socket).await?;
         /*let mut buffer = vec![0u8; 1024];
         let n = socket.read(&mut buffer).await?;
         if n == 0 {
@@ -80,8 +94,9 @@ async fn connextion_au_client(nb_client: usize) -> Result<Vec<String>, Box<dyn s
         //let nom = String::from_utf8_lossy(&buffer[..n]).to_string();
 
         noms_joueurs.push(nom);
+        sockets.push(socket);
 
     }
 
-    Ok(noms_joueurs)
+    Ok((noms_joueurs,sockets))
 }

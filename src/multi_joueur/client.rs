@@ -1,27 +1,63 @@
 use std::io;
+use std::thread::sleep;
+use std::time::Duration;
 use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, AsyncReadExt};
 use crate::affichage::terminal::AffichageTerminal;
 use crate::jouer::jouer;
-use crate::preparation::crée_joueur;
+use crate::preparation::{crée_joueur, demander_nb_manche};
 
-const port: &str = ":9000";
+const PORT: &str = ":9000";
 
 
-pub fn client(){
-    prépare();
+#[tokio::main]
+pub async fn client(){
+    let mut stream = prépare().await.unwrap();
     let mut joueur = crée_joueur(true);
     let affichage  = AffichageTerminal;
+    println!("On attend que l'hote choisisse le nombre de manche…");
+
+    let nb_manche: usize = récupérer_nombre_manche(&mut stream).await;
+
+
+
+    println!("{}", nb_manche);
+
+
+
 
     // Lance la partie
     //jouer(&mut joueur, &affichage, &liste, nb_manche);
 }
 
+async fn récupérer_nombre_manche(stream: &mut TcpStream) -> usize {
+    let nb_manche_string = lis_message(stream).await.expect("erreur lecture stream");
+    let nb_manche = nb_manche_string.parse::<usize>().unwrap();
+    nb_manche
+}
 
-fn prépare(){
-    tokio::runtime::Runtime::new().unwrap().block_on(async {
-        connection().await.unwrap();
-    });
+
+async fn envoie_a_l_hote(stream : &mut TcpStream, message:String) -> std::io::Result<()>{
+    let message_bytes = message.as_bytes();
+    stream.write_all(message_bytes).await?;
+    Ok(())
+}
+
+
+async fn lis_message(stream : &mut TcpStream) -> Result<String,Box<dyn std::error::Error>>{
+    let mut buffer = vec![0; 1024];
+    let n = stream.read(&mut buffer).await?;
+    if n == 0 {
+        return Err("Le serveur a fermé la connexion".into());
+    }
+    let message = String::from_utf8_lossy(&buffer[..n]).to_string();
+    Ok(message)
+}
+
+
+
+async fn prépare() -> Result<TcpStream, Box<dyn std::error::Error>> {
+    connection().await
 }
 
 fn demande_nom() -> String{
@@ -37,7 +73,7 @@ fn demande_nom() -> String{
 
 }
 
-async fn connection() -> Result<(), Box<dyn std::error::Error>> {
+async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
     println!("Quelle adresse ip ? (\"ip a\" sous linux)");
     let mut ip = String::new();
 
@@ -49,7 +85,7 @@ async fn connection() -> Result<(), Box<dyn std::error::Error>> {
 
 
     // Adresse IP du serveur
-    let addr = ip+port;
+    let addr = ip+PORT;
 
     println!("Connexion au serveur {}...", addr);
 
@@ -57,15 +93,10 @@ async fn connection() -> Result<(), Box<dyn std::error::Error>> {
     println!("Connecté !");
 
     let nom = demande_nom();
-    // envoyer un message
 
-    stream.write_all(nom.as_bytes()).await?;
 
-    /*// lire la réponse
-    let mut buffer = vec![0; 1024];
-    let n = stream.read(&mut buffer).await?;
+    envoie_a_l_hote(&mut stream, nom).await?;
 
-    println!("Reçu: {}", String::from_utf8_lossy(&buffer[..n]));*/
 
-    Ok(())
+    Ok(stream)
 }
