@@ -1,4 +1,4 @@
-use std::io::Read;
+use std::io::{Bytes, Read};
 use std::io;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpListener,TcpStream};
@@ -29,7 +29,8 @@ pub async fn hote(){
     let nb_manche: usize = demander_nb_manche(liste.len());
     envoie_message(&mut sockets[0],nb_manche.to_string()).await;
 
-
+    //il faudrait attendre, il envoie les deux en même temps, donc la réception du nombre de client ce passe mal
+    envoie_message_vecteur_string(&mut sockets[0],liste[0..nb_manche].to_vec()).await;
 
     //envoie les nb_manche première question
 
@@ -37,6 +38,17 @@ pub async fn hote(){
 
     // Lance la partie
     //jouer(&mut joueur, &affichage, &liste, nb_manche);
+
+}
+
+
+
+async fn envoie_message_vecteur_string(socket:&mut TcpStream, message:Vec<String>){
+    let mut message_bytes = Vec::new();
+    for mess in message {
+        message_bytes.extend_from_slice(mess.as_bytes());
+    }
+    socket.write_all(&message_bytes).await.unwrap();
 
 }
 

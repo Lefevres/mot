@@ -32,7 +32,7 @@ pub async fn client(){
 
 async fn récupérer_nombre_manche(stream: &mut TcpStream) -> usize {
     let nb_manche_string = lis_message(stream).await.expect("erreur lecture stream");
-    let nb_manche = nb_manche_string.parse::<usize>().unwrap();
+    let nb_manche:usize = nb_manche_string.parse().unwrap();
     nb_manche
 }
 
