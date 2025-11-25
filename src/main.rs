@@ -1,5 +1,6 @@
 use crate::affichage::affichage::Affichage;
 use crate::multi_joueur::multi_joueur::multi_joueur;
+use crate::solitaire::solitaire;
 
 mod joueur;
 mod jouer;
@@ -10,5 +11,6 @@ mod multi_joueur;
 mod preparation;
 
 fn main() {
-    multi_joueur();
+    solitaire();
+    //multi_joueur();
 }

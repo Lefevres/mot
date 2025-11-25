@@ -6,7 +6,7 @@ use crate::preparation::{crée_joueur, demander_nb_manche};
 
 pub fn hote(){
 
-    let mut joueur = crée_joueur();
+    let mut joueur = crée_joueur(true);
     let liste = cree_liste();
     let nb_client:usize= demander_nb_joueur();
 
