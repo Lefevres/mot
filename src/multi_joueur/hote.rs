@@ -1,3 +1,4 @@
+use std::io;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::TcpListener;
 use crate::preparation::crée_joueur;
@@ -7,10 +8,15 @@ pub fn hote(){
     let mut joueur = crée_joueur();
     //crée joueur
 
-    println!("je suis maintenan un hote joueur");
+    println!("je suis maintenant un hote joueur");
+
+    let nb_client:usize= 1;
 
 
-    connextion_au_client();
+    tokio::runtime::Runtime::new().unwrap().block_on(async {
+        connextion_au_client(nb_client).await.unwrap();
+    });
+
     println!("Je suis l'hote et tout vas bien !!");
 
 
@@ -21,10 +27,10 @@ pub fn hote(){
 
 }
 
-async  fn connextion_au_client() -> Result<(), Box<dyn std::error::Error>>{
-    let listener = TcpListener::bind("127.0.0.1:9000").await?;
-
-    loop {
+async  fn connextion_au_client(nb_client:usize) -> Result<(), Box<dyn std::error::Error>>{
+    let listener = TcpListener::bind("0.0.0.0:9000").await?;
+    for i in 0..nb_client {
+        //loop {
         // Accepter une connexion entrante
         let (mut socket, addresse) = listener.accept().await?;
 
@@ -36,12 +42,12 @@ async  fn connextion_au_client() -> Result<(), Box<dyn std::error::Error>>{
                 // Lire les données envoyées par le client
                 let n = match socket.read(&mut buf).await {
                     Ok(0) => {
-                    eprintln!("connexion {} fermée",addresse);
-                    return;
+                        eprintln!("connexion {} fermée", addresse);
+                        return;
                     } // Connexion fermée
                     Ok(n) => n,
                     Err(_) => {
-                        eprintln!("erreur de lecture du client {}",addresse);
+                        eprintln!("erreur de lecture du client {}", addresse);
                         return;
                     } // Erreur de lecture
                 };
@@ -53,6 +59,8 @@ async  fn connextion_au_client() -> Result<(), Box<dyn std::error::Error>>{
             }
         });
 
+        // }
     }
+    Ok(())
 
 }

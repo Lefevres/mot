@@ -1,6 +1,7 @@
 use std::io;
 use crate::affichage::affichage::Affichage;
 use crate::affichage::terminal::AffichageTerminal;
+use crate::multi_joueur::client::client;
 use crate::multi_joueur::hote::hote;
 
 static  affichage: AffichageTerminal = AffichageTerminal;
@@ -12,7 +13,7 @@ pub fn multi_joueur(){
 
     match role.as_str() {
         r if r == role1 => hote(),
-        //r if r == role2 => client(),
+        r if r == role2 => client(),
         _ => println!("Rôle inconnu tu as rentrer : {}", role),
     }
 
