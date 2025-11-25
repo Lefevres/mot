@@ -17,23 +17,25 @@ pub async fn client(){
     let affichage  = AffichageTerminal;
     println!("On attend que l'hote choisisse le nombre de manche…");
 
-    let nb_manche: usize = récupérer_nombre_manche(&mut stream).await;
+    let donnée_initialisation: (usize,Vec<String>) = récupérer_info_initialisation(&mut stream).await;
 
-
-
-    println!("{}", nb_manche);
-
-
+    let nb_manche = donnée_initialisation.0;
+    let liste = donnée_initialisation.1;
 
 
     // Lance la partie
-    //jouer(&mut joueur, &affichage, &liste, nb_manche);
+    jouer(&mut joueur, &affichage, &liste, nb_manche);
 }
 
-async fn récupérer_nombre_manche(stream: &mut TcpStream) -> usize {
-    let nb_manche_string = lis_message(stream).await.expect("erreur lecture stream");
-    let nb_manche:usize = nb_manche_string.parse().unwrap();
-    nb_manche
+async fn récupérer_info_initialisation(stream: &mut TcpStream) -> (usize,Vec<String>) {
+    let donnée_initialisation_string = lis_message(stream).await.expect("erreur lecture stream");
+    let mut donnée_initialisation_string:Vec<String> = donnée_initialisation_string
+        .split(";")
+        .map(|s| s.to_string())
+        .collect::<Vec<String>>();
+    let nb_manche = donnée_initialisation_string[0].parse::<usize>().unwrap();
+    donnée_initialisation_string = donnée_initialisation_string.split_off(1);
+    (nb_manche,donnée_initialisation_string)
 }
 
 

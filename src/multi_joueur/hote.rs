@@ -27,20 +27,34 @@ pub async fn hote(){
     }
 
     let nb_manche: usize = demander_nb_manche(liste.len());
-    envoie_message(&mut sockets[0],nb_manche.to_string()).await;
+
+    message_initialisation(&mut sockets, nb_manche, liste[0..nb_manche*2].to_vec()).await;  //fois deux pour question réponse
+
 
     //il faudrait attendre, il envoie les deux en même temps, donc la réception du nombre de client ce passe mal
-    envoie_message_vecteur_string(&mut sockets[0],liste[0..nb_manche].to_vec()).await;
+
 
     //envoie les nb_manche première question
 
-    //let affichage  = AffichageTerminal;
+    let affichage  = AffichageTerminal;
 
     // Lance la partie
-    //jouer(&mut joueur, &affichage, &liste, nb_manche);
+    jouer(&mut joueur, &affichage, &liste, nb_manche);
 
 }
 
+
+async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, questions: Vec<String>){
+    let mut message_String:String = String::from(nb_manche.to_string());
+    for mess in &questions {
+        message_String+=";";
+        message_String+= &mess;
+    }
+    for socket in sockets {
+        envoie_message(socket,message_String.clone()).await;
+    }
+
+}
 
 
 async fn envoie_message_vecteur_string(socket:&mut TcpStream, message:Vec<String>){
