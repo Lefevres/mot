@@ -12,10 +12,13 @@ pub fn hote(){
 
     let nb_client:usize= 1;
 
+    let nom: Vec<String> = tokio::runtime::Runtime::new()
+        .unwrap()
+        .block_on(async {
+            connextion_au_client(nb_client).await.unwrap()
+        });
 
-    tokio::runtime::Runtime::new().unwrap().block_on(async {
-        connextion_au_client(nb_client).await.unwrap();
-    });
+    println!("Bonjour {:?}",nom[0]);
 
     println!("Je suis l'hote et tout vas bien !!");
 
@@ -27,40 +30,27 @@ pub fn hote(){
 
 }
 
-async  fn connextion_au_client(nb_client:usize) -> Result<(), Box<dyn std::error::Error>>{
+async fn connextion_au_client(nb_client: usize) -> Result<Vec<String>, Box<dyn std::error::Error>> {
     let listener = TcpListener::bind("0.0.0.0:9000").await?;
-    for i in 0..nb_client {
-        //loop {
-        // Accepter une connexion entrante
-        let (mut socket, addresse) = listener.accept().await?;
+    let mut noms_joueurs = Vec::new();
 
-        // Gérer la connexion
-        tokio::spawn(async move {
-            let mut buf = [0; 1024];
+    for _ in 0..nb_client {
+        println!("En attente d'un client...");
+        let (mut socket, adresse) = listener.accept().await?;
+        println!("Client connecté : {}", adresse);
 
-            loop {
-                // Lire les données envoyées par le client
-                let n = match socket.read(&mut buf).await {
-                    Ok(0) => {
-                        eprintln!("connexion {} fermée", addresse);
-                        return;
-                    } // Connexion fermée
-                    Ok(n) => n,
-                    Err(_) => {
-                        eprintln!("erreur de lecture du client {}", addresse);
-                        return;
-                    } // Erreur de lecture
-                };
+        let mut buffer = vec![0u8; 1024];
+        let n = socket.read(&mut buffer).await?;
+        if n == 0 {
+            return Err("Le client a fermé la connexion".into());
+        }
 
-                // Écrire une réponse au client
-                if let Err(_) = socket.write_all(&buf[..n]).await {
-                    return; // Erreur d'écriture
-                }
-            }
-        });
+        // Convertir en String
+        let nom = String::from_utf8_lossy(&buffer[..n]).to_string();
+        println!("Nom reçu : {}", nom);
 
-        // }
+        noms_joueurs.push(nom);
     }
-    Ok(())
 
+    Ok(noms_joueurs)
 }
