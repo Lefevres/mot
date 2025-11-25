@@ -1,6 +1,9 @@
+use std::io::Read;
 use std::io;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
-use tokio::net::TcpListener;
+use tokio::net::{TcpListener,TcpStream};
+use crate::affichage::terminal::AffichageTerminal;
+use crate::jouer::jouer;
 use crate::mot::cree_liste;
 use crate::preparation::{crée_joueur, demander_nb_manche};
 
@@ -23,6 +26,11 @@ pub fn hote(){
 
     let nb_manche: usize = demander_nb_manche(liste.len());
 
+    let affichage  = AffichageTerminal;
+
+    // Lance la partie
+    jouer(&mut joueur, &affichage, &liste, nb_manche);
+
 }
 
 
@@ -40,6 +48,16 @@ fn demander_nb_joueur() -> usize {
 }
 
 
+async fn lis_buffer(mut socket:TcpStream) -> Result<String,Box<dyn std::error::Error>>{
+    let mut buffer = vec![0u8; 1024];
+    let n = socket.read(&mut buffer).await?;
+    if n == 0 {
+        return Err("Le client a fermé la connexion".into());
+    }
+    let littérale = String::from_utf8_lossy(&buffer[..n]).to_string();
+    Ok(littérale)
+}
+
 
 
 async fn connextion_au_client(nb_client: usize) -> Result<Vec<String>, Box<dyn std::error::Error>> {
@@ -51,14 +69,15 @@ async fn connextion_au_client(nb_client: usize) -> Result<Vec<String>, Box<dyn s
         let (mut socket, adresse) = listener.accept().await?;
         println!("Client connecté : {}", adresse);
 
-        let mut buffer = vec![0u8; 1024];
+        let nom = lis_buffer(socket).await?;
+        /*let mut buffer = vec![0u8; 1024];
         let n = socket.read(&mut buffer).await?;
         if n == 0 {
             return Err("Le client a fermé la connexion".into());
-        }
+        }*/
 
         // Convertir en String
-        let nom = String::from_utf8_lossy(&buffer[..n]).to_string();
+        //let nom = String::from_utf8_lossy(&buffer[..n]).to_string();
 
         noms_joueurs.push(nom);
 

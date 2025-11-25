@@ -11,6 +11,6 @@ mod multi_joueur;
 mod preparation;
 
 fn main() {
-    solitaire();
-    //multi_joueur();
+    //solitaire();
+    multi_joueur();
 }

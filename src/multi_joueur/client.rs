@@ -1,12 +1,20 @@
 use std::io;
 use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, AsyncReadExt};
+use crate::affichage::terminal::AffichageTerminal;
+use crate::jouer::jouer;
+use crate::preparation::crée_joueur;
 
 const port: &str = ":9000";
 
 
 pub fn client(){
     prépare();
+    let mut joueur = crée_joueur(true);
+    let affichage  = AffichageTerminal;
+
+    // Lance la partie
+    //jouer(&mut joueur, &affichage, &liste, nb_manche);
 }
 
 
@@ -30,7 +38,7 @@ fn demande_nom() -> String{
 }
 
 async fn connection() -> Result<(), Box<dyn std::error::Error>> {
-    println!("Quelle adresse ip ? (\"ip a sous\") linux");
+    println!("Quelle adresse ip ? (\"ip a\" sous linux)");
     let mut ip = String::new();
 
     io::stdin()
