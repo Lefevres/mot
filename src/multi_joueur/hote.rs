@@ -1,16 +1,14 @@
 use std::io;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::TcpListener;
-use crate::preparation::crée_joueur;
+use crate::mot::cree_liste;
+use crate::preparation::{crée_joueur, demander_nb_manche};
 
 pub fn hote(){
 
     let mut joueur = crée_joueur();
-    //crée joueur
-
-    println!("je suis maintenant un hote joueur");
-
-    let nb_client:usize= 1;
+    let liste = cree_liste();
+    let nb_client:usize= demander_nb_joueur();
 
     let nom: Vec<String> = tokio::runtime::Runtime::new()
         .unwrap()
@@ -18,17 +16,31 @@ pub fn hote(){
             connextion_au_client(nb_client).await.unwrap()
         });
 
-    println!("Bonjour {:?}",nom[0]);
 
-    println!("Je suis l'hote et tout vas bien !!");
+    for joueur in nom {
+        println!("Bonjour {}",joueur);
+    }
 
-
-
-    //si client se connecter et attendre
-    //si h proposer la connection et attendre mon bon vouloir
-    //si h crée la liste et la partager
+    let nb_manche: usize = demander_nb_manche(liste.len());
 
 }
+
+
+fn demander_nb_joueur() -> usize {
+    println!("Pour combien de joueur ? (hormis toi)");
+    loop {
+        let mut nb_joueur:String = String::new();
+        io::stdin().read_line(&mut nb_joueur).unwrap();
+        nb_joueur = nb_joueur.trim().to_string();
+        if nb_joueur.parse::<i32>().is_ok(){
+            return nb_joueur.parse::<i32>().unwrap() as usize;
+        }
+    }
+
+}
+
+
+
 
 async fn connextion_au_client(nb_client: usize) -> Result<Vec<String>, Box<dyn std::error::Error>> {
     let listener = TcpListener::bind("0.0.0.0:9000").await?;
@@ -47,9 +59,9 @@ async fn connextion_au_client(nb_client: usize) -> Result<Vec<String>, Box<dyn s
 
         // Convertir en String
         let nom = String::from_utf8_lossy(&buffer[..n]).to_string();
-        println!("Nom reçu : {}", nom);
 
         noms_joueurs.push(nom);
+
     }
 
     Ok(noms_joueurs)

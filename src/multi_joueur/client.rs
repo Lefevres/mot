@@ -2,11 +2,15 @@ use std::io;
 use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, AsyncReadExt};
 
-
+const port: &str = ":9000";
 
 
 pub fn client(){
-    println!("Je suis un client");
+    prépare();
+}
+
+
+fn prépare(){
     tokio::runtime::Runtime::new().unwrap().block_on(async {
         connection().await.unwrap();
     });
@@ -26,8 +30,18 @@ fn demande_nom() -> String{
 }
 
 async fn connection() -> Result<(), Box<dyn std::error::Error>> {
-    // Adresse IP du serveur (met celle de l'autre PC !)
-    let addr = "172.16.20.134:9000";
+    println!("Quelle adresse ip ? (\"ip a sous\") linux");
+    let mut ip = String::new();
+
+    io::stdin()
+        .read_line(&mut ip)
+        .expect("Erreur lors de l'entrer du nom du joueur'");
+
+    ip = ip.trim().to_string();
+
+
+    // Adresse IP du serveur
+    let addr = ip+port;
 
     println!("Connexion au serveur {}...", addr);
 
