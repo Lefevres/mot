@@ -1,9 +1,8 @@
 use std::io;
-use std::io::stdout;
 use crate::joueur::Joueur;
 
-pub fn crée_joueur(est_multi:bool) -> Joueur {
-    Joueur::nouveau(est_multi)
+pub fn crée_joueur() -> Joueur {
+    Joueur::nouveau()
 }
 
 pub fn demander_nb_manche(taille_liste: usize) -> usize {

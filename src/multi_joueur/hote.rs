@@ -1,4 +1,3 @@
-use std::io::{Bytes, Read};
 use std::io;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpListener,TcpStream};
@@ -10,34 +9,21 @@ use crate::preparation::{crée_joueur, demander_nb_manche};
 
 #[tokio::main]
 pub async fn hote(){
-
-    let mut joueur = crée_joueur(true);
+    let mut joueur = crée_joueur();
     let liste = cree_liste();
     let nb_client:usize= demander_nb_joueur();
-
     let clients = connextion_au_client(nb_client).await.unwrap();
-
-
     let nom = clients.0;
     let mut sockets = clients.1;
-
-
     for joueur in &nom {
         println!("Bonjour {}",joueur);
     }
 
     let nb_manche: usize = demander_nb_manche(liste.len());
-
     message_initialisation(&mut sockets, nb_manche, liste[0..nb_manche*2].to_vec()).await;  //fois deux pour question réponse
 
-
     //il faudrait attendre, il envoie les deux en même temps, donc la réception du nombre de client ce passe mal
-
-
-    //envoie les nb_manche première question
-
     let affichage  = AffichageTerminal;
-
     // Lance la partie
     jouer(&mut joueur, &affichage, &liste, nb_manche);
 
@@ -45,24 +31,14 @@ pub async fn hote(){
 
 
 async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, questions: Vec<String>){
-    let mut message_String:String = String::from(nb_manche.to_string());
+    let mut message_string:String = String::from(nb_manche.to_string());
     for mess in &questions {
-        message_String+=";";
-        message_String+= &mess;
+        message_string+=";";
+        message_string+= &mess;
     }
     for socket in sockets {
-        envoie_message(socket,message_String.clone()).await;
+        envoie_message(socket,message_string.clone()).await;
     }
-
-}
-
-
-async fn envoie_message_vecteur_string(socket:&mut TcpStream, message:Vec<String>){
-    let mut message_bytes = Vec::new();
-    for mess in message {
-        message_bytes.extend_from_slice(mess.as_bytes());
-    }
-    socket.write_all(&message_bytes).await.unwrap();
 
 }
 
@@ -99,7 +75,6 @@ async fn envoie_message(socket:&mut TcpStream, message:String){
 }
 
 
-
 async fn connextion_au_client(nb_client: usize) -> Result<(Vec<String>,Vec<TcpStream>), Box<dyn std::error::Error>> {
     let listener = TcpListener::bind("0.0.0.0:9000").await?;
     let mut noms_joueurs = Vec::new();
@@ -110,18 +85,8 @@ async fn connextion_au_client(nb_client: usize) -> Result<(Vec<String>,Vec<TcpSt
         println!("Client connecté : {}", adresse);
 
         let nom = lis_buffer(&mut socket).await?;
-        /*let mut buffer = vec![0u8; 1024];
-        let n = socket.read(&mut buffer).await?;
-        if n == 0 {
-            return Err("Le client a fermé la connexion".into());
-        }*/
-
-        // Convertir en String
-        //let nom = String::from_utf8_lossy(&buffer[..n]).to_string();
-
         noms_joueurs.push(nom);
         sockets.push(socket);
-
     }
 
     Ok((noms_joueurs,sockets))

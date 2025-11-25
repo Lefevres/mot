@@ -1,11 +1,9 @@
 use std::io;
-use std::thread::sleep;
-use std::time::Duration;
 use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, AsyncReadExt};
 use crate::affichage::terminal::AffichageTerminal;
 use crate::jouer::jouer;
-use crate::preparation::{crée_joueur, demander_nb_manche};
+use crate::preparation::{crée_joueur};
 
 const PORT: &str = ":9000";
 
@@ -13,16 +11,12 @@ const PORT: &str = ":9000";
 #[tokio::main]
 pub async fn client(){
     let mut stream = prépare().await.unwrap();
-    let mut joueur = crée_joueur(true);
+    let mut joueur = crée_joueur();
     let affichage  = AffichageTerminal;
     println!("On attend que l'hote choisisse le nombre de manche…");
-
     let donnée_initialisation: (usize,Vec<String>) = récupérer_info_initialisation(&mut stream).await;
-
     let nb_manche = donnée_initialisation.0;
     let liste = donnée_initialisation.1;
-
-
     // Lance la partie
     jouer(&mut joueur, &affichage, &liste, nb_manche);
 }
@@ -57,10 +51,10 @@ async fn lis_message(stream : &mut TcpStream) -> Result<String,Box<dyn std::erro
 }
 
 
-
 async fn prépare() -> Result<TcpStream, Box<dyn std::error::Error>> {
     connection().await
 }
+
 
 fn demande_nom() -> String{
     println!("Quel est ton nom ?");
@@ -74,6 +68,7 @@ fn demande_nom() -> String{
     nom
 
 }
+
 
 async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
     println!("Quelle adresse ip ? (\"ip a\" sous linux)");

@@ -4,7 +4,7 @@ use crate::affichage::terminal::AffichageTerminal;
 use crate::multi_joueur::client::client;
 use crate::multi_joueur::hote::hote;
 
-static  affichage: AffichageTerminal = AffichageTerminal;
+static  AFFICHAGE: AffichageTerminal = AffichageTerminal;
 pub fn multi_joueur(){
     let role1 = "hote";
     let role2 = "client";
@@ -16,15 +16,11 @@ pub fn multi_joueur(){
         r if r == role2 => client(),
         _ => println!("Rôle inconnu tu as rentrer : {}", role),
     }
-
-
 }
 
 
-
 fn choix_role(role1 : &str, role2 : &str) -> String{  // les roles sont hote ou client
-
-    affichage.afficher(format!("Role : {} ou {}", role1, role2));
+    AFFICHAGE.afficher(format!("Role : {} ou {}", role1, role2));
     loop {
         let mut role = String::new();
         io::stdin()
