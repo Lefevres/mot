@@ -6,12 +6,13 @@
  pub struct jouer;
 
 impl jeux for jouer {
-    fn jouer(&self, joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>, nb_manche: usize) {
+    fn jouer(&self, joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>, nb_manche: usize) -> (usize,usize) {
         let mut stop = false;
         while !joueur.fin(nb_manche) && !stop {
             stop = self.manche(joueur, affichage, liste);
         }
         affichage.afficher_score(joueur);
+        (joueur.bonne_reponse(),joueur.mauvaise_reponse())
     }
     fn manche(&self, joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>) -> bool {
         let mut essai = false;

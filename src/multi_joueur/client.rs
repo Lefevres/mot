@@ -22,8 +22,15 @@ pub async fn client(){
     let nb_manche = donnée_initialisation.0;
     let liste = donnée_initialisation.1;
     // Lance la partie
-    jeux.jouer(&mut joueur, &affichage, &liste, nb_manche);
+    let résultat = jeux.jouer(&mut joueur, &affichage, &liste, nb_manche);
+    let résultat = résultat.0.to_string() +";"+ &résultat.1.to_string();
+    envoie_a_l_hote(&mut stream, résultat).await;
+
+
+
 }
+
+
 
 async fn récupérer_info_initialisation(stream: &mut TcpStream) -> (usize,Vec<String>) {
     let donnée_initialisation_string = lis_message(stream).await.expect("erreur lecture stream");

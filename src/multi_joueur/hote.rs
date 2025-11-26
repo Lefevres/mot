@@ -12,26 +12,48 @@ use crate::logique::preparer::préparer;
 pub async fn hote(){
     let prep = preparation;
     let jeux = jouer;
+    
     let mut joueur = prep.crée_joueur();
     let liste = cree_liste();
     let nb_client:usize= demander_nb_joueur();
     let clients = connextion_au_client(nb_client).await.unwrap();
-    let nom = clients.0;
+    let noms = clients.0;
     let mut sockets = clients.1;
-    for joueur in &nom {
+    for joueur in &noms {
         println!("Bonjour {}",joueur);
     }
 
     let nb_manche: usize = prep.demander_nb_manche(liste.len());
     message_initialisation(&mut sockets, nb_manche, liste[0..nb_manche*2].to_vec()).await;  //fois deux pour question réponse
 
-    //il faudrait attendre, il envoie les deux en même temps, donc la réception du nombre de client ce passe mal
+    
     let affichage  = AffichageTerminal;
     // Lance la partie
     jeux.jouer(&mut joueur, &affichage, &liste, nb_manche);
 
+    let résultats = recevoir_résultat(sockets).await;
+
+    for i in 0..nb_client {
+        println!("{} a eu {} bonne réponses pour {} mauvaise ",noms[i], résultats[i].0, résultats[i].1);
+    }
+
+
+
+
 }
 
+async fn recevoir_résultat(sockets : Vec<TcpStream>) -> Vec<(String,String)> {
+    let mut résultats:Vec<(String,String)> = Vec::new();
+    for mut socket in sockets {
+        let buffer = lis_buffer(&mut socket).await.unwrap();
+        let mut itérateur = buffer.splitn(2,";");
+        let bonne_réponse = itérateur.next().unwrap();
+        let mauvaise_réponse = itérateur.next().unwrap();
+        let résultat = (bonne_réponse.to_string(),mauvaise_réponse.to_string());
+        résultats.push(résultat);
+    }
+    résultats
+}
 
 async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, questions: Vec<String>){
     let mut message_string:String = String::from(nb_manche.to_string());
