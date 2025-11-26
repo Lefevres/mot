@@ -2,19 +2,21 @@ use std::io;
 use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, AsyncReadExt};
 use crate::affichage::terminal::AffichageTerminal;
-use crate::logique::jeux::jeux;
-use crate::logique::jouer::jouer;
-use crate::logique::preparation::preparation;
-use crate::logique::preparer::préparer;
+use crate::logique::jeux::Jeux;
+use crate::logique::jouer::Jouer;
+use crate::logique::preparation::Preparation;
+use crate::logique::preparer::Préparer;
 
 const PORT: &str = ":9000";
 
 
 #[tokio::main]
 pub async fn client(){
-    let prep = preparation;
-    let jeux = jouer;
-    let mut stream = prépare().await.unwrap();
+    let prep = Preparation;
+    let jeux = Jouer;
+    let temp = prépare().await.unwrap();
+    let mut stream = temp.0;
+    let nom = temp.1;
     let mut joueur = prep.crée_joueur();
     let affichage  = AffichageTerminal;
     println!("On attend que l'hote choisisse le nombre de manche…");
@@ -24,12 +26,48 @@ pub async fn client(){
     // Lance la partie
     let résultat = jeux.jouer(&mut joueur, &affichage, &liste, nb_manche);
     let résultat = résultat.0.to_string() +";"+ &résultat.1.to_string();
-    envoie_a_l_hote(&mut stream, résultat).await;
+    envoie_a_l_hote(&mut stream, résultat).await.expect("on a un soucis");
+    let résultats = reçoit_les_résultats(&mut stream,nom).await;
+
+
+    println!("\n");
+    for résultat in résultats {
+        let nom = résultat.0;
+        let bonne_réponse = résultat.1;
+        let mauvaise_réponse = résultat.2;
+        let total = bonne_réponse + mauvaise_réponse;
+        let ratio = if total > 0 {
+            (bonne_réponse as f32 / total as f32) * 100.0
+        } else {
+            0.0
+        };
+
+        println!("{} a eu {} bonne réponse(s) et {} mauvaise(s) pour un ration de {:.1}%\n",nom,bonne_réponse,mauvaise_réponse,ratio);
+    }
+
 
 
 
 }
 
+
+async fn reçoit_les_résultats(socket: &mut TcpStream,mon_nom : String) -> Vec<(String,usize,usize)> {
+    let message = lis_message(socket).await.unwrap();
+    let préparation_retour = message.split(";")
+        .map(|s| s.to_string())
+        .collect::<Vec<String>>();
+    let mut résultats:Vec<(String, usize, usize)> = Vec::new();
+    for i in (0..préparation_retour.len()).step_by(3) {
+        let nom = &préparation_retour[i];
+        if *nom == mon_nom{
+            continue;
+        }
+        let bonne_réponse = préparation_retour[i+1].parse().unwrap();
+        let mauvaise_réponse = préparation_retour[i+2].parse().unwrap();
+        résultats.push((nom.to_string(),bonne_réponse,mauvaise_réponse));
+    }
+    résultats
+}
 
 
 async fn récupérer_info_initialisation(stream: &mut TcpStream) -> (usize,Vec<String>) {
@@ -62,7 +100,7 @@ async fn lis_message(stream : &mut TcpStream) -> Result<String,Box<dyn std::erro
 }
 
 
-async fn prépare() -> Result<TcpStream, Box<dyn std::error::Error>> {
+async fn prépare() -> Result<(TcpStream,String), Box<dyn std::error::Error>> {
     connection().await
 }
 
@@ -77,11 +115,10 @@ fn demande_nom() -> String{
 
     nom = nom.trim().to_string();
     nom
-
 }
 
 
-async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
+async fn connection() -> Result<(TcpStream,String),Box<dyn std::error::Error>> {
     println!("Quelle adresse ip ? (\"ip a\" sous linux)");
     let mut ip = String::new();
 
@@ -103,8 +140,8 @@ async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
     let nom = demande_nom();
 
 
-    envoie_a_l_hote(&mut stream, nom).await?;
+    envoie_a_l_hote(&mut stream, nom.clone()).await?;
 
 
-    Ok(stream)
+    Ok((stream,nom))
 }

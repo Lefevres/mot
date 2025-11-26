@@ -1,7 +1,7 @@
 use crate::affichage::affichage::Affichage;
 use crate::joueur::Joueur;
 
-pub trait jeux{
+pub trait Jeux{
 
     fn jouer(&self,joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>, nb_manche : usize) -> (usize,usize);
     fn manche(&self,joueur : &mut Joueur,affichage: &dyn Affichage, liste : &Vec<String>) -> bool;

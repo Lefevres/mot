@@ -1,10 +1,10 @@
 use std::io;
 use crate::joueur::Joueur;
-use crate::logique::preparer::préparer;
+use crate::logique::preparer::Préparer;
 
 
-pub struct preparation;
-impl préparer for preparation{
+pub struct Preparation;
+impl Préparer for Preparation{
     fn crée_joueur(&self) -> Joueur {
         Joueur::nouveau()
     }

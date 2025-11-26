@@ -1,11 +1,11 @@
  use std::io;
  use crate::affichage::affichage::Affichage;
  use crate::joueur::Joueur;
- use crate::logique::jeux::jeux;
+ use crate::logique::jeux::Jeux;
 
- pub struct jouer;
+ pub struct Jouer;
 
-impl jeux for jouer {
+impl Jeux for Jouer {
     fn jouer(&self, joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>, nb_manche: usize) -> (usize,usize) {
         let mut stop = false;
         while !joueur.fin(nb_manche) && !stop {
