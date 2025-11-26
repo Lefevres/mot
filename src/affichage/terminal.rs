@@ -23,13 +23,22 @@ impl Affichage for AffichageTerminal {
 
 
     fn afficher_indice(&self, mot:&String){
-        let revelation = mot.len()/3;
-        let mut indice = format!("{}",&mot[0..revelation]);
-        for _ in 0..mot.len() - revelation{
-            indice = indice+ "_ ".to_string().as_str();
+        let chars: Vec<char> = mot.chars().collect();
+        let len = chars.len();
+
+        let revelation = len / 3;
+
+        // on révèle le premier tiers
+        let mut indice: String = chars[..revelation].iter().collect();
+
+        // puis on ajoute des "_ "
+        for _ in revelation..len {
+            indice.push_str("_ ");
         }
-        println!("Le mot a {} lettres",mot.len());
-        println!("{}",indice);
+
+        println!("Le mot a {} lettres", len);
+        println!("{}", indice);
+
     }
 
     fn afficher_reponse_precedante(&self, mot : &String){

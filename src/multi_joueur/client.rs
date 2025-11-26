@@ -2,23 +2,27 @@ use std::io;
 use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, AsyncReadExt};
 use crate::affichage::terminal::AffichageTerminal;
-use crate::jouer::jouer;
-use crate::preparation::{crée_joueur};
+use crate::logique::jeux::jeux;
+use crate::logique::jouer::jouer;
+use crate::logique::preparation::preparation;
+use crate::logique::preparer::préparer;
 
 const PORT: &str = ":9000";
 
 
 #[tokio::main]
 pub async fn client(){
+    let prep = preparation;
+    let jeux = jouer;
     let mut stream = prépare().await.unwrap();
-    let mut joueur = crée_joueur();
+    let mut joueur = prep.crée_joueur();
     let affichage  = AffichageTerminal;
     println!("On attend que l'hote choisisse le nombre de manche…");
     let donnée_initialisation: (usize,Vec<String>) = récupérer_info_initialisation(&mut stream).await;
     let nb_manche = donnée_initialisation.0;
     let liste = donnée_initialisation.1;
     // Lance la partie
-    jouer(&mut joueur, &affichage, &liste, nb_manche);
+    jeux.jouer(&mut joueur, &affichage, &liste, nb_manche);
 }
 
 async fn récupérer_info_initialisation(stream: &mut TcpStream) -> (usize,Vec<String>) {

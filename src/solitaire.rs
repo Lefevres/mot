@@ -1,18 +1,25 @@
 use crate::affichage::terminal::AffichageTerminal;
-use crate::jouer::jouer;
+use crate::logique::jeux::jeux;
+use crate::logique::jouer::jouer;
+use crate::logique::preparation::preparation;
+use crate::logique::preparer::préparer;
 use crate::mot::cree_liste;
-use crate::preparation::{crée_joueur, demander_nb_manche};
+
+
+
 
 pub fn solitaire(){
-    let mut joueur = crée_joueur();
+    let logique = preparation;
+    let jeux = jouer;
+    let mut joueur = logique.crée_joueur();
     let liste = cree_liste();
-    let nb_manche: usize = demander_nb_manche(liste.len());
+    let nb_manche: usize = logique.demander_nb_manche(liste.len());
 
 
     let affichage  = AffichageTerminal;
-
+    
     // Lance la partie
-    jouer(&mut joueur, &affichage, &liste, nb_manche);
+    jeux.jouer(&mut joueur, &affichage, &liste, nb_manche);
 }
 
 

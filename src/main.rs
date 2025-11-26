@@ -2,12 +2,11 @@ use crate::multi_joueur::multi_joueur::multi_joueur;
 use crate::solitaire::solitaire;
 
 mod joueur;
-mod jouer;
 mod mot;
 mod affichage;
 mod solitaire;
 mod multi_joueur;
-mod preparation;
+mod logique;
 
 fn main() {
     println!("Mode de jeu ? solitaire ou multi_joueur ?");
