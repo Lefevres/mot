@@ -1,9 +1,16 @@
 use std::io;
 use crate::joueur::Joueur;
-
+use crate::mot::cree_liste;
 
 pub fn crée_joueur(est_multi:bool) -> Joueur {
     Joueur::nouveau(est_multi)
+}
+
+pub fn se_préparer<'a>(multi : bool) -> (Joueur,Vec<String>,usize){
+    let mut joueur = crée_joueur(false);
+    let liste = cree_liste();
+    let nb_manche: usize = demander_nb_manche(liste.len());
+    (joueur,liste,nb_manche)
 }
 
 pub fn demander_nb_manche(taille_liste: usize) -> usize {
