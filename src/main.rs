@@ -40,8 +40,6 @@ fn main() {
 
 fn solitaire() {
     let mut préparation = se_préparer(false);
-
-    // Lance la partie
     jouer(&mut préparation.0, &AFFICHAGE, &préparation.1, préparation.2);
 }
 
@@ -53,8 +51,8 @@ pub fn multi_joueur(){
     println!("Tu as choisie {}!", role);
 
     match role.as_str() {
-        r if r == role1 => crate::multi_joueur::hote::hote(),
-        r if r == role2 => crate::multi_joueur::client::client(),
+        r if r == role1 => multi_joueur::hote::hote(),
+        r if r == role2 => multi_joueur::client::client(),
         _ => println!("Rôle inconnu tu as rentrer : {}", role),
     }
 }

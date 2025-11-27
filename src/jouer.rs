@@ -18,8 +18,8 @@ fn manche(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>) -
     affichage.afficher_en_tete();
     affichage.afficher_score(joueur);
     let mot = affichage.afficher_question(joueur.question(), &liste);
-    while !essai {
-        let reponse = attendre_réponse();
+    while !essai { //syncroniser les résultats pour le multi ?
+        let reponse = demander(String::new());
         let reaction = réagir(joueur, affichage, &reponse, &mot);
         match reaction.as_str() {
             "stop" => {
@@ -41,12 +41,7 @@ fn manche(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>) -
 }
 
 
- fn attendre_réponse() -> String {
-     demander(String::new())
-}
-
-
-fn réagir(joueur: &mut Joueur, affichage: &dyn Affichage, reponse: &String, mot: &String) -> String {
+ fn réagir(joueur: &mut Joueur, affichage: &dyn Affichage, reponse: &String, mot: &String) -> String {
     match reponse.as_str() {
         "stop" => {
             "stop".to_string()
