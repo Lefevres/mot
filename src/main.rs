@@ -6,7 +6,8 @@ mod mot;
 mod affichage;
 mod solitaire;
 mod multi_joueur;
-mod logique;
+pub mod jouer;
+pub mod preparation;
 
 fn main() {
     println!("Mode de jeu ? solitaire ou multi_joueur ?");

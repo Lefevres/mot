@@ -3,18 +3,14 @@ use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpListener,TcpStream};
 use crate::affichage::terminal::AffichageTerminal;
 use crate::joueur::Joueur;
-use crate::logique::jeux::Jeux;
-use crate::logique::jouer::Jouer;
 use crate::mot::cree_liste;
-use crate::logique::preparation::{Preparation};
-use crate::logique::preparer::Préparer;
+use crate::preparation::{crée_joueur,demander_nb_manche};
+use crate::jouer::jouer;
+
 
 #[tokio::main]
 pub async fn hote(){
-    let prep = Preparation;
-    let jeux = Jouer;
-    
-    let mut joueur = prep.crée_joueur();
+    let mut joueur = crée_joueur();
     let mon_nom = demande_nom();
     let liste = cree_liste();
     let nb_client:usize= demander_nb_joueur();
@@ -25,13 +21,13 @@ pub async fn hote(){
         println!("Bonjour {}",joueur);
     }
 
-    let nb_manche: usize = prep.demander_nb_manche(liste.len());
+    let nb_manche: usize = demander_nb_manche(liste.len());
     message_initialisation(&mut sockets, nb_manche, liste[0..nb_manche*2].to_vec()).await;  //fois deux pour question réponse
 
     
     let affichage  = AffichageTerminal;
     // Lance la partie
-    jeux.jouer(&mut joueur, &affichage, &liste, nb_manche);
+    jouer(&mut joueur, &affichage, &liste, nb_manche);
 
     let mut résultats = recevoir_résultat(&mut sockets).await;
     résultats = ajoute_mes_résultats(résultats,joueur);
