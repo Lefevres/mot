@@ -12,7 +12,7 @@ pub async fn client(){
     let temp = prépare().await.unwrap();
     let mut stream = temp.0;
     let nom = temp.1;
-    let mut joueur = crée_joueur();
+    let mut joueur = crée_joueur(true);
     let affichage  = AffichageTerminal;
     println!("On attend que l'hote choisisse le nombre de manche…");
     let donnée_initialisation: (usize,Vec<String>) = récupérer_info_initialisation(&mut stream).await;

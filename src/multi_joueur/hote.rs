@@ -10,7 +10,7 @@ use crate::jouer::jouer;
 
 #[tokio::main]
 pub async fn hote(){
-    let mut joueur = crée_joueur();
+    let mut joueur = crée_joueur(true);
     let mon_nom = demande_nom();
     let liste = cree_liste();
     let nb_client:usize= demander_nb_joueur();
