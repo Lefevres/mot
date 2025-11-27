@@ -3,6 +3,7 @@ use std::io::stdout;
 use colored::Colorize;
 use crate::affichage::affichage::Affichage;
 use crate::joueur::Joueur;
+use crate::outils::outils::demander;
 
 pub struct AffichageTerminal;
 
@@ -40,12 +41,7 @@ impl Affichage for AffichageTerminal {
     fn afficher_reponse_precedante(&self, mot : &String){
         println!("La réponse étais {}\n",mot.green());
         println!("Entrer pour continuer : \n");
-        let mut saisie = String::new();
-        io::stdin()
-            .read_line(&mut saisie)
-            .expect("Erreur lors de la lecture");
-
-
+        demander(String::new());
     }
 
     fn afficher_bonne_reponse(&self) {

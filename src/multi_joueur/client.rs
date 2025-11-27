@@ -3,6 +3,7 @@ use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, AsyncReadExt};
 use crate::affichage::terminal::AffichageTerminal;
 use crate::jouer::jouer;
+use crate::outils::outils::demander;
 use crate::preparation::{crée_joueur};
 const PORT: &str = ":9000";
 
@@ -102,27 +103,14 @@ async fn prépare() -> Result<(TcpStream,String), Box<dyn std::error::Error>> {
 
 fn demande_nom() -> String{
     println!("Quel est ton nom ?");
-    let mut nom = String::new();
-
-    io::stdin()
-        .read_line(&mut nom)
-        .expect("Erreur lors de l'entrer du nom du joueur'");
-
-    nom = nom.trim().to_string();
-    nom
+    demander(String::new())
 }
 
 
 async fn connection() -> Result<(TcpStream,String),Box<dyn std::error::Error>> {
     println!("Quelle adresse ip ? (\"ip a\" sous linux)");
-    let mut ip = String::new();
-
-    io::stdin()
-        .read_line(&mut ip)
-        .expect("Erreur lors de l'entrer du nom du joueur'");
-
-    ip = ip.trim().to_string();
-
+    let ip = demander(String::new());
+    
 
     // Adresse IP du serveur
     let addr = ip+PORT;

@@ -1,22 +1,27 @@
 use std::io;
 use crate::joueur::Joueur;
 use crate::mot::cree_liste;
+use crate::outils::outils::demander;
 
 pub fn crée_joueur(est_multi:bool) -> Joueur {
     Joueur::nouveau(est_multi)
 }
 
 pub fn se_préparer<'a>(multi : bool) -> (Joueur,Vec<String>,usize){
-    let mut joueur = crée_joueur(false);
+    let mut joueur = crée_joueur(multi);
     let liste = cree_liste();
-    let nb_manche: usize = demander_nb_manche(liste.len());
+    let mut nb_manche= 0;
+    if !multi {
+        nb_manche = demander_nb_manche(liste.len());
+    }
+
     (joueur,liste,nb_manche)
 }
 
 pub fn demander_nb_manche(taille_liste: usize) -> usize {
     loop {
         //crossterm::execute!(stdout(), crossterm::terminal::Clear(crossterm::terminal::ClearType::All)).unwrap();
-        let mut entree = String::new(); // Crée une nouvelle chaîne à chaque itération
+
         println!("Combien de manche ? ");
         let min = if taille_liste/2 < usize::MAX {  // les questions et les réponses sont déjà séparer, donc on divise par deux
             taille_liste/2
@@ -24,12 +29,10 @@ pub fn demander_nb_manche(taille_liste: usize) -> usize {
             usize::MAX
         };
         println!("Nombre max de manches : {}", min.to_string());
+        let entree = demander(String::new());
 
-        io::stdin()
-            .read_line(&mut entree)
-            .expect("Erreur lors de la lecture du nombre de manches");
 
-        match entree.trim().parse::<usize>() {
+        match entree.parse::<usize>() {
             Ok(num) => {
                 if num <= min {
                     return num

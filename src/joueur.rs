@@ -39,6 +39,4 @@ impl Joueur {
     pub fn fin(&self, manche:usize) -> bool {
         self.question / 2 == manche
     } //renvoie true si on a fais manche tour
-
-
 }

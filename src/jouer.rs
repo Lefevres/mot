@@ -1,8 +1,10 @@
  use std::io;
  use crate::affichage::affichage::Affichage;
  use crate::joueur::Joueur;
+ use crate::outils::outils::demander;
+ use crate::preparation::demander_nb_manche;
 
-pub fn jouer(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>, nb_manche: usize) -> (usize,usize) {
+ pub fn jouer(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>, nb_manche: usize) -> (usize, usize) {
     let mut stop = false;
     while !joueur.fin(nb_manche) && !stop {
         stop = manche(joueur, affichage, liste);
@@ -10,6 +12,8 @@ pub fn jouer(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>
     affichage.afficher_score(joueur);
     (joueur.bonne_reponse(),joueur.mauvaise_reponse())
 }
+
+
 fn manche(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>) -> bool {
     let mut essai = false;
     affichage.afficher_en_tete();
@@ -37,14 +41,11 @@ fn manche(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>) -
     false
 }
 
-fn attendre_réponse() -> String {
-    let mut saisie = String::new();
-    io::stdin()
-        .read_line(&mut saisie)
-        .expect("Erreur lors de la lecture");
 
-    saisie.trim().to_string()
+ fn attendre_réponse() -> String {
+     demander(String::new())
 }
+
 
 fn réagir(joueur: &mut Joueur, affichage: &dyn Affichage, reponse: &String, mot: &String) -> String {
     match reponse.as_str() {

@@ -4,16 +4,20 @@ use tokio::net::{TcpListener,TcpStream};
 use crate::affichage::terminal::AffichageTerminal;
 use crate::joueur::Joueur;
 use crate::mot::cree_liste;
-use crate::preparation::{crée_joueur,demander_nb_manche};
+use crate::preparation::{crée_joueur, demander_nb_manche, se_préparer};
 use crate::jouer::jouer;
-
+use crate::outils::outils::demander;
 
 #[tokio::main]
 pub async fn hote(){
-    let mut joueur = crée_joueur(true);
+    //let (joueur,liste,manche) = se_préparer(true);
+
     let mon_nom = demande_nom();
+    let mut joueur = crée_joueur(true);
     let liste = cree_liste();
     let nb_client:usize= demander_nb_joueur();
+
+
     let clients = connextion_au_client(nb_client).await.unwrap();
     let mut noms = clients.0;
     let mut sockets = clients.1;
@@ -61,14 +65,7 @@ pub async fn hote(){
 
 fn demande_nom() -> String{
     println!("Quel est ton nom ?");
-    let mut nom = String::new();
-
-    io::stdin()
-        .read_line(&mut nom)
-        .expect("Erreur lors de l'entrer du nom du joueur'");
-
-    nom = nom.trim().to_string();
-    nom
+    demander(String::new())
 }
 
 fn ajoute_mon_nom(noms: &mut Vec<String>,nom : String){
@@ -128,9 +125,8 @@ async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, 
 fn demander_nb_joueur() -> usize {
     println!("Pour combien de joueur ? (hormis toi)");
     loop {
-        let mut nb_joueur:String = String::new();
-        io::stdin().read_line(&mut nb_joueur).unwrap();
-        nb_joueur = nb_joueur.trim().to_string();
+        let nb_joueur = demander(String::new());
+        
         if nb_joueur.parse::<i32>().is_ok(){
             return nb_joueur.parse::<i32>().unwrap() as usize;
         }

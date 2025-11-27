@@ -66,7 +66,7 @@ pub fn multi_joueur(){
 fn choix_role(role1 : &str, role2 : &str) -> String{  // les roles sont hote ou client
     AFFICHAGE.afficher(format!("Role : {} ou {}", role1, role2));
     loop {
-        let mut role = demander(String::new()).trim().to_string();
+        let mut role = demander(String::new());
 
         match &role {
             r if r == role1 || r == role2 => return role,
