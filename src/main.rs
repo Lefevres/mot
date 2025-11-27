@@ -1,10 +1,7 @@
-use std::io;
 use crate::affichage::affichage::Affichage;
 use crate::affichage::terminal::AffichageTerminal;
 use crate::jouer::jouer;
-use crate::mot::cree_liste;
-use crate::outils::outils::demander;
-use crate::preparation::{crée_joueur, demander_nb_manche, se_préparer};
+use crate::outils::outils::{demander, se_préparer};
 
 mod joueur;
 mod mot;
@@ -43,7 +40,7 @@ fn main() {
 
 fn solitaire() {
     let mut préparation = se_préparer(false);
-    
+
     // Lance la partie
     jouer(&mut préparation.0, &AFFICHAGE, &préparation.1, préparation.2);
 }

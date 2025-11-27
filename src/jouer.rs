@@ -1,8 +1,7 @@
- use std::io;
  use crate::affichage::affichage::Affichage;
  use crate::joueur::Joueur;
  use crate::outils::outils::demander;
- use crate::preparation::demander_nb_manche;
+
 
  pub fn jouer(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>, nb_manche: usize) -> (usize, usize) {
     let mut stop = false;

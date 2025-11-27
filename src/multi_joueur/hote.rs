@@ -1,12 +1,10 @@
-use std::io;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpListener,TcpStream};
 use crate::affichage::terminal::AffichageTerminal;
 use crate::joueur::Joueur;
 use crate::mot::cree_liste;
-use crate::preparation::{crée_joueur, demander_nb_manche, se_préparer};
 use crate::jouer::jouer;
-use crate::outils::outils::demander;
+use crate::outils::outils::{crée_joueur, demander, demander_nb_manche};
 
 #[tokio::main]
 pub async fn hote(){
@@ -126,7 +124,7 @@ fn demander_nb_joueur() -> usize {
     println!("Pour combien de joueur ? (hormis toi)");
     loop {
         let nb_joueur = demander(String::new());
-        
+
         if nb_joueur.parse::<i32>().is_ok(){
             return nb_joueur.parse::<i32>().unwrap() as usize;
         }

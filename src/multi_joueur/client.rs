@@ -1,10 +1,9 @@
-use std::io;
 use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, AsyncReadExt};
 use crate::affichage::terminal::AffichageTerminal;
 use crate::jouer::jouer;
-use crate::outils::outils::demander;
-use crate::preparation::{crée_joueur};
+use crate::outils::outils::{crée_joueur, demander};
+
 const PORT: &str = ":9000";
 
 
@@ -110,7 +109,7 @@ fn demande_nom() -> String{
 async fn connection() -> Result<(TcpStream,String),Box<dyn std::error::Error>> {
     println!("Quelle adresse ip ? (\"ip a\" sous linux)");
     let ip = demander(String::new());
-    
+
 
     // Adresse IP du serveur
     let addr = ip+PORT;
