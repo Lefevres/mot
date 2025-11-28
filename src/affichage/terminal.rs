@@ -1,4 +1,3 @@
-use std::io;
 use std::io::stdout;
 use colored::Colorize;
 use crate::affichage::affichage::Affichage;

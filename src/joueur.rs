@@ -4,6 +4,8 @@ pub struct Joueur  {
     question:usize,
     est_multi:bool,
 }
+
+
 impl Joueur {
     pub fn nouveau(est_multi:bool) -> Joueur {
     Joueur {bonne_reponse : 0, mauvaise_reponse : 0, question : 0, est_multi }

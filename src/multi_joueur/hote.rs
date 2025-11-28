@@ -1,46 +1,28 @@
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpListener,TcpStream};
-use crate::affichage::terminal::AffichageTerminal;
 use crate::joueur::Joueur;
 use crate::jouer::jouer;
 use crate::outils::outils::{demander, se_préparer};
 
+
 #[tokio::main]
 pub async fn hote(){
-
     let nb_client:usize= demander_nb_joueur();
-
     let (mut joueur,liste,nb_manche,affichage,mon_nom) = se_préparer("hote".to_string());
-
-
-
     let clients = connextion_au_client(nb_client).await.unwrap();
     let mut noms = clients.0;
     let mut sockets = clients.1;
-    for joueur in &noms {
-        println!("Bonjour {}",joueur);
-    }
-
 
     message_initialisation(&mut sockets, nb_manche, liste[0..nb_manche*2].to_vec()).await;  //fois deux pour question réponse
 
-    
-
-    // Lance la partie
     jouer(&mut joueur, &affichage, &liste, nb_manche);
 
     let mut résultats = recevoir_résultat(&mut sockets).await;
     résultats = ajoute_mes_résultats(résultats,joueur);
-    ajoute_mon_nom(&mut noms, mon_nom.clone()); //on passe un vecteur mutable donc pas besoin de retour
-
+    noms.insert(0,mon_nom.clone());
 
     afficher_résultat(nb_client,&noms,mon_nom,&résultats);
-
-
-
-
     partage_résultat(&mut sockets,résultats,noms).await;
-
 }
 
 
@@ -61,13 +43,6 @@ fn afficher_résultat(nb_client:usize, noms :&Vec<String>, mon_nom :String, rés
         };
         println!("{} a eu {} bonne réponse(s) pour {} mauvaise(s) pour un ration de {:.1}% \n",nom, résultats[i].0, résultats[i].1,ratio);
     }
-}
-
-
-
-
-fn ajoute_mon_nom(noms: &mut Vec<String>,nom : String){
-    noms.insert(0,nom);
 }
 
 
@@ -94,6 +69,7 @@ async fn partage_résultat(sockets: &mut Vec<TcpStream>,résultats:Vec<(String,S
     }
 }
 
+
 async fn recevoir_résultat(sockets : &mut Vec<TcpStream>) -> Vec<(String,String)> {
     let mut résultats:Vec<(String,String)> = Vec::new();
     for mut socket in sockets {
@@ -107,6 +83,7 @@ async fn recevoir_résultat(sockets : &mut Vec<TcpStream>) -> Vec<(String,String
     résultats
 }
 
+
 async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, questions: Vec<String>){
     let mut message_string:String = String::from(nb_manche.to_string());
     for mess in &questions {
@@ -116,7 +93,6 @@ async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, 
     for socket in sockets {
         envoie_message(socket,&message_string).await;
     }
-
 }
 
 
@@ -129,7 +105,6 @@ fn demander_nb_joueur() -> usize {
             return nb_joueur.parse::<i32>().unwrap() as usize;
         }
     }
-
 }
 
 
@@ -163,6 +138,5 @@ async fn connextion_au_client(nb_client: usize) -> Result<(Vec<String>,Vec<TcpSt
         noms_joueurs.push(nom);
         sockets.push(socket);
     }
-
     Ok((noms_joueurs,sockets))
 }

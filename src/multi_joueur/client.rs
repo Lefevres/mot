@@ -3,20 +3,15 @@ use tokio::io::{AsyncWriteExt, AsyncReadExt};
 use crate::jouer::jouer;
 use crate::outils::outils::{demander, se_préparer};
 
+
 const PORT: &str = ":9000";
 
 
 #[tokio::main]
 pub async fn client(){
     let (mut joueur,_,_,affichage,nom) = se_préparer("client".to_string());
-    
-
 
     let temp = connection().await.unwrap();
-
-
-
-
 
     let mut stream = temp;
     envoie_a_l_hote(&mut stream, nom.clone()).await.expect("J'envoie le nom");
@@ -33,8 +28,6 @@ pub async fn client(){
     envoie_a_l_hote(&mut stream, résultat).await.expect("on a un soucis");
     let résultats = reçoit_les_résultats(&mut stream,nom).await;
     afficher_résultat(résultats);
-
-
 }
 
 
@@ -50,7 +43,6 @@ fn afficher_résultat(résultats:Vec<(String,usize,usize)>)  {
         } else {
             0.0
         };
-
         println!("{} a eu {} bonne réponse(s) et {} mauvaise(s) pour un ration de {:.1}%\n",nom,bonne_réponse,mauvaise_réponse,ratio);
     }
 }
@@ -116,6 +108,6 @@ async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
 
     let  stream = TcpStream::connect(addr).await?;
     println!("Connecté !");
-    
+
     Ok(stream)
 }

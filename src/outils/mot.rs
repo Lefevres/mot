@@ -4,16 +4,19 @@ use std::string::ToString;
 use std::sync::LazyLock;
 use rand::prelude::SliceRandom;
 
+
 static CHEMIN: LazyLock<PathBuf> = LazyLock::new(|| {
     home_dir().expect("Impossible de trouver le dossier home").join(".mot")
 });
-static FICHIER: LazyLock<PathBuf> = LazyLock::new(|| CHEMIN.join("mot.txt")); //j'ai retirer //../../ 
+static FICHIER: LazyLock<PathBuf> = LazyLock::new(|| CHEMIN.join("mot.txt")); //j'ai retirer //../../
+
 
 pub fn cree_liste() -> Vec<String>{
     let fichier = lis_fichier();
     let liste = melange_liste(fichier);
     liste
 }
+
 
 fn lis_fichier() -> Vec<String>{
     let contenu = fs::read_to_string(FICHIER.clone())
@@ -24,8 +27,6 @@ fn lis_fichier() -> Vec<String>{
 
     contenu
 }
-
-
 
 fn melange_liste(mut liste:Vec<String>) -> Vec<String>{
     let mut rng = rand::rng();

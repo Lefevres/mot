@@ -3,12 +3,13 @@ use crate::affichage::terminal::AffichageTerminal;
 use crate::jouer::jouer;
 use crate::outils::outils::{demander, se_préparer};
 
+
 mod joueur;
 mod affichage;
 mod multi_joueur;
 pub mod jouer;
-pub mod preparation;
 mod outils;
+
 
 static  AFFICHAGE: AffichageTerminal = AffichageTerminal;
 
@@ -60,7 +61,7 @@ pub fn multi_joueur(){
 fn choix_role(role1 : &str, role2 : &str) -> String{  // les roles sont hote ou client
     AFFICHAGE.afficher(format!("Role : {} ou {}", role1, role2));
     loop {
-        let mut role = demander(String::new());
+        let role = demander(String::new());
 
         match &role {
             r if r == role1 || r == role2 => return role,

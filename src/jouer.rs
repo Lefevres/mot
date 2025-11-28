@@ -3,7 +3,7 @@
  use crate::outils::outils::demander;
 
 
- pub fn jouer(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>, nb_manche: usize) -> (usize, usize) {
+pub fn jouer(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>, nb_manche: usize) -> (usize, usize) {
     let mut stop = false;
     while !joueur.fin(nb_manche) && !stop {
         stop = manche(joueur, affichage, liste);
@@ -40,7 +40,7 @@ fn manche(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>) -
     false
 }
 
-
+ 
  fn réagir(joueur: &mut Joueur, affichage: &dyn Affichage, reponse: &String, mot: &String) -> String {
     match reponse.as_str() {
         "stop" => {
