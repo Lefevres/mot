@@ -2,18 +2,16 @@ use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpListener,TcpStream};
 use crate::affichage::terminal::AffichageTerminal;
 use crate::joueur::Joueur;
-use crate::mot::cree_liste;
 use crate::jouer::jouer;
-use crate::outils::outils::{crée_joueur, demander, demander_nb_manche};
+use crate::outils::outils::{demander, se_préparer};
 
 #[tokio::main]
 pub async fn hote(){
-    //let (joueur,liste,manche) = se_préparer(true);
-
     let mon_nom = demande_nom();
-    let mut joueur = crée_joueur(true);
-    let liste = cree_liste();
     let nb_client:usize= demander_nb_joueur();
+
+    let (mut joueur,liste,nb_manche,affichage) = se_préparer("hote".to_string());
+
 
 
     let clients = connextion_au_client(nb_client).await.unwrap();
@@ -23,11 +21,11 @@ pub async fn hote(){
         println!("Bonjour {}",joueur);
     }
 
-    let nb_manche: usize = demander_nb_manche(liste.len());
+
     message_initialisation(&mut sockets, nb_manche, liste[0..nb_manche*2].to_vec()).await;  //fois deux pour question réponse
 
     
-    let affichage  = AffichageTerminal;
+
     // Lance la partie
     jouer(&mut joueur, &affichage, &liste, nb_manche);
 
@@ -36,9 +34,17 @@ pub async fn hote(){
     ajoute_mon_nom(&mut noms, mon_nom.clone()); //on passe un vecteur mutable donc pas besoin de retour
 
 
+    afficher_résultat(nb_client,&noms,mon_nom,&résultats);
 
 
 
+
+    partage_résultat(&mut sockets,résultats,noms).await;
+
+}
+
+
+fn afficher_résultat(nb_client:usize, noms :&Vec<String>, mon_nom :String, résultats :&Vec<(String,String)>) {
     println!("\n");
     for i in 0..nb_client+1 { //pour l'hote
         let nom = noms[i].clone();
@@ -55,9 +61,6 @@ pub async fn hote(){
         };
         println!("{} a eu {} bonne réponse(s) pour {} mauvaise(s) pour un ration de {:.1}% \n",nom, résultats[i].0, résultats[i].1,ratio);
     }
-
-    partage_résultat(&mut sockets,résultats,noms).await;
-
 }
 
 

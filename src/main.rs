@@ -4,7 +4,6 @@ use crate::jouer::jouer;
 use crate::outils::outils::{demander, se_préparer};
 
 mod joueur;
-mod mot;
 mod affichage;
 mod multi_joueur;
 pub mod jouer;
@@ -39,7 +38,7 @@ fn main() {
 
 
 fn solitaire() {
-    let mut préparation = se_préparer(false);
+    let mut préparation = se_préparer("solitaire".to_string());
     jouer(&mut préparation.0, &AFFICHAGE, &préparation.1, préparation.2);
 }
 

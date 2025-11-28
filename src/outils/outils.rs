@@ -1,6 +1,8 @@
 use std::io;
+use crate::affichage::affichage::Affichage;
+use crate::affichage::terminal::AffichageTerminal;
 use crate::joueur::Joueur;
-use crate::mot::cree_liste;
+use crate::outils::mot::cree_liste;
 
 pub fn demander(mut variable:String) -> String{
     io::stdin()
@@ -13,15 +15,34 @@ pub fn crée_joueur(est_multi:bool) -> Joueur {
     Joueur::nouveau(est_multi)
 }
 
-pub fn se_préparer<'a>(multi : bool) -> (Joueur,Vec<String>,usize){
-    let mut joueur = crée_joueur(multi);
-    let liste = cree_liste();
+pub fn se_préparer<'a>(role : String) -> (Joueur,Vec<String>,usize,AffichageTerminal){
+    let mut joueur;
+    let mut liste=Vec::new();
     let mut nb_manche= 0;
-    if !multi {
-        nb_manche = demander_nb_manche(liste.len());
+    let affichage = AffichageTerminal;
+    match role.as_str() {
+        "solitaire" => {
+            joueur = crée_joueur(false);
+            liste = cree_liste();
+            nb_manche = demander_nb_manche(liste.len());
+        }
+        "client" => {
+            joueur = crée_joueur(false);
+        }
+        "hote" => {
+            joueur = crée_joueur(false);
+            liste = cree_liste();
+            nb_manche = demander_nb_manche(liste.len());
+        }
+        _ =>{
+            joueur = crée_joueur(false);
+            liste = cree_liste();
+            eprintln!("attention je suis dans se_préparer et je suis un role qui n'existe pas");
+        }
     }
 
-    (joueur,liste,nb_manche)
+
+    (joueur,liste,nb_manche,affichage)
 }
 
 pub fn demander_nb_manche(taille_liste: usize) -> usize {

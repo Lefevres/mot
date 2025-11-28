@@ -2,29 +2,35 @@ use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, AsyncReadExt};
 use crate::affichage::terminal::AffichageTerminal;
 use crate::jouer::jouer;
-use crate::outils::outils::{crée_joueur, demander};
+use crate::outils::outils::{crée_joueur, demander, se_préparer};
 
 const PORT: &str = ":9000";
 
 
 #[tokio::main]
 pub async fn client(){
+    let (mut joueur,_,_,affichage) = se_préparer("client".to_string());
     let temp = prépare().await.unwrap();
     let mut stream = temp.0;
     let nom = temp.1;
-    let mut joueur = crée_joueur(true);
-    let affichage  = AffichageTerminal;
+
     println!("On attend que l'hote choisisse le nombre de manche…");
     let donnée_initialisation: (usize,Vec<String>) = récupérer_info_initialisation(&mut stream).await;
     let nb_manche = donnée_initialisation.0;
     let liste = donnée_initialisation.1;
+    
     // Lance la partie
     let résultat = jouer(&mut joueur, &affichage, &liste, nb_manche);
     let résultat = résultat.0.to_string() +";"+ &résultat.1.to_string();
     envoie_a_l_hote(&mut stream, résultat).await.expect("on a un soucis");
     let résultats = reçoit_les_résultats(&mut stream,nom).await;
+    afficher_résultat(résultats);
 
 
+}
+
+
+fn afficher_résultat(résultats:Vec<(String,usize,usize)>)  {
     println!("\n");
     for résultat in résultats {
         let nom = résultat.0;
@@ -39,10 +45,6 @@ pub async fn client(){
 
         println!("{} a eu {} bonne réponse(s) et {} mauvaise(s) pour un ration de {:.1}%\n",nom,bonne_réponse,mauvaise_réponse,ratio);
     }
-
-
-
-
 }
 
 
