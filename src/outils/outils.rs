@@ -1,5 +1,4 @@
 use std::io;
-use crate::affichage::affichage::Affichage;
 use crate::affichage::terminal::AffichageTerminal;
 use crate::joueur::Joueur;
 use crate::outils::mot::cree_liste;
@@ -15,11 +14,14 @@ pub fn crée_joueur(est_multi:bool) -> Joueur {
     Joueur::nouveau(est_multi)
 }
 
-pub fn se_préparer<'a>(role : String) -> (Joueur,Vec<String>,usize,AffichageTerminal){
+pub fn se_préparer<'a>(role : String) -> (Joueur,Vec<String>,usize,AffichageTerminal,String){  //rajouter la demande de nom ?
+
     let mut joueur;
     let mut liste=Vec::new();
     let mut nb_manche= 0;
     let affichage = AffichageTerminal;
+    let mut nom = String::new();
+    
     match role.as_str() {
         "solitaire" => {
             joueur = crée_joueur(false);
@@ -28,11 +30,14 @@ pub fn se_préparer<'a>(role : String) -> (Joueur,Vec<String>,usize,AffichageTer
         }
         "client" => {
             joueur = crée_joueur(false);
+            nom = demande_nom();
         }
         "hote" => {
             joueur = crée_joueur(false);
             liste = cree_liste();
+            nom = demande_nom();
             nb_manche = demander_nb_manche(liste.len());
+
         }
         _ =>{
             joueur = crée_joueur(false);
@@ -42,7 +47,12 @@ pub fn se_préparer<'a>(role : String) -> (Joueur,Vec<String>,usize,AffichageTer
     }
 
 
-    (joueur,liste,nb_manche,affichage)
+    (joueur,liste,nb_manche,affichage,nom)
+}
+
+fn demande_nom() -> String{
+    println!("Quel est ton nom ?");
+    demander(String::new())
 }
 
 pub fn demander_nb_manche(taille_liste: usize) -> usize {

@@ -1,24 +1,32 @@
 use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, AsyncReadExt};
-use crate::affichage::terminal::AffichageTerminal;
 use crate::jouer::jouer;
-use crate::outils::outils::{crée_joueur, demander, se_préparer};
+use crate::outils::outils::{demander, se_préparer};
 
 const PORT: &str = ":9000";
 
 
 #[tokio::main]
 pub async fn client(){
-    let (mut joueur,_,_,affichage) = se_préparer("client".to_string());
-    let temp = prépare().await.unwrap();
-    let mut stream = temp.0;
-    let nom = temp.1;
+    let (mut joueur,_,_,affichage,nom) = se_préparer("client".to_string());
+    
+
+
+    let temp = connection().await.unwrap();
+
+
+
+
+
+    let mut stream = temp;
+    envoie_a_l_hote(&mut stream, nom.clone()).await.expect("J'envoie le nom");
+
 
     println!("On attend que l'hote choisisse le nombre de manche…");
     let donnée_initialisation: (usize,Vec<String>) = récupérer_info_initialisation(&mut stream).await;
     let nb_manche = donnée_initialisation.0;
     let liste = donnée_initialisation.1;
-    
+
     // Lance la partie
     let résultat = jouer(&mut joueur, &affichage, &liste, nb_manche);
     let résultat = résultat.0.to_string() +";"+ &résultat.1.to_string();
@@ -97,35 +105,17 @@ async fn lis_message(stream : &mut TcpStream) -> Result<String,Box<dyn std::erro
 }
 
 
-async fn prépare() -> Result<(TcpStream,String), Box<dyn std::error::Error>> {
-    connection().await
-}
-
-
-fn demande_nom() -> String{
-    println!("Quel est ton nom ?");
-    demander(String::new())
-}
-
-
-async fn connection() -> Result<(TcpStream,String),Box<dyn std::error::Error>> {
+async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
     println!("Quelle adresse ip ? (\"ip a\" sous linux)");
     let ip = demander(String::new());
-
 
     // Adresse IP du serveur
     let addr = ip+PORT;
 
     println!("Connexion au serveur {}...", addr);
 
-    let mut stream = TcpStream::connect(addr).await?;
+    let  stream = TcpStream::connect(addr).await?;
     println!("Connecté !");
-
-    let nom = demande_nom();
-
-
-    envoie_a_l_hote(&mut stream, nom.clone()).await?;
-
-
-    Ok((stream,nom))
+    
+    Ok(stream)
 }

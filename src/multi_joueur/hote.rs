@@ -7,10 +7,10 @@ use crate::outils::outils::{demander, se_préparer};
 
 #[tokio::main]
 pub async fn hote(){
-    let mon_nom = demande_nom();
+
     let nb_client:usize= demander_nb_joueur();
 
-    let (mut joueur,liste,nb_manche,affichage) = se_préparer("hote".to_string());
+    let (mut joueur,liste,nb_manche,affichage,mon_nom) = se_préparer("hote".to_string());
 
 
 
@@ -64,10 +64,7 @@ fn afficher_résultat(nb_client:usize, noms :&Vec<String>, mon_nom :String, rés
 }
 
 
-fn demande_nom() -> String{
-    println!("Quel est ton nom ?");
-    demander(String::new())
-}
+
 
 fn ajoute_mon_nom(noms: &mut Vec<String>,nom : String){
     noms.insert(0,nom);
