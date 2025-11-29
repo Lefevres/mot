@@ -14,17 +14,40 @@ pub async fn hote(){
     let mut sockets = clients.1;
 
     message_initialisation(&mut sockets, nb_manche, liste[0..nb_manche*2].to_vec()).await;  //fois deux pour question réponse
+    let mut résultats:Vec<(String,String)> = Vec::new();
+    //résultats.push(("0".to_string(),"0".to_string()));
+    noms.insert(0,mon_nom.clone());
+
 
     jouer(&mut joueur, &affichage, &liste, nb_manche);
 
-    let mut résultats = recevoir_résultat(&mut sockets).await;
-    résultats = ajoute_mes_résultats(résultats,joueur);
-    noms.insert(0,mon_nom.clone());
+    résultats = met_a_jour_les_résultats(&mut sockets,joueur).await;
+
+    //let mut résultats = recevoir_résultat(&mut sockets).await;
+
+
+    //résultats = ajoute_mes_résultats(résultats,joueur);
+    //noms.insert(0,mon_nom.clone());
+
 
     afficher_résultat(nb_client,&noms,mon_nom,&résultats);
     partage_résultat(&mut sockets,résultats,noms).await;
 }
 
+
+async fn met_a_jour_les_résultats(sockets :&mut Vec<TcpStream>,moi:Joueur) -> Vec<(String,String)> {
+    let mut résultats:Vec<(String,String)> = Vec::new();
+    for mut socket in sockets {
+        let buffer = lis_buffer(&mut socket).await.unwrap();
+        let mut itérateur = buffer.splitn(2,";");
+        let bonne_réponse = itérateur.next().unwrap();
+        let mauvaise_réponse = itérateur.next().unwrap();
+        let résultat = (bonne_réponse.to_string(),mauvaise_réponse.to_string());
+        résultats.push(résultat);
+    }
+    résultats = ajoute_mes_résultats(résultats,moi);
+    résultats
+}
 
 fn afficher_résultat(nb_client:usize, noms :&Vec<String>, mon_nom :String, résultats :&Vec<(String,String)>) {
     println!("\n");
