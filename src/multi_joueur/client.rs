@@ -1,6 +1,8 @@
 use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, AsyncReadExt};
+use crate::affichage::affichage::Affichage;
 use crate::jouer::jouer;
+use crate::joueur::Joueur;
 use crate::outils::outils::{demander, se_préparer};
 
 
@@ -24,11 +26,62 @@ pub async fn client(){
 
     // Lance la partie
     let résultat = jouer(&mut joueur, &affichage, &liste, nb_manche);
+
+
     let résultat = résultat.0.to_string() +";"+ &résultat.1.to_string();
     envoie_a_l_hote(&mut stream, résultat).await.expect("on a un soucis");
     let résultats = reçoit_les_résultats(&mut stream,nom).await;
     afficher_résultat(résultats);
 }
+
+
+
+async fn partie(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>, nb_manche: usize, sockets: &mut Vec<TcpStream>, résultats: &mut Vec<(String, String)>, noms : &Vec<String>) -> (usize, usize){
+    let mut stop = false;
+    while !joueur.fin(nb_manche) && !stop {
+        stop = manche(joueur, affichage, liste,sockets,résultats,noms,noms[0].clone()).await;
+        crate::multi_joueur::hote::met_a_jour_les_résultats(sockets, joueur, résultats).await;
+        crate::multi_joueur::hote::partage_résultat(sockets, résultats, &noms).await;
+    }
+    affichage.afficher_score(joueur);
+    (joueur.bonne_reponse(),joueur.mauvaise_reponse())
+
+}
+
+
+async fn manche(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>, sockets: &mut Vec<TcpStream>, résultats: &mut Vec<(String, String)>, noms : &Vec<String>,mon_nom : String) -> bool {
+    let mut essai = false;
+    affichage.afficher_en_tete();
+    affichage.afficher_score(joueur);
+    let mot = affichage.afficher_question(joueur.question(), &liste);
+    while !essai { //syncroniser les résultats pour le multi ?
+        let reponse = demander(String::new());
+        let reaction = crate::jouer::réagir(joueur, affichage, &reponse, &mot);
+        match reaction.as_str() {
+            "stop" => {
+                return true;  //on arrete bel et bien
+            }
+
+            "suivant" => {
+                essai = true;  //l'essai est correcte
+            }
+
+            "reposer" => {}
+
+            "affiche" => {
+                crate::multi_joueur::hote::partage_résultat(sockets, résultats, &noms).await;
+                afficher_résultat(sockets.len(),&noms,&mon_nom,&résultats);
+            }
+
+            _ => {
+                println!("comment on en est arrivé là ?");
+            }
+        }
+    }
+    false
+}
+
+
 
 
 fn afficher_résultat(résultats:Vec<(String,usize,usize)>)  {

@@ -13,7 +13,7 @@ pub fn jouer(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>
 }
 
 
-fn manche(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>) -> bool {
+pub(crate) fn manche(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>) -> bool {
     let mut essai = false;
     affichage.afficher_en_tete();
     affichage.afficher_score(joueur);
@@ -41,7 +41,7 @@ fn manche(joueur: &mut Joueur, affichage: &dyn Affichage, liste: &Vec<String>) -
 }
 
  
- fn réagir(joueur: &mut Joueur, affichage: &dyn Affichage, reponse: &String, mot: &String) -> String {
+ pub(crate) fn réagir(joueur: &mut Joueur, affichage: &dyn Affichage, reponse: &String, mot: &String) -> String {
     match reponse.as_str() {
         "stop" => {
             "stop".to_string()
