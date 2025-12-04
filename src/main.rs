@@ -1,17 +1,12 @@
-use crate::affichage::affichage::Affichage;
-use crate::affichage::terminal::AffichageTerminal;
 use crate::jouer::jouer;
 use crate::outils::outils::{demander, se_préparer};
-
+use crate::outils::terminal::afficher;
 
 mod joueur;
-mod affichage;
 mod multi_joueur;
 pub mod jouer;
 mod outils;
 
-
-static  AFFICHAGE: AffichageTerminal = AffichageTerminal;
 
 
 fn main() {
@@ -40,7 +35,7 @@ fn main() {
 
 fn solitaire() {
     let mut préparation = se_préparer("solitaire".to_string());
-    jouer(&mut préparation.0, &AFFICHAGE, &préparation.1, préparation.2);
+    jouer(&mut préparation.0, &préparation.1, préparation.2);
 }
 
 
@@ -59,7 +54,7 @@ pub fn multi_joueur(){
 
 
 fn choix_role(role1 : &str, role2 : &str) -> String{  // les roles sont hote ou client
-    AFFICHAGE.afficher(format!("Role : {} ou {}", role1, role2));
+    afficher(format!("Role : {} ou {}", role1, role2));
     loop {
         let role = demander(String::new());
 

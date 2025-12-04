@@ -1,5 +1,4 @@
 use std::io;
-use crate::affichage::terminal::AffichageTerminal;
 use crate::joueur::Joueur;
 use crate::outils::mot::cree_liste;
 
@@ -17,12 +16,11 @@ pub fn crée_joueur(est_multi:bool) -> Joueur {
 }
 
 
-pub fn se_préparer<'a>(role : String) -> (Joueur,Vec<String>,usize,AffichageTerminal,String){  //rajouter la demande de nom ?
+pub fn se_préparer<'a>(role : String) -> (Joueur,Vec<String>,usize,String){  //rajouter la demande de nom ?
 
     let joueur;
     let mut liste=Vec::new();
     let mut nb_manche= 0;
-    let affichage = AffichageTerminal;
     let mut nom = String::new();
 
     match role.as_str() {
@@ -50,7 +48,7 @@ pub fn se_préparer<'a>(role : String) -> (Joueur,Vec<String>,usize,AffichageTer
     }
 
 
-    (joueur,liste,nb_manche,affichage,nom)
+    (joueur,liste,nb_manche,nom)
 }
 
 

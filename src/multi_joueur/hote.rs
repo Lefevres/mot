@@ -8,7 +8,7 @@ use crate::outils::outils::{demander, se_préparer};
 #[tokio::main]
 pub async fn hote(){
     let nb_client:usize= demander_nb_joueur();
-    let (mut joueur,liste,nb_manche,affichage,mon_nom) = se_préparer("hote".to_string());
+    let (mut joueur,liste,nb_manche,mon_nom) = se_préparer("hote".to_string());
     let clients = connextion_au_client(nb_client).await.unwrap();
     let mut noms = clients.0;
     let mut sockets = clients.1;
@@ -19,7 +19,7 @@ pub async fn hote(){
     noms.insert(0,mon_nom.clone());
 
 
-    jouer(&mut joueur, &affichage, &liste, nb_manche);
+    jouer(&mut joueur, &liste, nb_manche);
 
     résultats = met_a_jour_les_résultats(&mut sockets,joueur).await;
 

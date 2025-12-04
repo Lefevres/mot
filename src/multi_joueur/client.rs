@@ -9,7 +9,7 @@ const PORT: &str = ":9000";
 
 #[tokio::main]
 pub async fn client(){
-    let (mut joueur,_,_,affichage,nom) = se_préparer("client".to_string());
+    let (mut joueur,_,_,nom) = se_préparer("client".to_string());
 
     let temp = connection().await.unwrap();
 
@@ -23,7 +23,7 @@ pub async fn client(){
     let liste = donnée_initialisation.1;
 
     // Lance la partie
-    let résultat = jouer(&mut joueur, &affichage, &liste, nb_manche);
+    let résultat = jouer(&mut joueur, &liste, nb_manche);
     let résultat = résultat.0.to_string() +";"+ &résultat.1.to_string();
     envoie_a_l_hote(&mut stream, résultat).await.expect("on a un soucis");
     let résultats = reçoit_les_résultats(&mut stream,nom).await;
