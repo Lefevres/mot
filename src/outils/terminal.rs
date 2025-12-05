@@ -50,7 +50,7 @@ use crate::outils::outils::demander;
             println!("Ça n'est malheureusement pas ça \n");
         }
 
-    pub fn afficher_score(joueur: &mut Joueur) {
+    pub fn afficher_score(joueur: &mut Joueur, nb_manche: usize) {
 
             let total = joueur.bonne_reponse() + joueur.mauvaise_reponse();
             let ratio = if total > 0 {
@@ -59,8 +59,8 @@ use crate::outils::outils::demander;
                 0.0
             };
             println!(
-                "\nScore : {} bonne(s) réponse(s), {} mauvaise(s) réponse(s) — Ratio : {:.1}%",
-                joueur.bonne_reponse(), joueur.mauvaise_reponse(), ratio
+                "\nScore : {} bonne(s) réponse(s), {} mauvaise(s) réponse(s) — Ratio : {:.1}%            Question {}/{}",
+                joueur.bonne_reponse(), joueur.mauvaise_reponse(), ratio, joueur.question()/2+1,nb_manche
             );
 
         }

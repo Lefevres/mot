@@ -5,21 +5,22 @@
  pub fn jouer(joueur: &mut Joueur, liste: &Vec<String>, nb_manche: usize) -> (usize, usize) {
     let mut stop = false;
     while !joueur.fin(nb_manche) && !stop {
-        stop = manche(joueur, liste);
+        stop = manche(joueur, liste, nb_manche);
     }
-    afficher_score(joueur);
+    afficher_score(joueur,nb_manche);
     (joueur.bonne_reponse(),joueur.mauvaise_reponse())
 }
 
 
-fn manche(joueur: &mut Joueur, liste: &Vec<String>) -> bool {
+fn manche(joueur: &mut Joueur, liste: &Vec<String>,nb_manche: usize) -> bool {
     let mut essai = false;
     afficher_en_tete();
-    afficher_score(joueur);
+    afficher_score(joueur,nb_manche);
     let mot = afficher_question(joueur.question(), &liste);
+    let mut liste_essai:Vec<String> = vec![];
     while !essai { //syncroniser les résultats pour le multi ?
-        let reponse = demander(String::new());
-        let reaction = réagir(joueur, &reponse, &mot);
+        let réponse = demander(String::new());
+        let reaction = réagir(joueur, &réponse, &mot);
         match reaction.as_str() {
             "stop" => {
                 return true;  //on arrete bel et bien
@@ -29,12 +30,15 @@ fn manche(joueur: &mut Joueur, liste: &Vec<String>) -> bool {
                 essai = true;  //l'essai est correcte
             }
 
+
+
             "reposer" => {}
 
             _ => {
                 println!("comment on en est arrivé là ?");
             }
         }
+        liste_essai.push(réponse);
     }
     false
 }

@@ -1,7 +1,7 @@
 pub struct Joueur  {
     bonne_reponse:usize,
     mauvaise_reponse:usize,
-    question:usize,
+    question:usize,   //question actuelle
     est_multi:bool,
 }
 
