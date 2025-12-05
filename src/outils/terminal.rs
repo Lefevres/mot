@@ -44,6 +44,8 @@ use crate::outils::outils::demander;
 
     pub fn afficher_bonne_reponse() {
             println!("Félicitation ce fût une bonne réponse 👍\n");
+            println!("Entrer pour continuer : \n");
+            demander(String::new());
         }
 
     pub fn afficher_mauvaise_reponse() {
@@ -64,6 +66,21 @@ use crate::outils::outils::demander;
             );
 
         }
+
+    pub fn afficher_score_fin(joueur: &mut Joueur) {
+
+        let total = joueur.bonne_reponse() + joueur.mauvaise_reponse();
+        let ratio = if total > 0 {
+            (joueur.bonne_reponse() as f32 / total as f32) * 100.0
+        } else {
+            0.0
+        };
+        println!(
+            "\nScore : {} bonne(s) réponse(s), {} mauvaise(s) réponse(s) — Ratio : {:.1}%",
+            joueur.bonne_reponse(), joueur.mauvaise_reponse(), ratio
+        );
+
+}
 
     pub fn afficher(texte: String) {
             println!("{}", texte);
