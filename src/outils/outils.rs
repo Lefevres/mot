@@ -1,6 +1,15 @@
 use std::io;
 use crate::joueur::Joueur;
 use crate::outils::mot::cree_liste;
+use std::error::Error;
+use crossterm::{
+    cursor,
+    event::{self, Event, KeyCode},
+    execute,
+    terminal::{self, ClearType},
+};
+use std::io::{stdout, Write};
+
 
 
 pub fn demander(mut variable:String) -> String{
@@ -8,6 +17,68 @@ pub fn demander(mut variable:String) -> String{
         .read_line(&mut variable)
         .expect("il y a un problème dans demander de outils");
     variable.trim().to_string()
+}
+
+
+pub fn demander_réponse() -> Result<(String),Box<dyn Error>>{
+    // Active le mode "raw" pour lire les touches en direct
+    terminal::enable_raw_mode()?;
+    let mut stdout = stdout();
+
+    let mut input = String::new();
+
+
+    stdout.flush()?;
+
+    loop {
+        // attend un événement clavier
+        if event::poll(std::time::Duration::from_millis(50))? {
+            if let Event::Key(key) = event::read()? {
+                match key.code {
+                    KeyCode::Char(c) => {
+                        input.push(c);
+                        print!("{}", c);
+                    }
+                    KeyCode::Backspace => {
+                        if !input.is_empty() {
+                            input.pop();
+                            // effacer un caractère
+                            execute!(
+                                stdout,
+                                cursor::MoveLeft(1),
+                                terminal::Clear(ClearType::UntilNewLine)
+                            )?;
+                        }
+                    }
+                    KeyCode::Enter => {
+                        break;
+                    }
+                    _ => {}
+                }
+
+                // Affichage dynamique du compteur
+                let saved_cursor = cursor::position()?;
+
+                let count = input.chars().count();
+
+                // aller à droite (colonne 40 par exemple)
+                execute!(
+                    stdout,
+                    cursor::MoveTo(40, saved_cursor.1),
+                    terminal::Clear(ClearType::UntilNewLine)
+                )?;
+                print!("{} caractères", count);
+
+                // Retour où était le curseur
+                execute!(stdout, cursor::MoveTo(saved_cursor.0, saved_cursor.1))?;
+                stdout.flush()?;
+            }
+        }
+    }
+
+    terminal::disable_raw_mode()?;
+    println!("\nEntrée finale : {}", input);
+    Ok(input)
 }
 
 

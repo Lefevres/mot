@@ -38,15 +38,18 @@ use crate::outils::outils::demander;
 
     pub fn afficher_reponse_precedante(mot : &String){
             println!("La réponse étais {}\n",mot.green());
-            println!("Entrer pour continuer : \n");
-            demander(String::new());
+            attendre_validation();
         }
 
     pub fn afficher_bonne_reponse() {
             println!("Félicitation ce fût une bonne réponse 👍\n");
-            println!("Entrer pour continuer : \n");
-            demander(String::new());
+            attendre_validation();
         }
+
+    fn attendre_validation(){
+        println!("Entrer pour continuer : \n");
+        demander(String::new());
+    }
 
     pub fn afficher_mauvaise_reponse() {
             println!("Ça n'est malheureusement pas ça \n");
