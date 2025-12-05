@@ -107,7 +107,7 @@ ambage : Circonlocution, hésitation à s'exprimer, marquant de l'embarras et pa
 ouaille : Les chrétiens, par rapport au prêtre
 truelle : Outil de maçon, à manche coudé, servant à étendre le mortier, l'enduit
 manu militari : En employant la force armée, la force publique (locution latine)
-ipso facto : Par voie de conséquence, automatiquementpr
+ipso facto : Par voie de conséquence, automatiquement
 proactif : Qui anticipe les attentes, prend l'initiative de l'action
 éponyme : Qui donne son nom à
 barbouze : Agent secret (police, espionnage)
@@ -182,7 +182,7 @@ diacronie : Caractère des faits linguistiques considérés du point de vue des 
 caustique : Qui attaque, blesse par la moquerie et la satire
 midinette : Jeune ouvrière parisienne de la couture et de la mode
 frivole : Qui ne s'occupe que de choses futiles ou traite à la légère les choses sérieuses
-ballade : Petit poème de forme régulière, composé de trois couplets ou plus, avec un refrain et un envoi
+ballade : Petit poème de forme régulière, composé de trois couplets ou plus, avec un refrain et un envoi
 mellomane : Personne qui connaît et aime la musique, spécialement classique
 faire chabrot : coutume de la moitié sud de la France qui consiste, quand il reste un fond de soupe ou de potage, à ajouter dans l'assiette du vin rouge pour diluer ce bouillon puis de porter le plat à la bouche, et à l'avaler à grandes goulées
 impétrant : Personne qui obtient de l'autorité compétente quelque chose qu'elle a sollicité (charge, titre, diplôme)
@@ -196,5 +196,25 @@ burlesque : D'un comique extravagant et déroutant
 facétie : Plaisanterie burlesque
 charnier : Lieu où sont entassés des cadavres
 méphitique : Qui sent mauvais et est toxique
-ad nominem : réfutation qui repose sur la mise en évidence d'un défaut de cohérence de la part d'une personne, entre ses dires, entre ses dires et ses croyances ou ses comportements
-ad rem : D'une manière nette, qui convient exactement à la question et à cause de cela, sans réplique
+ad hominem : réfutation qui repose sur la mise en évidence d'un défaut de cohérence de la part d'une personne, entre ses dires, entre ses dires et ses croyances ou ses comportements (locution latine)
+ad rem :D'une manière nette, qui convient exactement à la question et à cause de cela, sans réplique (locution latine)
+ucronie : Récit d'évènements fictifs à partir d'un point de départ historique
+frimas : Brouillard froid et épais, qui se glace en tombant.
+laude : Chant religieux n'appartenant pas à la liturgie, et écrit sur un texte en langue vernaculaire
+entériner : Rendre définitif, valide (un acte) en l'approuvant juridiquement
+coercition : Fait de contraindre
+hémiplégie : Paralysie complète ou incomplète, frappant une moitié du corps
+paréidolie : Tendance naturelle à voir des formes familières dans des images vagues ou ambiguës
+obérer : Accabler quelqu'un, quelque chose d'une lourde charge financière
+docte : Érudit, savant
+emphractique : Qui obstrue
+sacerdosse : Fonction qui présente un caractère quasi religieux en raison du dévouement qu'elle exige
+ampélographie : Étude descriptive de la vigne
+clavophile : Collectionneur de clefs
+clinophilie : fait d'aimer rester au lit, la journée, allongé, pendant des heures, tout en étant éveillé
+éperonner : Aiguillonner, stimuler
+tocsin : Sonnerie de cloche répétée et prolongée, pour donner l'alarme
+vil : à très bas prix
+gargotte : Lieu où on prend des repas à juste prix ou à bon marché
+bibliomencie : Art de deviner au moyen d'un livre qu'on ouvre au hasard
+prophylaxie : Ensemble de moyens médicaux mis en œuvre pour empêcher l'apparition, l'aggravation ou l'extension des maladies

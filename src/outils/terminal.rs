@@ -8,7 +8,7 @@ use crate::outils::outils::demander;
 
     pub fn afficher_en_tete(){
         crossterm::execute!(stdout(), crossterm::terminal::Clear(crossterm::terminal::ClearType::All)).unwrap();
-        let en_tete = "\n\nLes mots sont sans majuscule mais avec accent".green();
+        let en_tete = "\n\nLes mots sont sans majuscule mais avec accent, les locutions latine ne prenne pas de tiret".green();
         let instruction = "\n +1 points pour une bonne réponse, -1 points pour une mauvaise réponse\n".red();
         let indices = "{indice} pour avoir le nombre de lettres\n{passe} pour changer de mot\n{stop} pour arrêter".red();
         println!("{en_tete}\n{instruction}\n{indices}");
