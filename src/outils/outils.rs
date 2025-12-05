@@ -9,8 +9,7 @@ use crossterm::{
     terminal::{self, ClearType},
 };
 use std::io::{stdout, Write};
-
-
+use crossterm::terminal::Clear;
 
 pub fn demander(mut variable:String) -> String{
     io::stdin()
@@ -20,15 +19,17 @@ pub fn demander(mut variable:String) -> String{
 }
 
 
-pub fn demander_réponse() -> Result<(String),Box<dyn Error>>{
+pub fn demander_réponse(liste_essai: &mut Vec<String>) -> Result<String,Box<dyn Error>>{
     // Active le mode "raw" pour lire les touches en direct
     terminal::enable_raw_mode()?;
-    let mut stdout = stdout();
+    let mut sortie = stdout();
 
-    let mut input = String::new();
+    let mut entrée = String::new();
+
+    let mut compteur = 1;
 
 
-    stdout.flush()?;
+    sortie.flush()?;
 
     loop {
         // attend un événement clavier
@@ -36,15 +37,35 @@ pub fn demander_réponse() -> Result<(String),Box<dyn Error>>{
             if let Event::Key(key) = event::read()? {
                 match key.code {
                     KeyCode::Char(c) => {
-                        input.push(c);
+                        entrée.push(c);
                         print!("{}", c);
                     }
                     KeyCode::Backspace => {
-                        if !input.is_empty() {
-                            input.pop();
+                        /*if !entrée.is_empty() {
+
+                            entrée.pop(); // enlever le caractère dans ta variable
+
+                            // 1. Effacer la partie droite
+                            execute!(sortie, terminal::Clear(ClearType::UntilNewLine))?;
+
+                            // 2. Ré-afficher ce qu'il reste à droite
+                            print!("{}", &entrée);
+                            sortie.flush()?;
+
+                            // 3. Revenir à la bonne position (fin du texte)
+                            execute!(
+                                sortie,
+                                cursor::MoveLeft((entrée.len()) as u16)
+                            )?;
+
+                        }*/
+
+
+                        if !entrée.is_empty() {
+                            entrée.pop();
                             // effacer un caractère
                             execute!(
-                                stdout,
+                                sortie,
                                 cursor::MoveLeft(1),
                                 terminal::Clear(ClearType::UntilNewLine)
                             )?;
@@ -53,32 +74,82 @@ pub fn demander_réponse() -> Result<(String),Box<dyn Error>>{
                     KeyCode::Enter => {
                         break;
                     }
+                    KeyCode::Left => {
+                        execute!(
+                            sortie,
+                            cursor::MoveLeft(1),
+                        )?;
+                    }
+
+                    KeyCode::Right => {
+                        execute!(
+                            sortie,
+                            cursor::MoveRight(1),
+                        )?;
+                    }
+                    KeyCode::Up => {
+                        if liste_essai.len() >= compteur {
+                            execute!(
+                            sortie,
+                            Clear(ClearType::CurrentLine),
+                            cursor::MoveToColumn(0),
+
+                        )?;
+
+                            entrée = liste_essai[liste_essai.len()-compteur].clone();
+                            compteur = compteur+1;
+                            print!("{}", entrée);
+                        }
+                    }
+                    KeyCode::Down => {
+                        if compteur > 1 {
+                            execute!(
+                            sortie,
+                            Clear(ClearType::CurrentLine),
+                            cursor::MoveToColumn(0),
+
+                        )?;
+                            compteur = compteur-1;
+                            entrée = liste_essai[liste_essai.len()-compteur].clone();
+
+                            print!("{}", entrée);
+                        }
+                        else {
+                            execute!(
+                                sortie,
+                                Clear(ClearType::CurrentLine),
+                                cursor::MoveToColumn(0),
+                            )?;
+                        }
+                    }
+
+
                     _ => {}
                 }
 
                 // Affichage dynamique du compteur
                 let saved_cursor = cursor::position()?;
 
-                let count = input.chars().count();
+                let count = entrée.chars().count();
 
                 // aller à droite (colonne 40 par exemple)
                 execute!(
-                    stdout,
+                    sortie,
                     cursor::MoveTo(40, saved_cursor.1),
                     terminal::Clear(ClearType::UntilNewLine)
                 )?;
                 print!("{} caractères", count);
 
                 // Retour où était le curseur
-                execute!(stdout, cursor::MoveTo(saved_cursor.0, saved_cursor.1))?;
-                stdout.flush()?;
+                execute!(sortie, cursor::MoveTo(saved_cursor.0, saved_cursor.1))?;
+                sortie.flush()?;
             }
         }
     }
 
     terminal::disable_raw_mode()?;
-    println!("\nEntrée finale : {}", input);
-    Ok(input)
+    println!("\nEntrée finale : {}", entrée);
+    Ok(entrée)
 }
 
 
@@ -131,7 +202,7 @@ fn demande_nom() -> String{
 
 pub fn demander_nb_manche(taille_liste: usize) -> usize {
     loop {
-        //crossterm::execute!(stdout(), crossterm::terminal::Clear(crossterm::terminal::ClearType::All)).unwrap();
+        //crossterm::execute!(sortie(), crossterm::terminal::Clear(crossterm::terminal::ClearType::All)).unwrap();
 
         println!("Combien de manche ? ");
         let min = if taille_liste/2 < usize::MAX {  // les questions et les réponses sont déjà séparer, donc on divise par deux

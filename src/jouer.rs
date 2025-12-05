@@ -1,5 +1,5 @@
  use crate::joueur::Joueur;
- use crate::outils::outils::{demander, demander_réponse};
+ use crate::outils::outils::{demander_réponse};
  use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_score_fin};
 
  pub fn jouer(joueur: &mut Joueur, liste: &Vec<String>, nb_manche: usize) -> (usize, usize) {
@@ -19,7 +19,7 @@ fn manche(joueur: &mut Joueur, liste: &Vec<String>,nb_manche: usize) -> bool {
     let mot = afficher_question(joueur.question(), &liste);
     let mut liste_essai:Vec<String> = vec![];
     while !essai { //syncroniser les résultats pour le multi ?
-        let réponse = demander_réponse().unwrap();
+        let réponse = demander_réponse(&mut liste_essai).unwrap();
         let reaction = réagir(joueur, &réponse, &mot);
         match reaction.as_str() {
             "stop" => {
