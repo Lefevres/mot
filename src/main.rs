@@ -10,28 +10,40 @@ mod outils;
 
 
 fn main() {
-    println!("Mode de jeu ? solitaire ou multi_joueur ?");
     loop {
+        println!("Mode de jeu : solitaire ou multi_joueur ?");
         let mode = demander(String::new());
         match mode.trim() {
             "solitaire" | "1" => {
                 solitaire();
-                println!("Lancement d'une nouvelle partie");
-                println!("Mode de jeu ? solitaire ou multi_joueur ?");
             }
             "multi_joueur" | "2" => {
                 multi_joueur();
-                println!("Lancement d'une nouvelle partie");
-                println!("Mode de jeu ? solitaire ou multi_joueur ?");
             }
             _ => {
                 println!("N'importe quoi !!");
             }
         }
+        if !rejouer(){
+            break;
+        }
 
     }
 }
 
+
+fn rejouer() -> bool{
+    afficher(String::from("\n\nrejouer ? "));
+    loop{
+        let réponse = demander(String::new());
+        match réponse.as_str() {
+            "oui" | "o" =>  return true,
+            "non" | "n" => return false,
+            _ => (),
+        }
+    }
+
+}
 
 fn solitaire() {
     let mut préparation = se_préparer("solitaire".to_string());
@@ -43,7 +55,6 @@ pub fn multi_joueur(){
     let role1 = "hote";
     let role2 = "client";
     let role = choix_role(&role1, &role2);
-    println!("Tu as choisie {}!", role);
 
     match role.as_str() {
         r if r == role1 => multi_joueur::hote::hote(),
@@ -58,10 +69,16 @@ fn choix_role(role1 : &str, role2 : &str) -> String{  // les roles sont hote ou 
     loop {
         let role = demander(String::new());
 
-        match &role {
-            r if r == role1 || r == role2 => return role,
-            _ => (),
+        match role.as_str() {
+            r if r == role1 || r == "1" => {
+                return role1.to_string();
+            }
+            r if r == role2 || r == "2" => {
+                return role2.to_string();
+            }
+            _ => {
+                afficher("Choix invalide, réessayez.".to_string());
+            }
         }
     }
-
 }
