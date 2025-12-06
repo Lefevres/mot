@@ -93,20 +93,6 @@ async fn partage_résultat(sockets: &mut Vec<TcpStream>,résultats:Vec<(String,S
 }
 
 
-async fn recevoir_résultat(sockets : &mut Vec<TcpStream>) -> Vec<(String,String)> {
-    let mut résultats:Vec<(String,String)> = Vec::new();
-    for mut socket in sockets {
-        let buffer = lis_buffer(&mut socket).await.unwrap();
-        let mut itérateur = buffer.splitn(2,";");
-        let bonne_réponse = itérateur.next().unwrap();
-        let mauvaise_réponse = itérateur.next().unwrap();
-        let résultat = (bonne_réponse.to_string(),mauvaise_réponse.to_string());
-        résultats.push(résultat);
-    }
-    résultats
-}
-
-
 async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, questions: Vec<String>){
     let mut message_string:String = String::from(nb_manche.to_string());
     for mess in &questions {
