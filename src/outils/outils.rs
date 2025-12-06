@@ -9,6 +9,7 @@ use crossterm::{
     terminal::{self, ClearType},
 };
 use std::io::{stdout, Write};
+use crossterm::style::{Color, SetForegroundColor};
 use crossterm::terminal::Clear;
 
 pub fn demander(mut variable:String) -> String{
@@ -19,7 +20,7 @@ pub fn demander(mut variable:String) -> String{
 }
 
 
-pub fn demander_réponse(liste_essai: &mut Vec<String>) -> Result<String,Box<dyn Error>>{
+pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Result<String,Box<dyn Error>>{
     // Active le mode "raw" pour lire les touches en direct
     terminal::enable_raw_mode()?;
     let mut sortie = stdout();
@@ -132,13 +133,32 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>) -> Result<String,Box<dyn
 
                 let count = entrée.chars().count();
 
+
+                if nb_lettre == count {
+                    execute!(
+                        sortie,
+                        SetForegroundColor(Color::Green),
+                    )?;
+                }
+                else if count >= 1{
+                    execute!(
+                        sortie,
+                        SetForegroundColor(Color::Red),
+                    )?;
+
+                }
+
                 // aller à droite (colonne 40 par exemple)
                 execute!(
                     sortie,
                     cursor::MoveTo(40, saved_cursor.1),
                     terminal::Clear(ClearType::UntilNewLine)
+
                 )?;
+
+
                 print!("{} caractères", count);
+                execute!(sortie, SetForegroundColor(Color::Reset))?;
 
                 // Retour où était le curseur
                 execute!(sortie, cursor::MoveTo(saved_cursor.0, saved_cursor.1))?;

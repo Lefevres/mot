@@ -19,7 +19,7 @@ fn manche(joueur: &mut Joueur, liste: &Vec<String>,nb_manche: usize) -> bool {
     let mot = afficher_question(joueur.question(), &liste);
     let mut liste_essai:Vec<String> = vec![];
     while !essai { //syncroniser les résultats pour le multi ?
-        let réponse = demander_réponse(&mut liste_essai).unwrap();
+        let réponse = demander_réponse(&mut liste_essai,mot.len()).unwrap();
         let reaction = réagir(joueur, &réponse, &mot);
         match reaction.as_str() {
             "stop" => {
