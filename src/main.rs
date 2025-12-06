@@ -10,7 +10,7 @@ mod outils;
 
 
 fn main() {
-    println!("Mode de jeu ? solitaire(1) ou multi_joueur(2) ?");
+    println!("Mode de jeu ? solitaire ou multi_joueur ?");
     loop {
         let mode = demander(String::new());
         match mode.trim() {

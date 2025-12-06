@@ -4,6 +4,7 @@ use crate::outils::mot::cree_liste;
 use std::error::Error;
 use crossterm::{cursor, event::{self, Event, KeyCode}, execute, queue, terminal::{self, ClearType}};
 use std::io::{stdout, Write};
+use crossterm::event::KeyEventKind;
 use crossterm::style::{Color, SetForegroundColor};
 use crossterm::terminal::Clear;
 
@@ -19,11 +20,8 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
     // Active le mode "raw" pour lire les touches en direct
     terminal::enable_raw_mode()?;
     let mut sortie = stdout();
-
     let mut entrée = String::new();
-
     let mut compteur = 1;
-
 
     sortie.flush()?;
 
@@ -31,35 +29,20 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
         // attend un événement clavier
         if event::poll(std::time::Duration::from_millis(50))? {
             if let Event::Key(key) = event::read()? {
+                // Traiter uniquement la pression initiale (évite les doublons)
+                if key.kind != KeyEventKind::Press {   //windows c’est vraiment nul !
+                    continue;
+                }
+
                 match key.code {
                     KeyCode::Char(c) => {
                         entrée.push(c);
                         print!("{}", c);
+                        sortie.flush()?;
                     }
                     KeyCode::Backspace => {
-                        /*if !entrée.is_empty() {
-
-                            entrée.pop(); // enlever le caractère dans ta variable
-
-                            // 1. Effacer la partie droite
-                            execute!(sortie, terminal::Clear(ClearType::UntilNewLine))?;
-
-                            // 2. Ré-afficher ce qu'il reste à droite
-                            print!("{}", &entrée);
-                            sortie.flush()?;
-
-                            // 3. Revenir à la bonne position (fin du texte)
-                            execute!(
-                                sortie,
-                                cursor::MoveLeft((entrée.len()) as u16)
-                            )?;
-
-                        }*/
-
-
                         if !entrée.is_empty() {
                             entrée.pop();
-                            // effacer un caractère
                             execute!(
                                 sortie,
                                 cursor::MoveLeft(1),
@@ -67,65 +50,50 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                             )?;
                         }
                     }
-                    KeyCode::Enter => {
-                        break;
-                    }
+                    KeyCode::Enter => break,
                     KeyCode::Left => {
-                        execute!(
-                            sortie,
-                            cursor::MoveLeft(1),
-                        )?;
+                        execute!(sortie, cursor::MoveLeft(1))?;
                     }
-
                     KeyCode::Right => {
-                        execute!(
-                            sortie,
-                            cursor::MoveRight(1),
-                        )?;
+                        execute!(sortie, cursor::MoveRight(1))?;
                     }
                     KeyCode::Up => {
                         if liste_essai.len() >= compteur {
                             execute!(
-                            sortie,
-                            Clear(ClearType::CurrentLine),
-                            cursor::MoveToColumn(0),
-
-                        )?;
-
+                                sortie,
+                                Clear(ClearType::CurrentLine),
+                                cursor::MoveToColumn(0)
+                            )?;
                             entrée = liste_essai[liste_essai.len() - compteur].clone();
-                            compteur = compteur + 1;
+                            compteur += 1;
                             print!("{}", entrée);
                         }
                     }
                     KeyCode::Down => {
                         if compteur > 1 {
+                            compteur -= 1;
                             execute!(
-                            sortie,
-                            Clear(ClearType::CurrentLine),
-                            cursor::MoveToColumn(0),
-
-                        )?;
-                            compteur = compteur - 1;
+                                sortie,
+                                Clear(ClearType::CurrentLine),
+                                cursor::MoveToColumn(0)
+                            )?;
                             entrée = liste_essai[liste_essai.len() - compteur].clone();
-
                             print!("{}", entrée);
                         } else {
                             execute!(
                                 sortie,
                                 Clear(ClearType::CurrentLine),
-                                cursor::MoveToColumn(0),
+                                cursor::MoveToColumn(0)
                             )?;
+                            entrée.clear();
                         }
                     }
-
                     _ => {}
                 }
 
-                // Affichage dynamique du compteur
+                // Affichage dynamique du compteur de lettres
                 let saved_cursor = cursor::position()?;
-
                 let count = entrée.chars().count();
-
 
                 if nb_lettre == count {
                     queue!(sortie, SetForegroundColor(Color::Green))?;
@@ -138,20 +106,20 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                     cursor::MoveTo(40, saved_cursor.1),
                     Clear(ClearType::UntilNewLine)
                 )?;
-
                 write!(sortie, "{} caractères", count)?;
                 queue!(sortie, SetForegroundColor(Color::Reset))?;
-
                 queue!(sortie, cursor::MoveTo(saved_cursor.0, saved_cursor.1))?;
-
                 sortie.flush()?;
             }
         }
     }
+
     terminal::disable_raw_mode()?;
-    println!("\nEntrée finale : {}", entrée);
+    //println!("\nEntrée finale : {}", entrée);
     Ok(entrée)
 }
+
+
 
 
 pub fn crée_joueur(est_multi:bool) -> Joueur {

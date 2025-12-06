@@ -32,7 +32,7 @@ use crate::outils::outils::demander;
             indice.push_str("_ ");
         }
 
-        println!("Le mot a {} lettres", len);
+        println!("\nC’est un mot de {} lettres", len);
         println!("{}", indice);
     }
 
@@ -42,7 +42,7 @@ use crate::outils::outils::demander;
         }
 
     pub fn afficher_bonne_reponse() {
-            println!("Félicitation ce fût une bonne réponse 👍\n");
+            println!("\n Félicitation ce fût une bonne réponse 👍\n");
             attendre_validation();
         }
 
@@ -52,7 +52,7 @@ use crate::outils::outils::demander;
     }
 
     pub fn afficher_mauvaise_reponse() {
-            println!("Ça n'est malheureusement pas ça \n");
+            println!("\nÇa n'est malheureusement pas ça \n");
         }
 
     pub fn afficher_score(joueur: &mut Joueur, nb_manche: usize) {
