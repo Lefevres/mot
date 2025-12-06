@@ -19,7 +19,7 @@ fn manche(joueur: &mut Joueur, liste: &Vec<String>,nb_manche: usize) -> bool {
     let mot = afficher_question(joueur.question(), &liste);
     let mut liste_essai:Vec<String> = vec![];
     while !essai { //syncroniser les résultats pour le multi ?
-        let réponse = demander_réponse(&mut liste_essai,mot.len()).unwrap();
+        let réponse = demander_réponse(&mut liste_essai,mot.chars().count()).unwrap();
         let reaction = réagir(joueur, &réponse, &mot);
         match reaction.as_str() {
             "stop" => {
@@ -46,14 +46,14 @@ fn manche(joueur: &mut Joueur, liste: &Vec<String>,nb_manche: usize) -> bool {
  
  fn réagir(joueur: &mut Joueur, reponse: &String, mot: &String) -> String {
     match reponse.as_str() {
-        "stop" => {
+        "stop" | "s" => {
             "stop".to_string()
         }
-        "indice" => {
+        "indice" | "i" => {
             afficher_indice(mot);
             "reposer".to_string()
         }
-        "passe" => {
+        "passe" | "p" => {
             joueur.question_suivante();
             joueur.mauvaise_reponse_aj();
             afficher_reponse_precedante(mot);

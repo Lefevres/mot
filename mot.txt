@@ -19,7 +19,7 @@ fragrence : Parfum subtil, odeur agréable
 hapax : Mot, forme, emploi dont on ne peut relever qu'un exemple
 absoudre : Exempter de peine l'auteur d'une infraction
 adjuvent : Médicament, produit ajouté à un autre pour renforcer ou compléter son action
-syncretisme : Combinaison de doctrines, de systèmes initialement incompatibles
+syncrétisme : Combinaison de doctrines, de systèmes initialement incompatibles
 tessiture : Étendue des sons qui peuvent être émis normalement par une voix, un instrument
 alluvion : Dépôts (cailloux, sables, boues) provenant d'un transport par les eaux courantes
 saynete : Courte pièce comique avec peu de personnages
@@ -218,3 +218,4 @@ vil : à très bas prix
 gargotte : Lieu où on prend des repas à juste prix ou à bon marché
 bibliomencie : Art de deviner au moyen d'un livre qu'on ouvre au hasard
 prophylaxie : Ensemble de moyens médicaux mis en œuvre pour empêcher l'apparition, l'aggravation ou l'extension des maladies
+pathognomonique : Qui caractérise spécifiquement une maladie, qui en permet le diagnostic certain

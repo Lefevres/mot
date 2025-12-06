@@ -13,10 +13,10 @@ use crate::outils::outils::demander;
         println!("{en_tete}\n{indices}");
     }
 
-    pub fn afficher_question<'a>(nb_question : usize, liste : &'a Vec<String>) -> &'a String{  //renvoie le mot attendu
+    pub fn afficher_question(nb_question : usize, liste : &Vec<String>) -> String{  //renvoie le mot attendu
             let question = format!("{}", liste[nb_question+1]).bright_yellow();
             println!("\n\n{}\n\n", question ); //nb_question est la réponse, nb_question +1 est la question
-            &liste[nb_question]
+            liste[nb_question].trim().to_string().clone()
         }
 
 
@@ -31,17 +31,17 @@ use crate::outils::outils::demander;
             indice.push_str("_ ");
         }
 
-        println!("\nC’est un mot de {} lettres", len);
+        println!("\n\nC’est un mot de {} lettres", len);
         println!("{}", indice);
     }
 
     pub fn afficher_reponse_precedante(mot : &String){
-            println!("La réponse étais {}\n",mot.green());
+            println!("\nLa réponse étais {}\n",mot.green());
             attendre_validation();
         }
 
     pub fn afficher_bonne_reponse() {
-            println!("\n Félicitation ce fût une bonne réponse 👍\n");
+            println!("\n\nFélicitation ce fût une bonne réponse 👍\n");
             attendre_validation();
         }
 
