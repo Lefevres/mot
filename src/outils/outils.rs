@@ -2,12 +2,7 @@ use std::io;
 use crate::joueur::Joueur;
 use crate::outils::mot::cree_liste;
 use std::error::Error;
-use crossterm::{
-    cursor,
-    event::{self, Event, KeyCode},
-    execute,
-    terminal::{self, ClearType},
-};
+use crossterm::{cursor, event::{self, Event, KeyCode}, execute, queue, terminal::{self, ClearType}};
 use std::io::{stdout, Write};
 use crossterm::style::{Color, SetForegroundColor};
 use crossterm::terminal::Clear;
@@ -97,8 +92,8 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
 
                         )?;
 
-                            entrée = liste_essai[liste_essai.len()-compteur].clone();
-                            compteur = compteur+1;
+                            entrée = liste_essai[liste_essai.len() - compteur].clone();
+                            compteur = compteur + 1;
                             print!("{}", entrée);
                         }
                     }
@@ -110,12 +105,11 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                             cursor::MoveToColumn(0),
 
                         )?;
-                            compteur = compteur-1;
-                            entrée = liste_essai[liste_essai.len()-compteur].clone();
+                            compteur = compteur - 1;
+                            entrée = liste_essai[liste_essai.len() - compteur].clone();
 
                             print!("{}", entrée);
-                        }
-                        else {
+                        } else {
                             execute!(
                                 sortie,
                                 Clear(ClearType::CurrentLine),
@@ -123,7 +117,6 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                             )?;
                         }
                     }
-
 
                     _ => {}
                 }
@@ -135,38 +128,26 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
 
 
                 if nb_lettre == count {
-                    execute!(
-                        sortie,
-                        SetForegroundColor(Color::Green),
-                    )?;
-                }
-                else if count >= 1{
-                    execute!(
-                        sortie,
-                        SetForegroundColor(Color::Red),
-                    )?;
-
+                    queue!(sortie, SetForegroundColor(Color::Green))?;
+                } else if count >= 1 {
+                    queue!(sortie, SetForegroundColor(Color::Red))?;
                 }
 
-                // aller à droite (colonne 40 par exemple)
-                execute!(
+                queue!(
                     sortie,
                     cursor::MoveTo(40, saved_cursor.1),
-                    terminal::Clear(ClearType::UntilNewLine)
-
+                    Clear(ClearType::UntilNewLine)
                 )?;
 
+                write!(sortie, "{} caractères", count)?;
+                queue!(sortie, SetForegroundColor(Color::Reset))?;
 
-                print!("{} caractères", count);
-                execute!(sortie, SetForegroundColor(Color::Reset))?;
+                queue!(sortie, cursor::MoveTo(saved_cursor.0, saved_cursor.1))?;
 
-                // Retour où était le curseur
-                execute!(sortie, cursor::MoveTo(saved_cursor.0, saved_cursor.1))?;
                 sortie.flush()?;
             }
         }
     }
-
     terminal::disable_raw_mode()?;
     println!("\nEntrée finale : {}", entrée);
     Ok(entrée)
