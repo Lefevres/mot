@@ -164,7 +164,7 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                     Clear(ClearType::UntilNewLine)
                 )?;
 
-                let caractère = if count == 0 {"caractère"} else {"caractères"};
+                let caractère = if count <= 1 {"caractère"} else {"caractères"};
 
                 write!(sortie, "{} {}", count,caractère)?;
                 queue!(sortie, SetForegroundColor(Color::Reset))?;
@@ -175,7 +175,7 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
     }
 
     terminal::disable_raw_mode()?;
-    println!("\nEntrée finale : {}", entrée);
+    //println!("\nEntrée finale : {}", entrée);
     Ok(entrée)
 }
 

@@ -6,7 +6,7 @@ sybarite : Se dit d'une personne qui recherche les plaisirs de la vie dans une a
 quidam : Un certain individu, une personne
 altermoiement : Action de différer, de remettre à un autre temps
 borborygme : Bruit produit par le déplacement des gaz dans l'intestin ou l'estomac
-aphasi : Perte totale ou partielle de la capacité de parler ou de comprendre le langage parlé ou écrit, due à une lésion cérébrale
+aphasie : Perte totale ou partielle de la capacité de parler ou de comprendre le langage parlé ou écrit, due à une lésion cérébrale
 kyrielle : Longue suite (de paroles) interminable
 andain : Rangée régulière d'herbe fauchée
 parangon : Modèle
@@ -28,7 +28,7 @@ ahaner :Faire entendre des ahans
 pileus : À l'époque hellénistique et romaine, un petit bonnet rond, emboîtant bien le crâne
 senestre : La main gauche
 succin : Ambre jaune
-mulet : Hybride mâle de l'âne et de la jument ou du cheval et de l'ânesse , toujours infécond
+mulet : Hybride mâle de l'âne et de la jument
 fat : Qui montre sa prétention de façon déplaisante et un peu ridicule
 irmis : L'institut régional de médecine et d'ingénierie du sport
 circonspet : Qui est attentif et prudent dans ses actes
@@ -158,7 +158,7 @@ paltoquet : Homme insignifiant et prétentieux, insolent
 endocrine : Se dit des glandes à sécrétion interne, dont les produits sont déversés directement dans le sang
 intifada : Dans les pays arabes, révolte populaire menée contre un régime oppresseur ou un ennemi étranger
 insane : Qui est contraire à la saine raison, au bon sens
-suburbaine : Qui est près d'une grande ville, qui l'entoure
+suburbain : Qui est près d'une grande ville, qui l'entoure
 affable : Qui accueille et écoute de bonne grâce les personnes qui s'adressent à lui, à elle
 patente : écrit public émanant du roi qui établissait un droit ou un privilège
 trimard : Vagabondage
@@ -225,3 +225,14 @@ sophisme : Argument, raisonnement faux malgré une apparence de vérité
 guindé : Qui manque de naturel, a de la raideur
 déluré : Qui a l'esprit vif et avisé, qui est habile à se tirer d'embarras
 facétie : Plaisanterie burlesque
+asthénie : fatigue anormal qui subsiste même après le repos
+prégnance : Qualité de ce qui s'impose avec force à l'esprit
+syllogisme : Raisonnement qui a la forme d'une implication dont l'antécédent est la conjonction de deux propositions appelées prémisses
+cyprès : Arbre (conifère) à feuillage vert sombre, à forme droite et élancée
+bardot : Hybride stérile issu de l'accouplement d'un cheval et d'une ânesse, d'allure plus chevaline que le mulet
+bardeau : Tuile de bois pour toiture et pour bardage vertical
+facétie : Plaisanterie burlesque
+inanité : Caractère de ce qui est vain
+aggiornamento : terme italien signifiant littéralement «mise à jour»
+rodomont : Personnage fanfaron
+arable : Qui peut être labourré

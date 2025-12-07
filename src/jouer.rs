@@ -66,6 +66,7 @@ fn réagir(joueur: &mut Joueur, reponse: &String, mot: &String) -> String {
             afficher_bonne_reponse();
             "suivant".to_string()
         }
+        _ if reponse.trim() == "" => "reposer".to_string(),
         _ => {  // Cas pour mauvaise réponse
             joueur.mauvaise_reponse_aj();
             afficher_mauvaise_reponse();
