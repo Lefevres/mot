@@ -3,13 +3,13 @@
  use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_score_fin};
 
 
-pub fn jouer(joueur: &mut Joueur, liste: &Vec<String>, nb_manche: usize) -> (usize, usize) {
+pub fn jouer(joueur: &mut Joueur, liste: &Vec<String>, nb_manche: usize) -> (usize, usize, bool) {
     let mut stop = false;
     while !joueur.fin(nb_manche) && !stop {
         stop = manche(joueur, liste, nb_manche);
     }
     afficher_score_fin(joueur);
-    (joueur.bonne_reponse(),joueur.mauvaise_reponse())
+    (joueur.bonne_reponse(),joueur.mauvaise_reponse(),stop)
 }
 
 

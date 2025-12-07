@@ -14,7 +14,9 @@ fn main() {
         let mode = demander(String::new());
         match mode.trim() {
             "solitaire" | "1" => {
-                solitaire();
+                if solitaire(){
+                    return
+                };
             }
             "multi_joueur" | "2" => {
                 multi_joueur();
@@ -44,9 +46,9 @@ fn rejouer() -> bool{
 
 }
 
-fn solitaire() {
+fn solitaire() -> bool{
     let mut préparation = se_préparer("solitaire".to_string());
-    jouer(&mut préparation.0, &préparation.1, préparation.2);
+    jouer(&mut préparation.0, &préparation.1, préparation.2).2
 }
 
 
