@@ -4,9 +4,11 @@ use crate::outils::mot::cree_liste;
 use std::error::Error;
 use crossterm::{cursor, event::{self, Event, KeyCode}, execute, queue, terminal::{self, ClearType}};
 use std::io::{stdout, Write};
+use crossterm::cursor::MoveToColumn;
 use crossterm::event::KeyEventKind;
 use crossterm::style::{Color, SetForegroundColor};
 use crossterm::terminal::Clear;
+
 
 pub fn demander(mut variable:String) -> String{
     io::stdin()
@@ -25,6 +27,8 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
 
     sortie.flush()?;
 
+    let mut position = 0;
+
     loop {
         // attend un événement clavier
         if event::poll(std::time::Duration::from_millis(50))? {
@@ -36,36 +40,88 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
 
                 match key.code {
                     KeyCode::Char(c) => {
-                        entrée.push(c);
-                        print!("{}", c);
+                        entrée.insert(position,c);
+                        execute!(sortie, MoveToColumn(0), Clear(ClearType::CurrentLine))?;
+                        print!("{}", entrée);
+                        position += 1;
+                        execute!(sortie,MoveToColumn(position as u16))?;
                         sortie.flush()?;
                     }
                     KeyCode::Backspace => {
-                        if !entrée.is_empty() {
-                            entrée.pop();
+                        if !entrée.is_empty() && position > 0 {
+
+                            let mut temp:String =  String::new();
+
+                            for (i, c) in entrée.chars().enumerate() {
+                                if i == position-1 {
+                                    continue;
+                                }
+                                temp.push(c);
+                            }
+                            entrée = temp;
+
                             execute!(
                                 sortie,
-                                cursor::MoveLeft(1),
-                                terminal::Clear(ClearType::UntilNewLine)
+                                MoveToColumn(0),
+                                Clear(ClearType::CurrentLine),
+
                             )?;
+                            print!("{}",entrée);
+                            position -= 1;
+                            execute!(
+                                sortie,
+                                MoveToColumn(position as u16),
+                            )?;
+                        }
+                    }
+                    KeyCode::Delete =>{
+                        if !entrée.is_empty() && position < nb_lettre {
+
+                            let mut temp:String =  String::new();
+
+                            for (i, c) in entrée.chars().enumerate() {
+                                if i == position {
+                                    continue;
+                                }
+                                temp.push(c);
+                            }
+                            entrée = temp;
+
+                            execute!(
+                                sortie,
+                                MoveToColumn(0),
+                                Clear(ClearType::CurrentLine),
+
+                            )?;
+                            print!("{}",entrée);
                         }
                     }
                     KeyCode::Enter => break,
                     KeyCode::Left => {
-                        execute!(sortie, cursor::MoveLeft(1))?;
+                        if position > 0{
+                            execute!(sortie, cursor::MoveLeft(1))?;
+                            position -= 1;
+                        }
+
                     }
                     KeyCode::Right => {
-                        execute!(sortie, cursor::MoveRight(1))?;
+                        if position < entrée.chars().count() {
+                            execute!(sortie, cursor::MoveRight(1))?;
+                            position +=1;
+                        }
+
                     }
                     KeyCode::Up => {
                         if liste_essai.len() >= compteur {
                             execute!(
                                 sortie,
                                 Clear(ClearType::CurrentLine),
-                                cursor::MoveToColumn(0)
+                                MoveToColumn(0)
                             )?;
+
                             entrée = liste_essai[liste_essai.len() - compteur].clone();
                             compteur += 1;
+                            position = entrée.chars().count();
                             print!("{}", entrée);
                         }
                     }
@@ -78,6 +134,7 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                                 cursor::MoveToColumn(0)
                             )?;
                             entrée = liste_essai[liste_essai.len() - compteur].clone();
+                            position = entrée.chars().count();
                             print!("{}", entrée);
                         } else {
                             execute!(
@@ -106,7 +163,10 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                     cursor::MoveTo(40, saved_cursor.1),
                     Clear(ClearType::UntilNewLine)
                 )?;
-                write!(sortie, "{} caractères", count)?;
+
+                let caractère = if count == 0 {"caractère"} else {"caractères"};
+
+                write!(sortie, "{} {}", count,caractère)?;
                 queue!(sortie, SetForegroundColor(Color::Reset))?;
                 queue!(sortie, cursor::MoveTo(saved_cursor.0, saved_cursor.1))?;
                 sortie.flush()?;
@@ -115,7 +175,7 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
     }
 
     terminal::disable_raw_mode()?;
-    //println!("\nEntrée finale : {}", entrée);
+    println!("\nEntrée finale : {}", entrée);
     Ok(entrée)
 }
 
@@ -171,7 +231,6 @@ fn demande_nom() -> String{
 
 pub fn demander_nb_manche(taille_liste: usize) -> usize {
     loop {
-        //crossterm::execute!(sortie(), crossterm::terminal::Clear(crossterm::terminal::ClearType::All)).unwrap();
 
         println!("Combien de manche ? ");
         let min = if taille_liste/2 < usize::MAX {  // les questions et les réponses sont déjà séparer, donc on divise par deux

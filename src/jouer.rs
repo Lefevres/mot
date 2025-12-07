@@ -2,7 +2,8 @@
  use crate::outils::outils::{demander_réponse};
  use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_score_fin};
 
- pub fn jouer(joueur: &mut Joueur, liste: &Vec<String>, nb_manche: usize) -> (usize, usize) {
+
+pub fn jouer(joueur: &mut Joueur, liste: &Vec<String>, nb_manche: usize) -> (usize, usize) {
     let mut stop = false;
     while !joueur.fin(nb_manche) && !stop {
         stop = manche(joueur, liste, nb_manche);
@@ -44,7 +45,7 @@ fn manche(joueur: &mut Joueur, liste: &Vec<String>,nb_manche: usize) -> bool {
 }
 
  
- fn réagir(joueur: &mut Joueur, reponse: &String, mot: &String) -> String {
+fn réagir(joueur: &mut Joueur, reponse: &String, mot: &String) -> String {
     match reponse.as_str() {
         "stop" | "s" => {
             "stop".to_string()

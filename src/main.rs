@@ -8,7 +8,6 @@ pub mod jouer;
 mod outils;
 
 
-
 fn main() {
     loop {
         println!("Mode de jeu : solitaire ou multi_joueur ?");

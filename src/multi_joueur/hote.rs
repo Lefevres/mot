@@ -15,7 +15,6 @@ pub async fn hote(){
 
     message_initialisation(&mut sockets, nb_manche, liste[0..nb_manche*2].to_vec()).await;  //fois deux pour question réponse
     let mut résultats:Vec<(String,String)> = Vec::new();
-    //résultats.push(("0".to_string(),"0".to_string()));
     noms.insert(0,mon_nom.clone());
 
 

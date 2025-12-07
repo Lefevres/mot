@@ -107,7 +107,7 @@ ambage : Circonlocution, hésitation à s'exprimer, marquant de l'embarras et pa
 ouaille : Les chrétiens, par rapport au prêtre
 truelle : Outil de maçon, à manche coudé, servant à étendre le mortier, l'enduit
 manu militari : En employant la force armée, la force publique (locution latine)
-ipso facto : Par voie de conséquence, automatiquement
+ipso facto : Par voie de conséquence, automatiquement (locution latine)
 proactif : Qui anticipe les attentes, prend l'initiative de l'action
 éponyme : Qui donne son nom à
 barbouze : Agent secret (police, espionnage)
@@ -177,7 +177,7 @@ truculent : Haut en couleur, qui étonne et réjouit par ses excès
 infatuer : Inspirer à (qqn) un engouement excessif
 paraphe : Trait, marque ajouté(e) à une signature
 mordicus : Obstinément, avec entêtement
-E pluribus unum : De plusieurs, un
+E pluribus unum : De plusieurs, un (locution latine)
 diacronie : Caractère des faits linguistiques considérés du point de vue des phases de leur évolution dans le temps
 caustique : Qui attaque, blesse par la moquerie et la satire
 midinette : Jeune ouvrière parisienne de la couture et de la mode
@@ -196,7 +196,7 @@ burlesque : D'un comique extravagant et déroutant
 facétie : Plaisanterie burlesque
 charnier : Lieu où sont entassés des cadavres
 méphitique : Qui sent mauvais et est toxique
-ad hominem : réfutation qui repose sur la mise en évidence d'un défaut de cohérence de la part d'une personne, entre ses dires, entre ses dires et ses croyances ou ses comportements (locution latine)
+ad hominem : réfutation qui repose sur la mise en évidence d'un défaut de cohérence de la part d'une personne, entre ses dires et ses croyances ou ses comportements (locution latine)
 ad rem :D'une manière nette, qui convient exactement à la question et à cause de cela, sans réplique (locution latine)
 ucronie : Récit d'évènements fictifs à partir d'un point de départ historique
 frimas : Brouillard froid et épais, qui se glace en tombant.
