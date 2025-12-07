@@ -4,6 +4,7 @@ use crate::outils::mot::cree_liste;
 use std::error::Error;
 use crossterm::{cursor, event::{self, Event, KeyCode}, execute, queue, terminal::{self, ClearType}};
 use std::io::{stdout, Write};
+use std::str::Chars;
 use crossterm::cursor::MoveToColumn;
 use crossterm::event::KeyEventKind;
 use crossterm::style::{Color, SetForegroundColor};
@@ -18,11 +19,16 @@ pub fn demander(mut variable:String) -> String{
 }
 
 
+fn convVeccharVersString(chaine: &Vec<char>) -> String{
+    chaine.into_iter().collect::<String>()
+}
+
+
 pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Result<String,Box<dyn Error>>{
     // Active le mode "raw" pour lire les touches en direct
     terminal::enable_raw_mode()?;
     let mut sortie = stdout();
-    let mut entrée = String::new();
+    let mut entrée: Vec<char> = Vec::new();
     let mut compteur = 1;
 
     sortie.flush()?;
@@ -39,34 +45,26 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                 }
 
                 match key.code {
+
                     KeyCode::Char(c) => {
+
                         entrée.insert(position,c);
                         execute!(sortie, MoveToColumn(0), Clear(ClearType::CurrentLine))?;
-                        print!("{}", entrée);
+                        print!("{}", convVeccharVersString(&entrée));
                         position += 1;
                         execute!(sortie,MoveToColumn(position as u16))?;
                         sortie.flush()?;
                     }
                     KeyCode::Backspace => {
                         if !entrée.is_empty() && position > 0 {
-
-                            let mut temp:String =  String::new();
-
-                            for (i, c) in entrée.chars().enumerate() {
-                                if i == position-1 {
-                                    continue;
-                                }
-                                temp.push(c);
-                            }
-                            entrée = temp;
-
+                            entrée.remove(position - 1);
                             execute!(
                                 sortie,
                                 MoveToColumn(0),
                                 Clear(ClearType::CurrentLine),
 
                             )?;
-                            print!("{}",entrée);
+                            print!("{}", convVeccharVersString(&entrée));
                             position -= 1;
                             execute!(
                                 sortie,
@@ -75,28 +73,26 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                         }
                     }
                     KeyCode::Delete =>{
-                        if !entrée.is_empty() && position < nb_lettre {
 
-                            let mut temp:String =  String::new();
-
-                            for (i, c) in entrée.chars().enumerate() {
-                                if i == position {
-                                    continue;
-                                }
-                                temp.push(c);
-                            }
-                            entrée = temp;
-
+                        if !entrée.is_empty() && position < entrée.len() {
+                            entrée.remove(position);
                             execute!(
                                 sortie,
                                 MoveToColumn(0),
                                 Clear(ClearType::CurrentLine),
 
                             )?;
-                            print!("{}",entrée);
+                            print!("{}", convVeccharVersString(&entrée));
+                            //position -= 1;
+                            execute!(
+                                sortie,
+                                MoveToColumn(position as u16),
+                            )?;
                         }
                     }
+
                     KeyCode::Enter => break,
+
                     KeyCode::Left => {
                         if position > 0{
                             execute!(sortie, cursor::MoveLeft(1))?;
@@ -104,13 +100,15 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                         }
 
                     }
+
                     KeyCode::Right => {
-                        if position < entrée.chars().count() {
+                        if position < entrée.len() {
                             execute!(sortie, cursor::MoveRight(1))?;
                             position +=1;
                         }
 
                     }
+
                     KeyCode::Up => {
                         if liste_essai.len() >= compteur {
                             execute!(
@@ -119,12 +117,13 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                                 MoveToColumn(0)
                             )?;
 
-                            entrée = liste_essai[liste_essai.len() - compteur].clone();
+                            entrée = liste_essai[liste_essai.len() - compteur].clone().chars().collect();
                             compteur += 1;
-                            position = entrée.chars().count();
-                            print!("{}", entrée);
+                            position = entrée.len();
+                            print!("{}", convVeccharVersString(&entrée));
                         }
                     }
+
                     KeyCode::Down => {
                         if compteur > 1 {
                             compteur -= 1;
@@ -133,9 +132,9 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                                 Clear(ClearType::CurrentLine),
                                 cursor::MoveToColumn(0)
                             )?;
-                            entrée = liste_essai[liste_essai.len() - compteur].clone();
-                            position = entrée.chars().count();
-                            print!("{}", entrée);
+                            entrée = liste_essai[liste_essai.len() - compteur].clone().chars().collect();
+                            position = entrée.len();
+                            print!("{}", convVeccharVersString(&entrée));
                         } else {
                             execute!(
                                 sortie,
@@ -150,7 +149,7 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
 
                 // Affichage dynamique du compteur de lettres
                 let saved_cursor = cursor::position()?;
-                let count = entrée.chars().count();
+                let count = entrée.len();
 
                 if nb_lettre == count {
                     queue!(sortie, SetForegroundColor(Color::Green))?;
@@ -176,7 +175,7 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
 
     terminal::disable_raw_mode()?;
     //println!("\nEntrée finale : {}", entrée);
-    Ok(entrée)
+    Ok(entrée.into_iter().collect())
 }
 
 
