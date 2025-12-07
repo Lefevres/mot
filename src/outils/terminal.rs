@@ -1,4 +1,5 @@
 use std::io::stdout;
+use std::time::Duration;
 use colored::Colorize;
 use crate::joueur::Joueur;
 use crate::outils::outils::demander;
@@ -82,6 +83,11 @@ pub fn afficher_score_fin(joueur: &mut Joueur) {
         "\nScore : {} bonne(s) réponse(s), {} mauvaise(s) réponse(s) — Ratio : {:.1}%",
         joueur.bonne_reponse(), joueur.mauvaise_reponse(), ratio
     );
+}
+
+
+pub fn afficher_temp(temp: Duration){
+    println!("Temps : {} secondes", temp.as_secs());
 }
 
 pub fn afficher(texte: String) {

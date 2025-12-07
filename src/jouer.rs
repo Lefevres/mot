@@ -1,14 +1,20 @@
- use crate::joueur::Joueur;
+use tokio::time;
+use crate::joueur::Joueur;
  use crate::outils::outils::{demander_réponse};
- use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_score_fin};
+ use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_score_fin, afficher_temp};
 
 
 pub fn jouer(joueur: &mut Joueur, liste: &Vec<String>, nb_manche: usize) -> (usize, usize, bool) {
     let mut stop = false;
+    let temp_début = time::Instant::now();
+
     while !joueur.fin(nb_manche) && !stop {
         stop = manche(joueur, liste, nb_manche);
     }
+
+    let temp = temp_début.elapsed();
     afficher_score_fin(joueur);
+    afficher_temp(temp);
     (joueur.bonne_reponse(),joueur.mauvaise_reponse(),stop)
 }
 

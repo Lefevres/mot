@@ -4,7 +4,6 @@ use crate::outils::mot::cree_liste;
 use std::error::Error;
 use crossterm::{cursor, event::{self, Event, KeyCode}, execute, queue, terminal::{self, ClearType}};
 use std::io::{stdout, Write};
-use std::str::Chars;
 use crossterm::cursor::MoveToColumn;
 use crossterm::event::KeyEventKind;
 use crossterm::style::{Color, SetForegroundColor};
@@ -19,7 +18,7 @@ pub fn demander(mut variable:String) -> String{
 }
 
 
-fn convVeccharVersString(chaine: &Vec<char>) -> String{
+fn conv_vec_char_vers_string(chaine: &Vec<char>) -> String{
     chaine.into_iter().collect::<String>()
 }
 
@@ -50,7 +49,7 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
 
                         entrée.insert(position,c);
                         execute!(sortie, MoveToColumn(0), Clear(ClearType::CurrentLine))?;
-                        print!("{}", convVeccharVersString(&entrée));
+                        print!("{}", conv_vec_char_vers_string(&entrée));
                         position += 1;
                         execute!(sortie,MoveToColumn(position as u16))?;
                         sortie.flush()?;
@@ -64,7 +63,7 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                                 Clear(ClearType::CurrentLine),
 
                             )?;
-                            print!("{}", convVeccharVersString(&entrée));
+                            print!("{}", conv_vec_char_vers_string(&entrée));
                             position -= 1;
                             execute!(
                                 sortie,
@@ -82,7 +81,7 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                                 Clear(ClearType::CurrentLine),
 
                             )?;
-                            print!("{}", convVeccharVersString(&entrée));
+                            print!("{}", conv_vec_char_vers_string(&entrée));
                             //position -= 1;
                             execute!(
                                 sortie,
@@ -120,7 +119,7 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                             entrée = liste_essai[liste_essai.len() - compteur].clone().chars().collect();
                             compteur += 1;
                             position = entrée.len();
-                            print!("{}", convVeccharVersString(&entrée));
+                            print!("{}", conv_vec_char_vers_string(&entrée));
                         }
                     }
 
@@ -134,7 +133,7 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                             )?;
                             entrée = liste_essai[liste_essai.len() - compteur].clone().chars().collect();
                             position = entrée.len();
-                            print!("{}", convVeccharVersString(&entrée));
+                            print!("{}", conv_vec_char_vers_string(&entrée));
                         } else {
                             execute!(
                                 sortie,
