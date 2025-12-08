@@ -23,7 +23,7 @@ fn conv_vec_char_vers_string(chaine: &Vec<char>) -> String{
 }
 
 
-pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Result<String,Box<dyn Error>>{
+pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: &usize) -> Result<String,Box<dyn Error>>{
     // Active le mode "raw" pour lire les touches en direct
     terminal::enable_raw_mode()?;
     let mut sortie = stdout();
@@ -150,7 +150,7 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
                 let saved_cursor = cursor::position()?;
                 let count = entrée.len();
 
-                if nb_lettre == count {
+                if *nb_lettre == count {
                     queue!(sortie, SetForegroundColor(Color::Green))?;
                 } else if count >= 1 {
                     queue!(sortie, SetForegroundColor(Color::Red))?;

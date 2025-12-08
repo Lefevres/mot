@@ -15,10 +15,9 @@ pub fn afficher_en_tete(){
     println!("{en_tete}\n{indices}");
 }
 
-pub fn afficher_question(nb_question : usize, liste : &Vec<(String,String)>) -> String{  //renvoie le mot attendu
-        let question = format!("{}", liste[nb_question].1).bright_yellow();
+pub fn afficher_question(position : usize, liste : &Vec<(String,String)>){  //renvoie le mot attendu
+        let question = format!("{}", liste[position].1).bright_yellow();
         println!("\n\n{}\n\n", question ); //nb_question.0 est la réponse, nb_question.1 est la question
-        liste[nb_question].0.trim().to_string().clone()
     }
 
 
@@ -56,7 +55,7 @@ pub fn afficher_mauvaise_reponse() {
         println!("\nÇa n'est malheureusement pas ça \n");
     }
 
-pub fn afficher_score(joueur: &mut Joueur, nb_manche: usize) {
+pub fn afficher_score(joueur: &Joueur, nb_manche: usize) {
 
         let total = joueur.bonne_reponse() + joueur.mauvaise_reponse();
         let ratio = if total > 0 {

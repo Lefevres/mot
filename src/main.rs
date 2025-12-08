@@ -6,7 +6,7 @@ mod joueur;
 mod multi_joueur;
 pub mod jouer;
 mod outils;
-
+mod jeux;
 
 fn main() {
     loop {
