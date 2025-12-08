@@ -94,3 +94,8 @@ pub fn afficher(texte: String) {
         println!("{}", texte);
     }
 
+
+pub fn afficher_str(texte: &str) {
+    println!("{}", texte);
+}
+

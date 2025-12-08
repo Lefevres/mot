@@ -1,6 +1,6 @@
 use crate::jouer::jouer;
 use crate::outils::outils::{demander, se_préparer};
-use crate::outils::terminal::afficher;
+use crate::outils::terminal::{afficher, afficher_str};
 
 mod joueur;
 mod multi_joueur;
@@ -10,7 +10,7 @@ mod outils;
 
 fn main() {
     loop {
-        println!("Mode de jeu : solitaire ou multi_joueur ?");
+        afficher_str("Mode de jeu : solitaire ou multi_joueur ?");
         let mode = demander(String::new());
         match mode.trim() {
             "solitaire" | "1" => {
@@ -22,7 +22,7 @@ fn main() {
                 multi_joueur();
             }
             _ => {
-                println!("N'importe quoi !!");
+                afficher_str("N'importe quoi !!");
             }
         }
         if !rejouer(){
@@ -60,7 +60,7 @@ pub fn multi_joueur(){
     match role.as_str() {
         r if r == role1  => multi_joueur::hote::hote(),
         r if r == role2 => multi_joueur::client::client(),
-        _ => println!("Rôle inconnu tu as rentrer : {}", role),
+        _ => afficher(format!("Rôle inconnu tu as rentrer : {}", role)),
     }
 }
 
