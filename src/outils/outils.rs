@@ -180,37 +180,33 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: &usize) -> Res
 
 
 
-pub fn crée_joueur(est_multi:bool) -> Joueur {
-    Joueur::nouveau(est_multi)
+pub fn crée_joueur() -> Joueur {
+    Joueur::nouveau()
 }
 
 
 pub fn se_préparer<'a>(role : String) -> (Joueur,Vec<(String,String)>,usize,String){  //rajouter la demande de nom ?
 
-    let joueur;
+    let joueur= crée_joueur();
     let mut liste=Vec::new();
     let mut nb_manche= 0;
     let mut nom = String::new();
 
     match role.as_str() {
         "solitaire" => {
-            joueur = crée_joueur(false);
             liste = cree_liste();
             nb_manche = demander_nb_manche(liste.len());
         }
         "client" => {
-            joueur = crée_joueur(false);
             nom = demande_nom();
         }
         "hote" => {
-            joueur = crée_joueur(false);
             liste = cree_liste();
             nom = demande_nom();
             nb_manche = demander_nb_manche(liste.len());
 
         }
         _ =>{
-            joueur = crée_joueur(false);
             liste = cree_liste();
             eprintln!("attention je suis dans se_préparer et je suis un role qui n'existe pas");
         }

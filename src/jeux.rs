@@ -1,13 +1,13 @@
 use crate::joueur::Joueur;
 use crate::outils::outils::demander_réponse;
-use crate::outils::terminal::{afficher_en_tete, afficher_indice, afficher_question, afficher_reponse_precedante, afficher_score, afficher_score_fin, afficher_str};
+use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_score_fin, afficher_str};
 
-enum Mode {
+pub enum Mode {
     Classique,
     Chronomètre,
 }
 
-struct Jeux<'a> {
+pub struct Jeux<'a> {
     mode: Mode,
     joueur: &'a mut Joueur,
     liste: Vec<(String, String)>,
@@ -16,20 +16,22 @@ struct Jeux<'a> {
 
 
 impl Jeux<'_> {
-    pub fn nouveau(mode: Mode, joueur: &mut Joueur, liste: Vec<(String,String)>, nb_manche: usize) -> Jeux {
+    pub fn nouveau(mode: Mode, joueur: &mut Joueur, liste: Vec<(String,String)>, nb_manche: usize) -> Jeux<'_> {
         Jeux{mode, joueur, liste, nb_manche}
     }
 
-    pub fn jouer(&mut self) {
+    pub fn jouer(&mut self) -> (usize,usize){
 
         while !self.joueur.fin(self.nb_manche) {
             if self.joue_une_manche(){
-                return;
+                return (self.joueur.bonne_reponse(),self.joueur.mauvaise_reponse());
             }
         }
 
-        //affiche les résultats ?
+
         afficher_score_fin(self.joueur);
+
+        (self.joueur.bonne_reponse(),self.joueur.mauvaise_reponse())
     }
 
     fn joue_une_manche(&mut self) -> bool {
@@ -43,6 +45,7 @@ impl Jeux<'_> {
 
             match réponse.as_str() {
                 "stop" | "s" => {
+                    afficher_str("\n");
                     return true;
                 }
 
@@ -56,7 +59,20 @@ impl Jeux<'_> {
                     afficher_reponse_precedante(&mot);
                     return false;
                 }
-                _=> afficher_str("comment on en est arrivé là ?")
+
+                _ if réponse == mot => { // Si la réponse est égale au mot attention au \n
+                    self.joueur.bonne_reponse_aj();
+                    self.joueur.question_suivante();
+                    afficher_bonne_reponse();
+                    return false;
+                }
+
+                _ if réponse.trim() == "" => (),
+
+                _ => {  // Cas pour mauvaise réponse
+                    self.joueur.mauvaise_reponse_aj();
+                    afficher_mauvaise_reponse();
+                }
             }
 
             liste_essai.push(réponse);
@@ -73,7 +89,7 @@ impl Jeux<'_> {
 
 
     fn détermine_mot(&self) -> String {
-        self.liste[self.nb_manche].0.clone()
+        self.liste[self.joueur.question()].0.clone()
     }
 
 

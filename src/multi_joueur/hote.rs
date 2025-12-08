@@ -1,7 +1,7 @@
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpListener,TcpStream};
+use crate::jeux::{Jeux, Mode};
 use crate::joueur::Joueur;
-use crate::jouer::jouer;
 use crate::outils::outils::{demander, se_préparer};
 use crate::outils::terminal::{afficher, afficher_str};
 
@@ -17,7 +17,9 @@ pub async fn hote(){
     let mut résultats:Vec<(String,String)> = Vec::new();
     noms.insert(0,mon_nom.clone());
 
-    jouer(&mut joueur, &liste, nb_manche);
+    let mut jeux = Jeux::nouveau(Mode::Classique,&mut joueur, liste, nb_manche);
+    jeux.jouer();
+    //jouer(&mut joueur, &liste, nb_manche);
 
     résultats = met_a_jour_les_résultats(&mut sockets,joueur).await;
 

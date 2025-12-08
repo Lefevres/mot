@@ -1,6 +1,6 @@
 use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, AsyncReadExt};
-use crate::jouer::jouer;
+use crate::jeux::{Jeux, Mode};
 use crate::outils::outils::{demander, se_préparer, transforme_vec_string_en_tuple_string};
 use crate::outils::terminal::{afficher, afficher_str};
 
@@ -23,7 +23,9 @@ pub async fn client(){
     let liste = donnée_initialisation.1;
 
     // Lance la partie
-    let résultat = jouer(&mut joueur, &liste, nb_manche);
+    let mut jeux = Jeux::nouveau(Mode::Classique,&mut joueur, liste, nb_manche);
+    let résultat = jeux.jouer();
+    //let résultat = jouer(&mut joueur, &liste, nb_manche);
     let résultat = résultat.0.to_string() +";"+ &résultat.1.to_string();
     envoie_a_l_hote(&mut stream, résultat).await.expect("on a un soucis");
     let résultats = reçoit_les_résultats(&mut stream,nom).await;

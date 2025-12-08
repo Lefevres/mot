@@ -1,10 +1,9 @@
-use crate::jouer::jouer;
+use crate::jeux::{Jeux, Mode};
 use crate::outils::outils::{demander, se_préparer};
 use crate::outils::terminal::{afficher, afficher_str};
 
 mod joueur;
 mod multi_joueur;
-pub mod jouer;
 mod outils;
 mod jeux;
 
@@ -48,7 +47,10 @@ fn rejouer() -> bool{
 
 fn solitaire() -> bool{
     let mut préparation = se_préparer("solitaire".to_string());
-    jouer(&mut préparation.0, &préparation.1, préparation.2).2
+    let mut jeux = Jeux::nouveau(Mode::Classique, &mut préparation.0, préparation.1, préparation.2);
+    jeux.jouer();
+    true
+    //jouer(&mut préparation.0, &préparation.1, préparation.2).2
 }
 
 
