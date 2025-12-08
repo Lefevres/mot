@@ -17,17 +17,9 @@ pub async fn hote(){
     let mut résultats:Vec<(String,String)> = Vec::new();
     noms.insert(0,mon_nom.clone());
 
-
     jouer(&mut joueur, &liste, nb_manche);
 
     résultats = met_a_jour_les_résultats(&mut sockets,joueur).await;
-
-    //let mut résultats = recevoir_résultat(&mut sockets).await;
-
-
-    //résultats = ajoute_mes_résultats(résultats,joueur);
-    //noms.insert(0,mon_nom.clone());
-
 
     afficher_résultat(nb_client,&noms,mon_nom,&résultats);
     partage_résultat(&mut sockets,résultats,noms).await;
@@ -92,11 +84,13 @@ async fn partage_résultat(sockets: &mut Vec<TcpStream>,résultats:Vec<(String,S
 }
 
 
-async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, questions: Vec<String>){
+async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, questions: Vec<(String,String)>){
     let mut message_string:String = String::from(nb_manche.to_string());
     for mess in &questions {
         message_string+=";";
-        message_string+= &mess;
+        message_string+= &mess.0;
+        message_string+=";";
+        message_string+= &mess.1;
     }
     for socket in sockets {
         envoie_message(socket,&message_string).await;
@@ -124,6 +118,7 @@ async fn lis_buffer(socket:&mut TcpStream) -> Result<String,Box<dyn std::error::
     }
     let littérale = String::from_utf8_lossy(&buffer[..n]).to_string();
     Ok(littérale)
+
 }
 
 

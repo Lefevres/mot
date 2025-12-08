@@ -1,7 +1,7 @@
 use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, AsyncReadExt};
 use crate::jouer::jouer;
-use crate::outils::outils::{demander, se_préparer};
+use crate::outils::outils::{demander, se_préparer, transforme_vec_string_en_tuple_string};
 
 
 const PORT: &str = ":9000";
@@ -18,7 +18,7 @@ pub async fn client(){
 
 
     println!("On attend que l'hote choisisse le nombre de manche…");
-    let donnée_initialisation: (usize,Vec<String>) = récupérer_info_initialisation(&mut stream).await;
+    let donnée_initialisation: (usize,Vec<(String,String)>) = récupérer_info_initialisation(&mut stream).await;
     let nb_manche = donnée_initialisation.0;
     let liste = donnée_initialisation.1;
 
@@ -67,7 +67,7 @@ async fn reçoit_les_résultats(socket: &mut TcpStream,mon_nom : String) -> Vec<
 }
 
 
-async fn récupérer_info_initialisation(stream: &mut TcpStream) -> (usize,Vec<String>) {
+async fn récupérer_info_initialisation(stream: &mut TcpStream) -> (usize,Vec<(String,String)>) {
     let donnée_initialisation_string = lis_message(stream).await.expect("erreur lecture stream");
     let mut donnée_initialisation_string:Vec<String> = donnée_initialisation_string
         .split(";")
@@ -75,7 +75,7 @@ async fn récupérer_info_initialisation(stream: &mut TcpStream) -> (usize,Vec<S
         .collect::<Vec<String>>();
     let nb_manche = donnée_initialisation_string[0].parse::<usize>().unwrap();
     donnée_initialisation_string = donnée_initialisation_string.split_off(1);
-    (nb_manche,donnée_initialisation_string)
+    (nb_manche, transforme_vec_string_en_tuple_string(donnée_initialisation_string))
 }
 
 

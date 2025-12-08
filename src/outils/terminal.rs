@@ -15,10 +15,10 @@ pub fn afficher_en_tete(){
     println!("{en_tete}\n{indices}");
 }
 
-pub fn afficher_question(nb_question : usize, liste : &Vec<String>) -> String{  //renvoie le mot attendu
-        let question = format!("{}", liste[nb_question+1]).bright_yellow();
-        println!("\n\n{}\n\n", question ); //nb_question est la réponse, nb_question +1 est la question
-        liste[nb_question].trim().to_string().clone()
+pub fn afficher_question(nb_question : usize, liste : &Vec<(String,String)>) -> String{  //renvoie le mot attendu
+        let question = format!("{}", liste[nb_question].1).bright_yellow();
+        println!("\n\n{}\n\n", question ); //nb_question.0 est la réponse, nb_question.1 est la question
+        liste[nb_question].0.trim().to_string().clone()
     }
 
 

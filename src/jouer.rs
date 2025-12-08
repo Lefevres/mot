@@ -4,7 +4,7 @@ use crate::joueur::Joueur;
  use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_score_fin, afficher_temp};
 
 
-pub fn jouer(joueur: &mut Joueur, liste: &Vec<String>, nb_manche: usize) -> (usize, usize, bool) {
+pub fn jouer(joueur: &mut Joueur, liste: &Vec<(String,String)>, nb_manche: usize) -> (usize, usize, bool) {
     let mut stop = false;
     let temp_début = time::Instant::now();
 
@@ -19,7 +19,7 @@ pub fn jouer(joueur: &mut Joueur, liste: &Vec<String>, nb_manche: usize) -> (usi
 }
 
 
-fn manche(joueur: &mut Joueur, liste: &Vec<String>,nb_manche: usize) -> bool {
+fn manche(joueur: &mut Joueur, liste: &Vec<(String,String)>,nb_manche: usize) -> bool {
     let mut essai = false;
     afficher_en_tete();
     afficher_score(joueur,nb_manche);

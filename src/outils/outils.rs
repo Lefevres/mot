@@ -185,7 +185,7 @@ pub fn crée_joueur(est_multi:bool) -> Joueur {
 }
 
 
-pub fn se_préparer<'a>(role : String) -> (Joueur,Vec<String>,usize,String){  //rajouter la demande de nom ?
+pub fn se_préparer<'a>(role : String) -> (Joueur,Vec<(String,String)>,usize,String){  //rajouter la demande de nom ?
 
     let joueur;
     let mut liste=Vec::new();
@@ -231,8 +231,8 @@ pub fn demander_nb_manche(taille_liste: usize) -> usize {
     loop {
 
         println!("Combien de manche ? ");
-        let min = if taille_liste/2 < usize::MAX {  // les questions et les réponses sont déjà séparer, donc on divise par deux
-            taille_liste/2
+        let min = if taille_liste/2 < usize::MAX {
+            taille_liste
         } else {
             usize::MAX
         };
@@ -249,4 +249,16 @@ pub fn demander_nb_manche(taille_liste: usize) -> usize {
             Err(_) => println!("Entrée invalide, veuillez entrer un nombre entier positif."),
         }
     }
+}
+
+
+pub fn transforme_vec_string_en_tuple_string(vecteur: Vec<String>) -> Vec<(String,String)> {
+    let mut nouvelle_liste_2_0:Vec<(String,String)> = vec![];
+
+    let mut compteur = 0;
+    while compteur < vecteur.len() {
+        nouvelle_liste_2_0.push((vecteur[compteur].to_string(), vecteur[compteur+1].to_string()));
+        compteur += 2;
+    }
+    nouvelle_liste_2_0
 }
