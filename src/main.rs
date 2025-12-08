@@ -50,7 +50,6 @@ fn solitaire() -> bool{
     let mut jeux = Jeux::nouveau(Mode::Classique, &mut préparation.0, préparation.1, préparation.2);
     jeux.jouer();
     true
-    //jouer(&mut préparation.0, &préparation.1, préparation.2).2
 }
 
 

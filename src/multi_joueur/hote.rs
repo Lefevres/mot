@@ -19,7 +19,6 @@ pub async fn hote(){
 
     let mut jeux = Jeux::nouveau(Mode::Classique,&mut joueur, liste, nb_manche);
     jeux.jouer();
-    //jouer(&mut joueur, &liste, nb_manche);
 
     résultats = met_a_jour_les_résultats(&mut sockets,joueur).await;
 

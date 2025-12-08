@@ -24,7 +24,7 @@ impl Jeux<'_> {
 
         while !self.joueur.fin(self.nb_manche) {
             if self.joue_une_manche(){
-                return (self.joueur.bonne_reponse(),self.joueur.mauvaise_reponse());
+                break;
             }
         }
 
@@ -81,6 +81,7 @@ impl Jeux<'_> {
 
     }
 
+
     fn affiche_info(&self) {
         afficher_en_tete();
         afficher_score(&self.joueur, self.nb_manche);
@@ -92,21 +93,4 @@ impl Jeux<'_> {
         self.liste[self.joueur.question()].0.clone()
     }
 
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
