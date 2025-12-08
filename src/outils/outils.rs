@@ -8,7 +8,7 @@ use crossterm::cursor::MoveToColumn;
 use crossterm::event::KeyEventKind;
 use crossterm::style::{Color, SetForegroundColor};
 use crossterm::terminal::Clear;
-
+use crate::outils::terminal::{afficher, afficher_str};
 
 pub fn demander(mut variable:String) -> String{
     io::stdin()
@@ -173,7 +173,7 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: usize) -> Resu
     }
 
     terminal::disable_raw_mode()?;
-    //println!("\nEntrée finale : {}", entrée);
+    //afficher(format!("\nEntrée finale : {}", entrée));
     Ok(entrée.into_iter().collect())
 }
 
@@ -222,7 +222,7 @@ pub fn se_préparer<'a>(role : String) -> (Joueur,Vec<(String,String)>,usize,Str
 
 
 fn demande_nom() -> String{
-    println!("Quel est ton nom ?");
+    afficher_str("Quel est ton nom ?");
     demander(String::new())
 }
 
@@ -230,13 +230,13 @@ fn demande_nom() -> String{
 pub fn demander_nb_manche(taille_liste: usize) -> usize {
     loop {
 
-        println!("Combien de manche ? ");
+        afficher_str("Combien de manche ? ");
         let min = if taille_liste/2 < usize::MAX {
             taille_liste
         } else {
             usize::MAX
         };
-        println!("Nombre max de manches : {}", min.to_string());
+        afficher(format!("Nombre max de manches : {}", min.to_string()));
         let entree = demander(String::new());
 
 
@@ -246,7 +246,7 @@ pub fn demander_nb_manche(taille_liste: usize) -> usize {
                     return num
                 }
             }, //  Retourne le nombre valide et quitte la boucle si le nombre n’est pas trop grand, sinon on va dépasser la taille de la liste
-            Err(_) => println!("Entrée invalide, veuillez entrer un nombre entier positif."),
+            Err(_) => afficher_str("Entrée invalide, veuillez entrer un nombre entier positif."),
         }
     }
 }
