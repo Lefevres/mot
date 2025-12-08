@@ -1,7 +1,7 @@
 use tokio::time;
 use crate::joueur::Joueur;
  use crate::outils::outils::{demander_réponse};
- use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_score_fin, afficher_temp};
+ use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_score_fin, afficher_str, afficher_temp};
 
 
 pub fn jouer(joueur: &mut Joueur, liste: &Vec<(String,String)>, nb_manche: usize) -> (usize, usize, bool) {
@@ -42,7 +42,7 @@ fn manche(joueur: &mut Joueur, liste: &Vec<(String,String)>,nb_manche: usize) ->
             "reposer" => {}
 
             _ => {
-                println!("comment on en est arrivé là ?");
+                afficher_str("comment on en est arrivé là ?");
             }
         }
         liste_essai.push(réponse);
