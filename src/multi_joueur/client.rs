@@ -2,7 +2,7 @@ use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, AsyncReadExt};
 use crate::jouer::jouer;
 use crate::outils::outils::{demander, se_préparer, transforme_vec_string_en_tuple_string};
-
+use crate::outils::terminal::{afficher, afficher_str};
 
 const PORT: &str = ":9000";
 
@@ -17,7 +17,7 @@ pub async fn client(){
     envoie_a_l_hote(&mut stream, nom.clone()).await.expect("J'envoie le nom");
 
 
-    println!("On attend que l'hote choisisse le nombre de manche…");
+    afficher_str("On attend que l'hote choisisse le nombre de manche…");
     let donnée_initialisation: (usize,Vec<(String,String)>) = récupérer_info_initialisation(&mut stream).await;
     let nb_manche = donnée_initialisation.0;
     let liste = donnée_initialisation.1;
@@ -32,7 +32,7 @@ pub async fn client(){
 
 
 fn afficher_résultat(résultats:Vec<(String,usize,usize)>)  {
-    println!("\n");
+    afficher_str("\n");
     for résultat in résultats {
         let nom = résultat.0;
         let bonne_réponse = résultat.1;
@@ -43,7 +43,7 @@ fn afficher_résultat(résultats:Vec<(String,usize,usize)>)  {
         } else {
             0.0
         };
-        println!("{} a eu {} bonne réponse(s) et {} mauvaise(s) pour un ration de {:.1}%\n",nom,bonne_réponse,mauvaise_réponse,ratio);
+        afficher(format!("{} a eu {} bonne réponse(s) et {} mauvaise(s) pour un ration de {:.1}%\n",nom,bonne_réponse,mauvaise_réponse,ratio));
     }
 }
 
@@ -98,16 +98,16 @@ async fn lis_message(stream : &mut TcpStream) -> Result<String,Box<dyn std::erro
 
 
 async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
-    println!("Quelle adresse ip ? (\"ip a\" sous linux)");
+    afficher_str("Quelle adresse ip ? (\"ip a\" sous linux)");
     let ip = demander(String::new());
 
     // Adresse IP du serveur
     let addr = ip+PORT;
 
-    println!("Connexion au serveur {}...", addr);
+    afficher(format!("Connexion au serveur {}...", addr));
 
     let  stream = TcpStream::connect(addr).await?;
-    println!("Connecté !");
+    afficher_str("Connecté !");
 
     Ok(stream)
 }
