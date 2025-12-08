@@ -3,7 +3,7 @@ use tokio::net::{TcpListener,TcpStream};
 use crate::joueur::Joueur;
 use crate::jouer::jouer;
 use crate::outils::outils::{demander, se_préparer};
-
+use crate::outils::terminal::{afficher, afficher_str};
 
 #[tokio::main]
 pub async fn hote(){
@@ -41,7 +41,7 @@ async fn met_a_jour_les_résultats(sockets :&mut Vec<TcpStream>,moi:Joueur) -> V
 }
 
 fn afficher_résultat(nb_client:usize, noms :&Vec<String>, mon_nom :String, résultats :&Vec<(String,String)>) {
-    println!("\n");
+    afficher_str("\n");
     for i in 0..nb_client+1 { //pour l'hote
         let nom = noms[i].clone();
         if *nom == mon_nom{
@@ -55,7 +55,7 @@ fn afficher_résultat(nb_client:usize, noms :&Vec<String>, mon_nom :String, rés
         } else {
             0.0
         };
-        println!("{} a eu {} bonne réponse(s) pour {} mauvaise(s) pour un ration de {:.1}% \n",nom, résultats[i].0, résultats[i].1,ratio);
+        afficher(format!("{} a eu {} bonne réponse(s) pour {} mauvaise(s) pour un ration de {:.1}% \n",nom, résultats[i].0, résultats[i].1,ratio));
     }
 }
 
@@ -99,7 +99,7 @@ async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, 
 
 
 fn demander_nb_joueur() -> usize {
-    println!("Pour combien de joueur ? (hormis toi)");
+    afficher_str("Pour combien de joueur ? (hormis toi)");
     loop {
         let nb_joueur = demander(String::new());
 
@@ -133,9 +133,9 @@ async fn connextion_au_client(nb_client: usize) -> Result<(Vec<String>,Vec<TcpSt
     let mut noms_joueurs = Vec::new();
     let mut sockets = Vec::new();
     for _ in 0..nb_client {
-        println!("En attente d'un client...");
+        afficher_str("En attente d'un client...");
         let (mut socket, adresse) = listener.accept().await?;
-        println!("Client connecté : {}", adresse);
+        afficher(format!("Client connecté : {}", adresse));
 
         let nom = lis_buffer(&mut socket).await?;
         noms_joueurs.push(nom);
