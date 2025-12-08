@@ -58,7 +58,7 @@ pub fn multi_joueur(){
     let role = choix_role(&role1, &role2);
 
     match role.as_str() {
-        r if r == role1 => multi_joueur::hote::hote(),
+        r if r == role1  => multi_joueur::hote::hote(),
         r if r == role2 => multi_joueur::client::client(),
         _ => println!("Rôle inconnu tu as rentrer : {}", role),
     }
@@ -71,10 +71,10 @@ fn choix_role(role1 : &str, role2 : &str) -> String{  // les roles sont hote ou 
         let role = demander(String::new());
 
         match role.as_str() {
-            r if r == role1 || r == "1" => {
+            r if r == role1 || r == "1" || r == "h" => {
                 return role1.to_string();
             }
-            r if r == role2 || r == "2" => {
+            r if r == role2 || r == "2" || r == "c"=> {
                 return role2.to_string();
             }
             _ => {
