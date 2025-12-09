@@ -38,10 +38,10 @@ fn mode_de_jeu() -> Mode {
     afficher_str("Classique ? Chronomètre ?");
 
     match demander().as_str() {
-        "Classique" => {
+        "Classique" | "classique"  | "1" | "cl" | "Cl" => {
             Mode::Classique
         }
-        "Chronomètre" => {
+        "Chronomètre" | "chronomètre" | "2" | "ch" | "Ch"  => {
             Mode::Chronomètre
         }
         _ => {
