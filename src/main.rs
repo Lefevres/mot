@@ -1,4 +1,6 @@
 use crate::jeux::{Jeux, Mode};
+use crate::multi_joueur::client::client;
+use crate::multi_joueur::hote::hote;
 use crate::outils::outils::{demander, se_préparer};
 use crate::outils::terminal::{afficher, afficher_str};
 
@@ -7,23 +9,24 @@ mod multi_joueur;
 mod outils;
 mod jeux;
 
+
 fn main() {
+
     loop {
-        afficher_str("Mode de jeu : solitaire ou multi_joueur ?");
-        let mode = demander();
-        match mode.trim() {
-            "solitaire" | "1" => {
-                if solitaire(){
-                    return
-                };
-            }
-            "multi_joueur" | "2" => {
-                multi_joueur();
-            }
-            _ => {
-                afficher_str("N'importe quoi !!");
+        let mode : Mode = mode_de_jeu();
+        if est_ce_multi() {
+            //multi_joueur
+            match choisir_le_role() {
+                true => hote(),
+                false => client(),
             }
         }
+        else {
+            let mut préparation = se_préparer("solitaire".to_string());
+            let mut jeux = Jeux::nouveau(mode, &mut préparation.0, préparation.1, préparation.2);
+            jeux.jouer();
+        }
+
         if !rejouer(){
             break;
         }
@@ -31,9 +34,69 @@ fn main() {
     }
 }
 
+fn mode_de_jeu() -> Mode {
+    afficher_str("Classique ? Chronomètre ?");
+
+    match demander().as_str() {
+        "Classique" => {
+            Mode::Classique
+        }
+        "Chronomètre" => {
+            Mode::Chronomètre
+        }
+        _ => {
+            Mode::Classique
+        }
+    }
+}
+
+
+fn est_ce_multi() -> bool{
+    afficher_str("Mode de jeu : solitaire ou multi_joueur ?");
+    let mode = demander();
+    loop {
+        match mode.trim() {
+            "solitaire" | "1" => {
+                return false
+            }
+            "multi_joueur" | "2" => {
+                return true
+            }
+            _ => {
+                afficher_str("N'importe quoi !!");
+
+            }
+        }
+    }
+
+}
+
+
+fn choisir_le_role() -> bool {
+    afficher_str("Role : hote ou client");
+    loop {
+        match demander().trim() {
+            "hote" | "h" | "1" => {
+                return true
+            }
+
+            "client" | "c" | "2" => {
+                return false
+            }
+
+            _ => {
+                afficher_str("N'importe quoi !!");
+            }
+
+        }
+    }
+
+}
+
 
 fn rejouer() -> bool{
     afficher(String::from("\n\nrejouer ? "));
+
     loop{
         let réponse = demander();
         match réponse.as_str() {
@@ -43,68 +106,4 @@ fn rejouer() -> bool{
         }
     }
 
-}
-
-fn solitaire() -> bool{
-
-    let mut préparation = se_préparer("solitaire".to_string());
-    
-    afficher_str("Classique ? Chronomètre ?");
-
-    let mut mode:Mode;
-    match demander().as_str() {
-        "Classique" => {
-            mode = Mode::Classique;
-
-        }
-
-        "Chronomètre" => {
-            mode = Mode::Chronomètre;
-
-        }
-
-        _ => {
-            mode = Mode::Classique;
-
-        }
-
-    }
-
-    let mut jeux = Jeux::nouveau(mode, &mut préparation.0, préparation.1, préparation.2);
-    jeux.jouer();
-    true
-
-}
-
-
-pub fn multi_joueur(){
-    let role1 = "hote";
-    let role2 = "client";
-    let role = choix_role(&role1, &role2);
-
-    match role.as_str() {
-        r if r == role1  => multi_joueur::hote::hote(),
-        r if r == role2 => multi_joueur::client::client(),
-        _ => afficher(format!("Rôle inconnu tu as rentrer : {}", role)),
-    }
-}
-
-
-fn choix_role(role1 : &str, role2 : &str) -> String{  // les roles sont hote ou client
-    afficher(format!("Role : {} ou {}", role1, role2));
-    loop {
-        let role = demander();
-
-        match role.as_str() {
-            r if r == role1 || r == "1" || r == "h" => {
-                return role1.to_string();
-            }
-            r if r == role2 || r == "2" || r == "c"=> {
-                return role2.to_string();
-            }
-            _ => {
-                afficher("Choix invalide, réessayez.".to_string());
-            }
-        }
-    }
 }
