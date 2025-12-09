@@ -13,7 +13,7 @@ pub async fn hote(){
     let mut noms = clients.0;
     let mut sockets = clients.1;
 
-    message_initialisation(&mut sockets, nb_manche, liste[0..nb_manche*2].to_vec()).await;  //fois deux pour question réponse
+    message_initialisation(&mut sockets, nb_manche, &liste).await;  //fois deux pour question réponse
     let mut résultats:Vec<(String,String)> = Vec::new();
     noms.insert(0,mon_nom.clone());
 
@@ -85,9 +85,9 @@ async fn partage_résultat(sockets: &mut Vec<TcpStream>,résultats:Vec<(String,S
 }
 
 
-async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, questions: Vec<(String,String)>){
+async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, questions: &Vec<(String,String)>){
     let mut message_string:String = String::from(nb_manche.to_string());
-    for mess in &questions {
+    for mess in questions {
         message_string+=";";
         message_string+= &mess.0;
         message_string+=";";
