@@ -9,8 +9,8 @@ mod multi_joueur;
 mod outils;
 mod jeux;
 
-#[tokio::main]
-async fn main() {
+
+fn main() {
 
     loop {
         let mode : Mode = mode_de_jeu();

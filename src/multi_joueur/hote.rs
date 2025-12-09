@@ -13,7 +13,8 @@ pub async fn hote(){
     let mut noms = clients.0;
     let mut sockets = clients.1;
 
-    message_initialisation(&mut sockets, nb_manche, &liste).await;  //fois deux pour question réponse
+    message_initialisation(&mut sockets, nb_manche, &liste[0..nb_manche*2].to_vec()).await;  //fois deux pour question réponse; faire très attention si jouer, tester le multi
+
     let mut résultats:Vec<(String,String)> = Vec::new();
     noms.insert(0,mon_nom.clone());
 

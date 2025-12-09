@@ -9,7 +9,7 @@ const PORT: &str = ":9000";
 
 #[tokio::main]
 pub async fn client(){
-    let (mut joueur,_,_,nom) = se_préparer("client".to_string());
+    let (mut joueur,_,_,nom) = se_préparer("client");
 
     let temp = connection().await.unwrap();
 
@@ -61,6 +61,12 @@ async fn reçoit_les_résultats(socket: &mut TcpStream,mon_nom : String) -> Vec<
         if *nom == mon_nom{
             continue;
         }
+
+        match préparation_retour.get(i+1) {
+            Some(valeur) => println!("Conversion réussie : {}", valeur),
+            None => eprintln!("Erreur de conversion"),
+        }
+
         let bonne_réponse = préparation_retour[i+1].parse().unwrap();
         let mauvaise_réponse = préparation_retour[i+2].parse().unwrap();
         résultats.push((nom.to_string(),bonne_réponse,mauvaise_réponse));
@@ -101,7 +107,7 @@ async fn lis_message(stream : &mut TcpStream) -> Result<String,Box<dyn std::erro
 
 async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
     afficher_str("Quelle adresse ip ? (\"ip a\" sous linux)");
-    let ip = demander(String::new());
+    let ip = demander();
 
     // Adresse IP du serveur
     let addr = ip+PORT;
