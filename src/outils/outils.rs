@@ -10,7 +10,8 @@ use crossterm::style::{Color, SetForegroundColor};
 use crossterm::terminal::Clear;
 use crate::outils::terminal::{afficher, afficher_str};
 
-pub fn demander(mut variable:String) -> String{
+pub fn demander() -> String{
+    let mut variable = String::new();
     io::stdin()
         .read_line(&mut variable)
         .expect("il y a un problème dans demander de outils");
@@ -219,7 +220,7 @@ pub fn se_préparer<'a>(role : String) -> (Joueur,Vec<(String,String)>,usize,Str
 
 fn demande_nom() -> String{
     afficher_str("Quel est ton nom ?");
-    demander(String::new())
+    demander()
 }
 
 
@@ -233,7 +234,7 @@ pub fn demander_nb_manche(taille_liste: usize) -> usize {
             usize::MAX
         };
         afficher(format!("Nombre max de manches : {}", min.to_string()));
-        let entree = demander(String::new());
+        let entree = demander();
 
 
         match entree.parse::<usize>() {

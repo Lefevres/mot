@@ -8,12 +8,12 @@ use crate::outils::terminal::{afficher, afficher_str};
 #[tokio::main]
 pub async fn hote(){
     let nb_client:usize= demander_nb_joueur();
-    let (mut joueur,liste,nb_manche,mon_nom) = se_préparer("hote".to_string());
+    let (mut joueur,liste,nb_manche,mon_nom) = se_préparer("hote".to_string());  //on envoi toute les questions ????????
     let clients = connextion_au_client(nb_client).await.unwrap();
     let mut noms = clients.0;
     let mut sockets = clients.1;
 
-    message_initialisation(&mut sockets, nb_manche, liste[0..nb_manche*2].to_vec()).await;  //fois deux pour question réponse
+    message_initialisation(&mut sockets, nb_manche, liste[0..nb_manche].to_vec()).await;
     let mut résultats:Vec<(String,String)> = Vec::new();
     noms.insert(0,mon_nom.clone());
 
@@ -102,7 +102,7 @@ async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, 
 fn demander_nb_joueur() -> usize {
     afficher_str("Pour combien de joueur ? (hormis toi)");
     loop {
-        let nb_joueur = demander(String::new());
+        let nb_joueur = demander();
 
         if nb_joueur.parse::<i32>().is_ok(){
             return nb_joueur.parse::<i32>().unwrap() as usize;

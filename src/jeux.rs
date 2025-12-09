@@ -5,6 +5,7 @@ use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher
 pub enum Mode {
     Classique,
     Chronomètre,
+    Survie,
 }
 
 pub struct Jeux<'a> {
@@ -21,7 +22,31 @@ impl Jeux<'_> {
     }
 
     pub fn jouer(&mut self) -> (usize,usize){
+        match self.mode {
+            Mode::Classique => {
+                self.classique()
+            }
 
+            Mode::Chronomètre => {
+                self.chronomètre()
+            }
+            _ => (0,0)
+
+        }
+
+    }
+
+
+    fn chronomètre(&mut self) -> (usize,usize){
+        afficher_str("il ne se passe pas grand chose pour le moment");
+        (0,0)
+    }
+
+
+
+
+
+    fn classique(&mut self) -> (usize,usize){
         while !self.joueur.fin(self.nb_manche) {
             if self.joue_une_manche(){
                 break;

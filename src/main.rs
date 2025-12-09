@@ -10,7 +10,7 @@ mod jeux;
 fn main() {
     loop {
         afficher_str("Mode de jeu : solitaire ou multi_joueur ?");
-        let mode = demander(String::new());
+        let mode = demander();
         match mode.trim() {
             "solitaire" | "1" => {
                 if solitaire(){
@@ -35,7 +35,7 @@ fn main() {
 fn rejouer() -> bool{
     afficher(String::from("\n\nrejouer ? "));
     loop{
-        let réponse = demander(String::new());
+        let réponse = demander();
         match réponse.as_str() {
             "oui" | "o" =>  return true,
             "non" | "n" => return false,
@@ -46,10 +46,34 @@ fn rejouer() -> bool{
 }
 
 fn solitaire() -> bool{
+
     let mut préparation = se_préparer("solitaire".to_string());
-    let mut jeux = Jeux::nouveau(Mode::Classique, &mut préparation.0, préparation.1, préparation.2);
+    
+    afficher_str("Classique ? Chronomètre ?");
+
+    let mut mode:Mode;
+    match demander().as_str() {
+        "Classique" => {
+            mode = Mode::Classique;
+
+        }
+
+        "Chronomètre" => {
+            mode = Mode::Chronomètre;
+
+        }
+
+        _ => {
+            mode = Mode::Classique;
+
+        }
+
+    }
+
+    let mut jeux = Jeux::nouveau(mode, &mut préparation.0, préparation.1, préparation.2);
     jeux.jouer();
     true
+
 }
 
 
@@ -69,7 +93,7 @@ pub fn multi_joueur(){
 fn choix_role(role1 : &str, role2 : &str) -> String{  // les roles sont hote ou client
     afficher(format!("Role : {} ou {}", role1, role2));
     loop {
-        let role = demander(String::new());
+        let role = demander();
 
         match role.as_str() {
             r if r == role1 || r == "1" || r == "h" => {

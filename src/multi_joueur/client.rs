@@ -11,9 +11,7 @@ const PORT: &str = ":9000";
 pub async fn client(){
     let (mut joueur,_,_,nom) = se_préparer("client".to_string());
 
-    let temp = connection().await.unwrap();
-
-    let mut stream = temp;
+    let mut stream = connection().await.unwrap();
     envoie_a_l_hote(&mut stream, nom.clone()).await.expect("J'envoie le nom");
 
 
@@ -101,7 +99,7 @@ async fn lis_message(stream : &mut TcpStream) -> Result<String,Box<dyn std::erro
 
 async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
     afficher_str("Quelle adresse ip ? (\"ip a\" sous linux)");
-    let ip = demander(String::new());
+    let ip = demander();
 
     // Adresse IP du serveur
     let addr = ip+PORT;
