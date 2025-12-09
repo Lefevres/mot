@@ -8,7 +8,7 @@ use crate::outils::terminal::{afficher, afficher_str};
 #[tokio::main]
 pub async fn hote(){
     let nb_client:usize= demander_nb_joueur();
-    let (mut joueur,liste,nb_manche,mon_nom) = se_préparer("hote".to_string());
+    let (mut joueur,liste,nb_manche,mon_nom) = se_préparer("hote");
     let clients = connextion_au_client(nb_client).await.unwrap();
     let mut noms = clients.0;
     let mut sockets = clients.1;

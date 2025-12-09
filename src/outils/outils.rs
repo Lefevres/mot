@@ -186,14 +186,14 @@ pub fn crée_joueur() -> Joueur {
 }
 
 
-pub fn se_préparer<'a>(role : String) -> (Joueur,Vec<(String,String)>,usize,String){  //rajouter la demande de nom ?
+pub fn se_préparer<'a>(role : &str) -> (Joueur,Vec<(String,String)>,usize,String){  //rajouter la demande de nom ?
 
     let joueur= crée_joueur();
     let mut liste=Vec::new();
     let mut nb_manche= 0;
     let mut nom = String::new();
 
-    match role.as_str() {
+    match role {
         "solitaire" => {
             liste = cree_liste();
             nb_manche = demander_nb_manche(liste.len());

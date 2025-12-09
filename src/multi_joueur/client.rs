@@ -9,7 +9,7 @@ const PORT: &str = ":9000";
 
 #[tokio::main]
 pub async fn client(){
-    let (mut joueur,_,_,nom) = se_préparer("client".to_string());
+    let (mut joueur,_,_,nom) = se_préparer("client");
 
     let mut stream =  connection().await.unwrap();
     envoie_a_l_hote(&mut stream, nom.clone()).await.expect("J'envoie le nom");
