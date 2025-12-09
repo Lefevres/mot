@@ -1,4 +1,7 @@
 use std::cmp::PartialEq;
+use std::thread;
+use std::time::Duration;
+use crossbeam_channel::unbounded;
 use crate::joueur::Joueur;
 use crate::outils::outils::demander_réponse;
 use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_score_fin, afficher_str};
@@ -40,9 +43,30 @@ impl Jeux<'_> {
     }
 
     fn chronomètre(&mut self) -> (usize,usize){
-        afficher_str("il ne se passe pas grand chose pour le moment");
-        (0,0)
+
+        let (écrit, lit) = unbounded();
+        let temp = Duration::from_secs(10);
+
+        // Thread pour le compte à rebours
+        thread::spawn(move || {
+            thread::sleep(temp);
+            écrit.send(()).unwrap();
+        });
+
+        loop {
+            // attend soit la saisie, soit le signal de fin de temps
+            crossbeam_channel::select! {
+            recv(lit) -> _ => {
+                afficher_str("Temps écoulé !");
+                return (self.joueur.bonne_reponse(),self.joueur.mauvaise_reponse());
+            }
+            default => {
+                self.joue_une_manche();
+                }
+            }
+        }
     }
+
 
     fn classique(&mut self) -> (usize,usize){
 
