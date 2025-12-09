@@ -102,7 +102,7 @@ async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, 
 fn demander_nb_joueur() -> usize {
     afficher_str("Pour combien de joueur ? (hormis toi)");
     loop {
-        let nb_joueur = demander(String::new());
+        let nb_joueur = demander();
 
         if nb_joueur.parse::<i32>().is_ok(){
             return nb_joueur.parse::<i32>().unwrap() as usize;

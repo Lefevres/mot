@@ -48,7 +48,7 @@ pub fn afficher_bonne_reponse() {
 
 fn attendre_validation(){
     println!("Entrer pour continuer : \n");
-    demander(String::new());
+    demander();
 }
 
 pub fn afficher_mauvaise_reponse() {

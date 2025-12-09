@@ -99,7 +99,7 @@ async fn lis_message(stream : &mut TcpStream) -> Result<String,Box<dyn std::erro
 
 async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
     afficher_str("Quelle adresse ip ? (\"ip a\" sous linux)");
-    let ip = demander(String::new());
+    let ip = demander();
 
     // Adresse IP du serveur
     let addr = ip+PORT;
