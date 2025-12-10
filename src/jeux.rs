@@ -56,7 +56,7 @@ impl Jeux<'_> {
         let mut liste_essai:Vec<String> = vec!();
 
         loop {  //tant que le mot n'as pas été passer, ou stop
-            let réponse = demander_réponse(&mut liste_essai,&mot.chars().count()).unwrap();
+            let réponse = demander_réponse(&mut liste_essai,&mot.chars().count(),None).unwrap();
 
             match réponse.as_str() {
                 "stop" | "s" => {

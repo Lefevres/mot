@@ -1,20 +1,69 @@
-use std::time::Duration;
+use std::time::{Duration, Instant};
 use crate::jeux::Jeux;
-use crate::outils::outils::demander;
-use crate::outils::terminal::{afficher_score_fin, afficher_str};
+use crate::outils::outils::{demander, demander_réponse};
+use crate::outils::terminal::{afficher_bonne_reponse, afficher_indice, afficher_mauvaise_reponse, afficher_reponse_precedante, afficher_score_fin, afficher_str};
 
 pub fn chronomètre(jeux:&mut Jeux) -> (usize, usize){
     afficher_str("Combien de seconde ?");
-    let temp = Duration::from_secs(demander().parse().unwrap());
+    let durée = Duration::from_secs(demander().parse().unwrap());
     let début = std::time::Instant::now();
 
 
     loop {
-        if début.elapsed() >= temp {
+        if début.elapsed() >= durée {
             afficher_str("Le temp est passer !");
             afficher_score_fin(jeux.joueur);
             return (jeux.joueur.bonne_reponse(),jeux.joueur.mauvaise_reponse())
         }
-        jeux.joue_une_manche(0);
+        joue_une_manche(jeux,0,début+durée);
     }
+}
+
+
+
+fn joue_une_manche(jeux:&mut Jeux,nb_manche_total:usize,fin:Instant) -> bool {
+
+    jeux.affiche_info(nb_manche_total);
+    let mot = jeux.détermine_mot();
+    let mut liste_essai:Vec<String> = vec!();
+
+    loop {  //tant que le mot n'as pas été passer, ou stop
+        let réponse = demander_réponse(&mut liste_essai, &mot.chars().count(), Option::from(fin)).unwrap();
+
+        match réponse.as_str() {
+            "stop" | "s" => {
+                afficher_str("\n");
+                return true;
+            }
+
+            "indice" | "i" => {
+                afficher_indice(&mot);
+            }
+
+            "passe" | "p" => {
+                jeux.joueur.question_suivante();
+                jeux.joueur.mauvaise_reponse_aj();
+                afficher_reponse_precedante(&mot);
+                return false;
+            }
+
+            _ if réponse == mot => { // Si la réponse est égale au mot attention au \n
+                jeux.joueur.bonne_reponse_aj();
+                jeux.joueur.question_suivante();
+                afficher_bonne_reponse();
+                return false;
+            }
+
+            _ if réponse.trim() == "" => (),
+
+            _ => {  // Cas pour mauvaise réponse
+                jeux.joueur.mauvaise_reponse_aj();
+                afficher_mauvaise_reponse();
+            }
+        }
+
+        liste_essai.push(réponse);
+
+    }
+
 }

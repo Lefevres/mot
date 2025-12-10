@@ -4,6 +4,7 @@ use crate::outils::mot::cree_liste;
 use std::error::Error;
 use crossterm::{cursor, event::{self, Event, KeyCode}, execute, queue, terminal::{self, ClearType}};
 use std::io::{stdout, Write};
+use std::time::Instant;
 use crossterm::cursor::MoveToColumn;
 use crossterm::event::KeyEventKind;
 use crossterm::style::{Color, SetForegroundColor};
@@ -24,7 +25,7 @@ fn conv_vec_char_vers_string(chaine: &Vec<char>) -> String{
 }
 
 
-pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: &usize) -> Result<String,Box<dyn Error>>{
+pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: &usize,fin: Option<Instant>) -> Result<String,Box<dyn Error>>{
     // Active le mode "raw" pour lire les touches en direct
     terminal::enable_raw_mode()?;
     let mut sortie = stdout();
@@ -171,6 +172,13 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: &usize) -> Res
                 sortie.flush()?;
             }
         }
+        if fin.is_some() {
+            if fin.unwrap() <= Instant::now() {
+                terminal::disable_raw_mode()?;
+                return Ok("stop".to_string());
+            }
+        }
+
     }
 
     terminal::disable_raw_mode()?;
