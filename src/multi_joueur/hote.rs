@@ -6,19 +6,19 @@ use crate::outils::outils::{demander, se_préparer};
 use crate::outils::terminal::{afficher, afficher_str};
 
 #[tokio::main]
-pub async fn hote(){
+pub async fn hote(mode: Mode){
     let nb_client:usize= demander_nb_joueur();
     let (mut joueur,liste,nb_manche,mon_nom) = se_préparer("hote");
     let clients = connextion_au_client(nb_client).await.unwrap();
     let mut noms = clients.0;
     let mut sockets = clients.1;
 
-    message_initialisation(&mut sockets, nb_manche, &liste[0..nb_manche*2].to_vec()).await;  //fois deux pour question réponse; faire très attention si jouer, tester le multi
+    message_initialisation(&mut sockets, nb_manche, &liste[0..nb_manche*2].to_vec(),&mode).await;  //fois deux pour question réponse; faire très attention si jouer, tester le multi
 
-    let mut résultats:Vec<(String,String)> = Vec::new();
+    let mut résultats:Vec<(String,String)>;
     noms.insert(0,mon_nom.clone());
 
-    let mut jeux = Jeux::nouveau(Mode::Classique,&mut joueur, liste, nb_manche);
+    let mut jeux = Jeux::nouveau(mode,&mut joueur, liste, nb_manche);
     jeux.jouer();
 
     résultats = met_a_jour_les_résultats(&mut sockets,joueur).await;
@@ -86,8 +86,8 @@ async fn partage_résultat(sockets: &mut Vec<TcpStream>,résultats:Vec<(String,S
 }
 
 
-async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, questions: &Vec<(String,String)>){
-    let mut message_string:String = String::from(nb_manche.to_string());
+async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, questions: &Vec<(String,String)>, mode: &Mode){
+    let mut message_string:String = String::from(nb_manche.to_string()+";"+préparer_enum(mode).as_str());
     for mess in questions {
         message_string+=";";
         message_string+= &mess.0;
@@ -144,4 +144,8 @@ async fn connextion_au_client(nb_client: usize) -> Result<(Vec<String>,Vec<TcpSt
         sockets.push(socket);
     }
     Ok((noms_joueurs,sockets))
+}
+
+fn préparer_enum(valeur: &Mode) -> String {
+    serde_json::to_string(valeur).unwrap()
 }

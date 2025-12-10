@@ -13,19 +13,26 @@ mod jeux;
 fn main() {
 
     loop {
-        let mode : Mode = mode_de_jeu();
+
         if est_ce_multi() {
-            //multi_joueur
             match choisir_le_role() {
-                true => hote(),
-                false => client(),
+                true => {
+                    let mode = mode_de_jeu();
+                    hote(mode);  //il faudra que l'hote envoie le role au client
+                }
+
+                false => {
+                    client();
+                }
             }
 
         }else {
+            let mode = mode_de_jeu();
             let mut préparation = se_préparer("solitaire");
             let mut jeux = Jeux::nouveau(mode, &mut préparation.0, préparation.1, préparation.2);
             jeux.jouer();
         }
+
 
         if !rejouer(){
             break;
@@ -33,6 +40,7 @@ fn main() {
 
     }
 }
+
 
 fn mode_de_jeu() -> Mode {
     afficher_str("Classique ? Chronomètre ?");
@@ -45,6 +53,7 @@ fn mode_de_jeu() -> Mode {
             Mode::Chronomètre
         }
         _ => {
+            afficher_str("bon… bha on va dire classique alors…");
             Mode::Classique
         }
     }
@@ -52,14 +61,15 @@ fn mode_de_jeu() -> Mode {
 
 
 fn est_ce_multi() -> bool{
-    afficher_str("Mode de jeu : solitaire ou multi_joueur ?");
-    let mode = demander();
+
     loop {
+        afficher_str("Mode de jeu : solitaire ou multi_joueur ?");
+        let mode = demander();
         match mode.trim() {
-            "solitaire" | "1" => {
+            "solitaire" | "1" | "s" | "S" | "SOLITAIRE" => {
                 return false
             }
-            "multi_joueur" | "2" => {
+            "multi_joueur" | "2" | "m" | "M" | "MULTIJOUEUR" => {
                 return true
             }
             _ => {

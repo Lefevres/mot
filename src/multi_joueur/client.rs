@@ -18,12 +18,13 @@ pub async fn client(){
 
 
     afficher_str("On attend que l'hote choisisse le nombre de manche…");
-    let donnée_initialisation: (usize,Vec<(String,String)>) = récupérer_info_initialisation(&mut stream).await;
+    let donnée_initialisation: (usize,Mode,Vec<(String,String)>) = récupérer_info_initialisation(&mut stream).await;
     let nb_manche = donnée_initialisation.0;
-    let liste = donnée_initialisation.1;
+    let mode = donnée_initialisation.1;
+    let liste = donnée_initialisation.2;
 
     // Lance la partie
-    let mut jeux = Jeux::nouveau(Mode::Classique,&mut joueur, liste, nb_manche);
+    let mut jeux = Jeux::nouveau(mode,&mut joueur, liste, nb_manche);
     let résultat = jeux.jouer();
     //let résultat = jouer(&mut joueur, &liste, nb_manche);
     let résultat = résultat.0.to_string() +";"+ &résultat.1.to_string();
@@ -75,15 +76,16 @@ async fn reçoit_les_résultats(socket: &mut TcpStream,mon_nom : String) -> Vec<
 }
 
 
-async fn récupérer_info_initialisation(stream: &mut TcpStream) -> (usize,Vec<(String,String)>) {
+async fn récupérer_info_initialisation(stream: &mut TcpStream) -> (usize,Mode,Vec<(String,String)>) {
     let donnée_initialisation_string = lis_message(stream).await.expect("erreur lecture stream");
     let mut donnée_initialisation_string:Vec<String> = donnée_initialisation_string
         .split(";")
         .map(|s| s.to_string())
         .collect::<Vec<String>>();
     let nb_manche = donnée_initialisation_string[0].parse::<usize>().unwrap();
-    donnée_initialisation_string = donnée_initialisation_string.split_off(1);
-    (nb_manche, transforme_vec_string_en_tuple_string(donnée_initialisation_string))
+    let mode:Mode = récupéré_enum(donnée_initialisation_string[1].as_str());
+    donnée_initialisation_string = donnée_initialisation_string.split_off(2);
+    (nb_manche,mode, transforme_vec_string_en_tuple_string(donnée_initialisation_string))
 }
 
 
@@ -118,4 +120,9 @@ async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
     afficher_str("Connecté !");
 
     Ok(stream)
+}
+
+
+fn récupéré_enum(chaine: &str) -> Mode{
+    serde_json::from_str(chaine).unwrap()
 }

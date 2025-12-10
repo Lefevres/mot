@@ -2,10 +2,13 @@ use std::cmp::PartialEq;
 use std::thread;
 use std::time::Duration;
 use crossbeam_channel::unbounded;
+use serde::{Deserialize, Serialize};
 use crate::joueur::Joueur;
 use crate::outils::outils::demander_réponse;
 use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_score_fin, afficher_str};
 
+
+#[derive(Serialize, Deserialize, Debug)]
 pub enum Mode {
     Classique,
     Chronomètre,
