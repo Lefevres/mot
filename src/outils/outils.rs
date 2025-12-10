@@ -15,7 +15,7 @@ pub fn demander() -> String{
     io::stdin()
         .read_line(&mut variable)
         .expect("il y a un problème dans demander de outils");
-    variable.trim().to_string()
+    variable.trim().to_lowercase().to_string()
 }
 
 
@@ -186,17 +186,16 @@ pub fn crée_joueur() -> Joueur {
 }
 
 
-pub fn se_préparer<'a>(role : &str) -> (Joueur,Vec<(String,String)>,usize,String){  //rajouter la demande de nom ?
+pub fn se_préparer<'a>(role : &str) -> (Joueur,Vec<(String,String)>,String, usize){  //rajouter la demande de nom ?
 
     let joueur= crée_joueur();
     let mut liste=Vec::new();
-    let mut nb_manche= 0;
     let mut nom = String::new();
+
 
     match role {
         "solitaire" => {
             liste = cree_liste();
-            nb_manche = demander_nb_manche(liste.len());
         }
         "client" => {
             nom = demande_nom();
@@ -204,7 +203,6 @@ pub fn se_préparer<'a>(role : &str) -> (Joueur,Vec<(String,String)>,usize,Strin
         "hote" => {
             liste = cree_liste();
             nom = demande_nom();
-            nb_manche = demander_nb_manche(liste.len());
 
         }
         _ =>{
@@ -213,8 +211,9 @@ pub fn se_préparer<'a>(role : &str) -> (Joueur,Vec<(String,String)>,usize,Strin
         }
     }
 
+    let nb_max_manche = liste.len();
 
-    (joueur,liste,nb_manche,nom)
+    (joueur, liste, nom, nb_max_manche)
 }
 
 
@@ -228,7 +227,7 @@ pub fn demander_nb_manche(taille_liste: usize) -> usize {
     loop {
 
         afficher_str("Combien de manche ? ");
-        let min = if taille_liste/2 < usize::MAX {
+        let min = if taille_liste < usize::MAX {
             taille_liste
         } else {
             usize::MAX

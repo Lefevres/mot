@@ -8,7 +8,7 @@ mod joueur;
 mod multi_joueur;
 mod outils;
 mod jeux;
-
+mod mode;
 
 fn main() {
 
@@ -18,7 +18,7 @@ fn main() {
             match choisir_le_role() {
                 true => {
                     let mode = mode_de_jeu();
-                    hote(mode);  //il faudra que l'hote envoie le role au client
+                    hote(mode);
                 }
 
                 false => {
@@ -29,7 +29,7 @@ fn main() {
         }else {
             let mode = mode_de_jeu();
             let mut préparation = se_préparer("solitaire");
-            let mut jeux = Jeux::nouveau(mode, &mut préparation.0, préparation.1, préparation.2);
+            let mut jeux = Jeux::nouveau(mode, &mut préparation.0, préparation.1,préparation.3);
             jeux.jouer();
         }
 
@@ -43,15 +43,17 @@ fn main() {
 
 
 fn mode_de_jeu() -> Mode {
-    afficher_str("Classique ? Chronomètre ?");
+    afficher_str("Classique ? Chronomètre ? Survie ?");
 
     match demander().as_str() {
-        "Classique" | "classique"  | "1" | "cl" | "Cl" => {
+        "classique"  | "1" | "cl" => {
             Mode::Classique
         }
-        "Chronomètre" | "chronomètre" | "2" | "ch" | "Ch"  => {
+        "chronomètre" | "2" | "ch"  => {
             Mode::Chronomètre
         }
+        "survie" | "3" | "s" | "su" => Mode::Survie,
+
         _ => {
             afficher_str("bon… bha on va dire classique alors…");
             Mode::Classique

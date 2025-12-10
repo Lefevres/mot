@@ -8,14 +8,14 @@ use crate::outils::terminal::{afficher, afficher_str};
 #[tokio::main]
 pub async fn hote(mode: Mode){
     let nb_client:usize= demander_nb_joueur();
-    let (mut joueur,liste,nb_manche,mon_nom) = se_préparer("hote");
+    let (mut joueur,liste,mon_nom, nb_manche) = se_préparer("hote");
     let clients = connextion_au_client(nb_client).await.unwrap();
     let mut noms = clients.0;
     let mut sockets = clients.1;
 
     message_initialisation(&mut sockets, nb_manche, &liste[0..nb_manche*2].to_vec(),&mode).await;  //fois deux pour question réponse; faire très attention si jouer, tester le multi
 
-    let mut résultats:Vec<(String,String)>;
+    let résultats:Vec<(String,String)>;
     noms.insert(0,mon_nom.clone());
 
     let mut jeux = Jeux::nouveau(mode,&mut joueur, liste, nb_manche);

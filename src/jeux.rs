@@ -1,11 +1,10 @@
-use std::cmp::PartialEq;
-use std::thread;
-use std::time::Duration;
-use crossbeam_channel::unbounded;
 use serde::{Deserialize, Serialize};
 use crate::joueur::Joueur;
+use crate::mode::chronometre::chronomètre;
+use crate::mode::classique::classique;
+use crate::mode::survie::survie;
 use crate::outils::outils::demander_réponse;
-use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_score_fin, afficher_str};
+use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_str};
 
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -17,15 +16,15 @@ pub enum Mode {
 
 pub struct Jeux<'a> {
     mode: Mode,
-    joueur: &'a mut Joueur,
+    pub joueur: &'a mut Joueur,
     liste: Vec<(String, String)>,
-    nb_manche: usize,
+    pub nb_max_manche: usize,
 }
 
 
 impl Jeux<'_> {
-    pub fn nouveau(mode: Mode, joueur: &mut Joueur, liste: Vec<(String,String)>, nb_manche: usize) -> Jeux<'_> {
-        Jeux{mode, joueur, liste, nb_manche}
+    pub fn nouveau(mode: Mode, joueur: &mut Joueur, liste: Vec<(String,String)>, nb_max_manche: usize) -> Jeux<'_> {
+        Jeux{mode, joueur, liste, nb_max_manche}
     }
 
     pub fn jouer(&mut self) -> (usize,usize){
@@ -33,60 +32,26 @@ impl Jeux<'_> {
         match self.mode {
 
             Mode::Classique => {
-                self.classique()
+                classique(self)
+
             }
 
             Mode::Chronomètre => {
-                self.chronomètre()
+                chronomètre(self)
             }
-            _ => (0,0)
+
+            Mode::Survie => {
+                survie(self)
+            }
 
         }
 
     }
 
-    fn chronomètre(&mut self) -> (usize,usize){
 
-        let (écrit, lit) = unbounded();
-        let temp = Duration::from_secs(10);
+   pub fn joue_une_manche(&mut self,nb_manche_total:usize) -> bool {
 
-        // Thread pour le compte à rebours
-        thread::spawn(move || {
-            thread::sleep(temp);
-            écrit.send(()).unwrap();
-        });
-
-        loop {
-            // attend soit la saisie, soit le signal de fin de temps
-            crossbeam_channel::select! {
-            recv(lit) -> _ => {
-                afficher_str("Temps écoulé !");
-                return (self.joueur.bonne_reponse(),self.joueur.mauvaise_reponse());
-            }
-            default => {
-                self.joue_une_manche();
-                }
-            }
-        }
-    }
-
-
-    fn classique(&mut self) -> (usize,usize){
-
-        while !self.joueur.fin(self.nb_manche) {
-            if self.joue_une_manche(){
-                break;
-            }
-        }
-
-        afficher_score_fin(self.joueur);
-
-        (self.joueur.bonne_reponse(),self.joueur.mauvaise_reponse())
-    }
-
-    fn joue_une_manche(&mut self) -> bool {
-
-        self.affiche_info();
+        self.affiche_info(nb_manche_total);
         let mot = self.détermine_mot();
         let mut liste_essai:Vec<String> = vec!();
 
@@ -132,14 +97,14 @@ impl Jeux<'_> {
     }
 
 
-    fn affiche_info(&self) {
+    pub(crate) fn affiche_info(&self, nb_manche:usize) {
         afficher_en_tete();
-        afficher_score(&self.joueur, self.nb_manche);
+        afficher_score(&self.joueur, nb_manche);
         afficher_question(self.joueur.question(),&self.liste);
     }
 
 
-    fn détermine_mot(&self) -> String {
+    pub(crate) fn détermine_mot(&self) -> String {
         self.liste[self.joueur.question()].0.clone()
     }
 

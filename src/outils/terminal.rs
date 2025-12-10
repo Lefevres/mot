@@ -1,5 +1,4 @@
 use std::io::stdout;
-use std::time::Duration;
 use colored::Colorize;
 use crate::joueur::Joueur;
 use crate::outils::outils::demander;
@@ -37,12 +36,12 @@ pub fn afficher_indice(mot: &String) {
 }
 
 pub fn afficher_reponse_precedante(mot : &String){
-        println!("\nLa réponse étais {}\n",mot.green());
+        println!("\nLa réponse était {}\n",mot.green());
         attendre_validation();
     }
 
 pub fn afficher_bonne_reponse() {
-        println!("\n\nFélicitation ce fût une bonne réponse 👍\n");
+        println!("\n\nFélicitation c'est une bonne réponse 👍\n");
         attendre_validation();
     }
 
@@ -84,10 +83,6 @@ pub fn afficher_score_fin(joueur: &mut Joueur) {
     );
 }
 
-
-pub fn afficher_temp(temp: Duration){
-    println!("Temps : {} secondes", temp.as_secs());
-}
 
 pub fn afficher(texte: String) {
         println!("{}", texte);
