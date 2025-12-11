@@ -33,7 +33,7 @@ fat : Qui montre sa prétention de façon déplaisante et un peu ridicule
 irmis : L'institut régional de médecine et d'ingénierie du sport
 circonspet : Qui est attentif et prudent dans ses actes
 diacre : Une personne qui assiste le dirigeant d'une église locale chrétienne et a la responsabilité de certaines activités
-endémi :  Persistance habituelle d'une maladie infectieuse et contagieuse dans une région donnée
+endémie :  Persistance habituelle d'une maladie infectieuse et contagieuse dans une région donnée
 godiche : Benêt, maladroit
 gadin : chute
 suranné : Qui a cessé d'être en usage, qui évoque une époque révolue

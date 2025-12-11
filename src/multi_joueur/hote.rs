@@ -36,7 +36,7 @@ pub async fn hote(mode: Mode){
             option = true;
             info = demander_temp();
             envoi_message_tous(&mut sockets,&info.to_string()).await;
-        }//demander temp
+        }
         _ => ()
     }
    // message_initialisation(&mut sockets, nb_manche, &liste[0..nb_manche].to_vec(),mode.clone()).await;  //fois deux pour question réponse; faire très attention si jouer, tester le multi
@@ -58,7 +58,7 @@ pub async fn hote(mode: Mode){
 
 async fn envoi_message_tous(sockets: &mut Vec<TcpStream>, message: &String) {
     for socket in sockets {
-        envoie_message(socket, message).await;
+        envoie_message(socket, message.clone()).await;
     }
 }
 
@@ -68,8 +68,7 @@ async fn envoi_jeux(sockets: &mut Vec<TcpStream>, mode: Mode, liste: Vec<(String
         let longeur = liste.len();
         let jeux = Jeux::nouveau(mode.clone(), Joueur::nouveau(), liste.clone(), longeur);
         let jeux_string = serde_json::to_string(&jeux).unwrap();
-        let message = jeux_string + "\n";
-        envoie_message(socket,&message).await;
+        envoie_message(socket,jeux_string).await;
     }
 }
 
@@ -128,7 +127,7 @@ async fn partage_résultat(sockets: &mut Vec<TcpStream>,résultats:Vec<(String,S
     }
     message.pop();
     for mut socket in sockets {
-        envoie_message(&mut socket,&message).await;
+        envoie_message(&mut socket,message.clone()).await;
     }
 }
 
@@ -142,7 +141,7 @@ async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, 
         message_string+= &mess.1;
     }
     for socket in sockets {
-        envoie_message(socket,&message_string).await;
+        envoie_message(socket,message_string.clone()).await;
     }
 }
 
@@ -171,7 +170,8 @@ async fn lis_buffer(socket:&mut TcpStream) -> Result<String,Box<dyn std::error::
 }
 
 
-async fn envoie_message(socket:&mut TcpStream, message:&String){
+async fn envoie_message(socket:&mut TcpStream, message:String){
+    let message = message + "\n";
     let message_bytes = message.as_bytes();
     socket.write_all(message_bytes).await.unwrap();
 }

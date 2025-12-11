@@ -1,5 +1,5 @@
 use tokio::net::TcpStream;
-use tokio::io::{AsyncWriteExt, BufReader, AsyncBufReadExt};
+use tokio::io::{AsyncWriteExt, BufReader, AsyncBufReadExt, AsyncReadExt};
 use crate::jeux::{Jeux, Mode};
 use crate::outils::outils::{demander, se_préparer, transforme_vec_string_en_tuple_string};
 use crate::outils::terminal::{afficher, afficher_str};
@@ -24,7 +24,7 @@ pub async fn client(){
     println!("6");
     let mut jeux = récupéré_jeux(&mut stream).await.unwrap();
     println!("7");
-    
+
     let mut option = false;
     let mut info:usize = 0;
 
@@ -32,7 +32,7 @@ pub async fn client(){
         Mode::Classique | Mode::Chronomètre => {
             option = true;
             println!("client est dans match mode");
-            info = lis_message(&mut stream).await.unwrap().parse().unwrap();
+            info = lis_message(&mut stream).await.unwrap().trim().parse().unwrap();
         }
         _ => ()
     }
@@ -54,7 +54,21 @@ pub async fn client(){
 
 
 async  fn récupéré_jeux(socket: &mut TcpStream) -> Option<Jeux> {
-    let jeux = lis_message(socket).await.unwrap();
+    //let jeux = lis_message(socket).await.unwrap();
+
+    println!("je suis au début2");
+    let mut reader = BufReader::new(socket);
+    println!("je suis au début enfin un peu moins2");
+    let mut jeux = String::new();
+    println!("je suis au milieu2");
+    reader.read_line(&mut jeux).await.expect("TODO: panic message2");
+    println!("je suis au plus loin2");
+    if jeux.is_empty() {
+        afficher_str("Le serveur a fermé la connexion2");
+        return None
+    }
+    println!("je suis au plus loin");
+
     println!("Contenu de jeux : {}", jeux);
     let jeux = serde_json::from_str::<Jeux>(&jeux);
     match jeux {
@@ -129,18 +143,13 @@ async fn envoie_a_l_hote(stream : &mut TcpStream, message:String) -> std::io::Re
 
 
 async fn lis_message(stream : &mut TcpStream) -> Result<String,Box<dyn std::error::Error>>{
-    println!("je suis au début");
-    let mut reader = BufReader::new(stream);
-    println!("je suis au début enfin un peu moins");
-    let mut buffer = String::new();
-    println!("je suis au milieu");
-    reader.read_line(&mut buffer).await?;
-    println!("je suis au plus loin");
-    if buffer.is_empty() {
+    let mut buffer = vec![0; 1024];
+    let n = stream.read(&mut buffer).await?;
+    if n == 0 {
         return Err("Le serveur a fermé la connexion".into());
     }
-    println!("je suis au plus loin");
-    Ok(buffer)
+    let message = String::from_utf8_lossy(&buffer[..n]).to_string();
+    Ok(message)
 }
 
 
