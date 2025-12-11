@@ -99,6 +99,7 @@ fn afficher_résultat(résultats:Vec<(String,usize,usize)>)  {
 
 async fn reçoit_les_résultats(socket: &mut TcpStream,mon_nom : String) -> Vec<(String,usize,usize)> {
     let message = lis_message(socket).await.unwrap();
+    let message = message.trim().to_string();
     let préparation_retour = message.split(";")
         .map(|s| s.to_string())
         .collect::<Vec<String>>();
@@ -110,6 +111,10 @@ async fn reçoit_les_résultats(socket: &mut TcpStream,mon_nom : String) -> Vec<
         }
 
         match préparation_retour.get(i+1) {
+            Some(_) => (),
+            None => eprintln!("Erreur de conversion"),
+        }
+        match préparation_retour.get(i+2) {
             Some(_) => (),
             None => eprintln!("Erreur de conversion"),
         }

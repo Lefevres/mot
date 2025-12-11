@@ -16,7 +16,7 @@ pub fn afficher_en_tete(){
 
 pub fn afficher_question(position : usize, liste : &Vec<(String,String)>){  //renvoie le mot attendu
         let question = format!("{}", liste[position].1).bright_yellow();
-        println!("\n\n{}\n\n", question ); //nb_question.0 est la réponse, nb_question.1 est la question
+        println!("\n\n{}\n\n\n", question ); //nb_question.0 est la réponse, nb_question.1 est la question
     }
 
 

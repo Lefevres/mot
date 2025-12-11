@@ -132,7 +132,7 @@ fn rejouer() -> bool{
         match réponse.as_str() {
             "oui" | "o" =>  return true,
             "non" | "n" => return false,
-            _ => (),
+            _ => afficher_str("si tu n'arrive même pas a répondre a une question aussi simple tu n'es pas prêt pour la suite"),
         }
     }
 

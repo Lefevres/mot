@@ -4,7 +4,7 @@ use crate::outils::mot::cree_liste;
 use std::error::Error;
 use crossterm::{cursor, event::{self, Event, KeyCode}, execute, queue, terminal::{self, ClearType}};
 use std::io::{stdout, Write};
-use std::time::Instant;
+use std::time::{Duration, Instant};
 use crossterm::cursor::MoveToColumn;
 use crossterm::event::KeyEventKind;
 use crossterm::style::{Color, SetForegroundColor};
@@ -170,8 +170,37 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: &usize,fin: Op
                 queue!(sortie, SetForegroundColor(Color::Reset))?;
                 queue!(sortie, cursor::MoveTo(saved_cursor.0, saved_cursor.1))?;
                 sortie.flush()?;
+
+
+
+
             }
         }
+
+        if fin.is_some() {
+            //affichage dynamique du temp
+            let sauvegarde_position_curseur = cursor::position()?;
+            let nombre = fin.unwrap() - Instant::now();
+
+
+            if fin.unwrap() <= Instant::now() + Duration::from_secs(10) {
+                queue!(sortie, SetForegroundColor(Color::Red))?;
+            }
+
+            queue!(
+                    sortie,
+                    cursor::MoveTo(40, sauvegarde_position_curseur.1-2),  //soustraction magique
+                    Clear(ClearType::UntilNewLine)
+                )?;
+
+            let inscription = if nombre <= Duration::from_secs(1) { "seconde" } else { "secondes" };
+
+            write!(sortie, "{} {}", nombre.as_secs(), inscription)?;
+            queue!(sortie, SetForegroundColor(Color::Reset))?;
+            queue!(sortie, cursor::MoveTo(sauvegarde_position_curseur.0, sauvegarde_position_curseur.1))?;
+            sortie.flush()?;
+        }
+
         if fin.is_some() {
             if fin.unwrap() <= Instant::now() {
                 terminal::disable_raw_mode()?;
