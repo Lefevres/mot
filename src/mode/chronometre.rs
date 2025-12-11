@@ -1,21 +1,20 @@
 use std::time::{Duration, Instant};
 use crate::jeux::Jeux;
-use crate::outils::outils::{demander, demander_réponse};
+use crate::outils::outils::{demander_réponse};
 use crate::outils::terminal::{afficher_bonne_reponse, afficher_indice, afficher_mauvaise_reponse, afficher_reponse_precedante, afficher_score_fin, afficher_str};
 
-pub fn chronomètre(jeux:&mut Jeux) -> (usize, usize){
-    afficher_str("Combien de seconde ?");
-    let durée = Duration::from_secs(demander().parse().unwrap());
-    let début = std::time::Instant::now();
+pub fn chronomètre(jeux:&mut Jeux, durée: usize) -> (usize, usize){
 
+    let début = Instant::now();
+    let fin = début + Duration::from_secs(durée as u64);
 
     loop {
-        if début.elapsed() >= durée {
+        if Instant::now() >= fin {
             afficher_str("Le temp est passer !");
             afficher_score_fin(jeux.joueur.clone());
             return (jeux.joueur.bonne_reponse(),jeux.joueur.mauvaise_reponse())
         }
-        joue_une_manche(jeux,0,début+durée);
+        joue_une_manche(jeux,0,fin);
     }
 }
 

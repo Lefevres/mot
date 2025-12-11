@@ -44,7 +44,12 @@ impl Jeux {
             }
 
             Mode::Chronomètre => {
-                chronomètre(self)
+                if nb_question.is_some() {
+                    chronomètre(self, nb_question.unwrap())
+                }else {
+                    afficher_str("bein… y'a un problème");
+                    (0,0)
+                }
             }
 
             Mode::Survie => {

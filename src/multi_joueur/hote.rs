@@ -1,4 +1,4 @@
-use tokio::io::{AsyncReadExt, AsyncWriteExt, BufReader};
+use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpListener,TcpStream};
 use crate::jeux::{Jeux, Mode};
 use crate::joueur::Joueur;
@@ -7,24 +7,24 @@ use crate::outils::terminal::{afficher, afficher_str};
 
 #[tokio::main]
 pub async fn hote(mode: Mode){
-    println!("1");
+
     let nb_client:usize= demander_nb_joueur();
-    println!("2");
+
     let (joueur, liste, mon_nom, nb_manche) = se_préparer("hote");
-    println!("3");
+
     let clients = connextion_au_client(nb_client).await.unwrap();
-    println!("4");
+
     let mut noms = clients.0;
-    println!("5");
+
     let mut sockets = clients.1;
-    println!("Je vais envoyer");
+
 
     //l'hote envoi les jeux aux clients
     envoi_jeux(&mut sockets, mode.clone(), liste.clone()).await;
-    println!("J'ai envoyer");
+
     let mut option = false;
     let mut info = 0;
-    println!("Je vais dans le match");
+
     match mode {
 
         Mode::Classique => {
@@ -42,17 +42,17 @@ pub async fn hote(mode: Mode){
    // message_initialisation(&mut sockets, nb_manche, &liste[0..nb_manche].to_vec(),mode.clone()).await;  //fois deux pour question réponse; faire très attention si jouer, tester le multi
 
     let résultats:Vec<(String,String)>;
-    println!("8");
+
     noms.insert(0,mon_nom.clone());
-    println!("9");
+
     let mut jeux = Jeux::nouveau(mode.clone(), joueur.clone(), liste, nb_manche);
-    println!("10");
+
     jeux.jouer(if option { Some(info) } else { None });
-    println!("11");
+
     résultats = met_a_jour_les_résultats(&mut sockets,&joueur).await;
-    println!("12");
+
     afficher_résultat(nb_client,&noms,mon_nom,&résultats);
-    println!("13");
+
     partage_résultat(&mut sockets,résultats,noms).await;
 }
 
@@ -132,20 +132,6 @@ async fn partage_résultat(sockets: &mut Vec<TcpStream>,résultats:Vec<(String,S
 }
 
 
-async fn message_initialisation(sockets: &mut Vec<TcpStream>, nb_manche: usize, questions: &Vec<(String,String)>, mode: Mode){
-    let mut message_string:String = String::from(nb_manche.to_string()+";"+préparer_enum(mode).as_str());
-    for mess in questions {
-        message_string+=";";
-        message_string+= &mess.0;
-        message_string+=";";
-        message_string+= &mess.1;
-    }
-    for socket in sockets {
-        envoie_message(socket,message_string.clone()).await;
-    }
-}
-
-
 fn demander_nb_joueur() -> usize {
     afficher_str("Pour combien de joueur ? (hormis toi)");
     loop {
@@ -181,21 +167,17 @@ async fn connextion_au_client(nb_client: usize) -> Result<(Vec<String>,Vec<TcpSt
     let listener = TcpListener::bind("0.0.0.0:9000").await?;
     let mut noms_joueurs = Vec::new();
     let mut sockets = Vec::new();
-    println!("nombre de clients : {}", nb_client);
+    afficher(format!("nombre de clients : {}", nb_client));
     for _ in 0..nb_client {
         afficher_str("En attente d'un client...");
         let (mut socket, adresse) = listener.accept().await?;
         afficher(format!("Client connecté : {}", adresse));
 
         let nom = lis_buffer(&mut socket).await?;
-        println!("Je fini de lire le buffer");
+
         noms_joueurs.push(nom);
         sockets.push(socket);
     }
-    println!("Je renvoi");
-    Ok((noms_joueurs,sockets))
-}
 
-fn préparer_enum(valeur: Mode) -> String {
-    serde_json::to_string(&valeur).unwrap()
+    Ok((noms_joueurs,sockets))
 }

@@ -10,20 +10,20 @@ const PORT: &str = ":9000";
 
 #[tokio::main]
 pub async fn client(){
-    println!("1");
+
     let (_,_,nom,_) = se_préparer("client");
-    println!("2");
+
     let temp = connection().await.unwrap();
-    println!("3");
+
     let mut stream = temp;
-    println!("4");
+
     envoie_a_l_hote(&mut stream, nom.clone()).await.expect("J'envoie le nom");
-    println!("5");
+
 
     afficher_str("On attend que l'hote choisisse le nombre de manche…");
-    println!("6");
+
     let mut jeux = récupéré_jeux(&mut stream).await.unwrap();
-    println!("7");
+
 
     let mut option = false;
     let mut info:usize = 0;
@@ -31,7 +31,7 @@ pub async fn client(){
     match jeux.mode {
         Mode::Classique | Mode::Chronomètre => {
             option = true;
-            println!("client est dans match mode");
+
             info = lis_message(&mut stream).await.unwrap().trim().parse().unwrap();
         }
         _ => ()
@@ -40,36 +40,36 @@ pub async fn client(){
     // Lance la partie
 
     let résultat = jeux.jouer(if option { Some(info) } else { None });
-    println!("8");
+
     //let résultat = jouer(&mut joueur, &liste, nb_manche);
     let résultat = résultat.0.to_string() +";"+ &résultat.1.to_string();
-    println!("9");
+
     envoie_a_l_hote(&mut stream, résultat).await.expect("on a un soucis");
-    println!("10");
+
     let résultats = reçoit_les_résultats(&mut stream,nom).await;
-    println!("11");
+
     afficher_résultat(résultats);
-    println!("12");
+
 }
 
 
 async  fn récupéré_jeux(socket: &mut TcpStream) -> Option<Jeux> {
-    //let jeux = lis_message(socket).await.unwrap();
 
-    println!("je suis au début2");
+
+
     let mut reader = BufReader::new(socket);
-    println!("je suis au début enfin un peu moins2");
+
     let mut jeux = String::new();
-    println!("je suis au milieu2");
+
     reader.read_line(&mut jeux).await.expect("TODO: panic message2");
-    println!("je suis au plus loin2");
+
     if jeux.is_empty() {
         afficher_str("Le serveur a fermé la connexion2");
         return None
     }
-    println!("je suis au plus loin");
 
-    println!("Contenu de jeux : {}", jeux);
+
+
     let jeux = serde_json::from_str::<Jeux>(&jeux);
     match jeux {
         Ok(jeux) => { Some(jeux) },
@@ -110,7 +110,7 @@ async fn reçoit_les_résultats(socket: &mut TcpStream,mon_nom : String) -> Vec<
         }
 
         match préparation_retour.get(i+1) {
-            Some(valeur) => println!("Conversion réussie : {}", valeur),
+            Some(_) => (),
             None => eprintln!("Erreur de conversion"),
         }
 
@@ -119,19 +119,6 @@ async fn reçoit_les_résultats(socket: &mut TcpStream,mon_nom : String) -> Vec<
         résultats.push((nom.to_string(),bonne_réponse,mauvaise_réponse));
     }
     résultats
-}
-
-
-async fn récupérer_info_initialisation(stream: &mut TcpStream) -> (usize,Mode,Vec<(String,String)>) {
-    let donnée_initialisation_string = lis_message(stream).await.expect("erreur lecture stream");
-    let mut donnée_initialisation_string:Vec<String> = donnée_initialisation_string
-        .split(";")
-        .map(|s| s.to_string())
-        .collect::<Vec<String>>();
-    let nb_manche = donnée_initialisation_string[0].parse::<usize>().unwrap();
-    let mode:Mode = récupéré_enum(donnée_initialisation_string[1].as_str());
-    donnée_initialisation_string = donnée_initialisation_string.split_off(2);
-    (nb_manche,mode, transforme_vec_string_en_tuple_string(donnée_initialisation_string))
 }
 
 
@@ -158,17 +145,12 @@ async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
     let ip = demander();
 
     // Adresse IP du serveur
-    let addr = ip+PORT;
+    let addr = ip + PORT;
 
     afficher(format!("Connexion au serveur {}...", addr));
 
-    let  stream = TcpStream::connect(addr).await?;
+    let stream = TcpStream::connect(addr).await?;
     afficher_str("Connecté !");
 
     Ok(stream)
-}
-
-
-fn récupéré_enum(chaine: &str) -> Mode{
-    serde_json::from_str(chaine).unwrap()
 }
