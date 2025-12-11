@@ -167,7 +167,6 @@ async fn connextion_au_client(nb_client: usize) -> Result<(Vec<String>,Vec<TcpSt
     let listener = TcpListener::bind("0.0.0.0:9000").await?;
     let mut noms_joueurs = Vec::new();
     let mut sockets = Vec::new();
-    afficher(format!("nombre de clients : {}", nb_client));
     for _ in 0..nb_client {
         afficher_str("En attente d'un client...");
         let (mut socket, adresse) = listener.accept().await?;

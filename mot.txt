@@ -22,7 +22,7 @@ adjuvent : Médicament, produit ajouté à un autre pour renforcer ou compléter
 syncrétisme : Combinaison de doctrines, de systèmes initialement incompatibles
 tessiture : Étendue des sons qui peuvent être émis normalement par une voix, un instrument
 alluvion : Dépôts (cailloux, sables, boues) provenant d'un transport par les eaux courantes
-saynete : Courte pièce comique avec peu de personnages
+saynète : Courte pièce comique avec peu de personnages
 timorer : Qui est trop méfiant, trop attaché à ses habitudes, qui craint le risque, les responsabilités, l'imprévu
 ahaner :Faire entendre des ahans
 pileus : À l'époque hellénistique et romaine, un petit bonnet rond, emboîtant bien le crâne
@@ -116,7 +116,7 @@ pandémonium : Lieu où règne la corruption, un désordre infernal
 armagedon : est le lieu symbolique de rassemblement pour la bataille entre les rois de la terre et le Dieu Tout-Puissant
 loisible : est permis, possible ou envisageable de faire
 ommeyyade : Dynastie de califes arabes qui a régné sur l’ensemble de l’Empire musulman
-paredre : nom ou adjectif signifiant littéralement « assis près », « qui est assis à côté de ». Il s'emploie pour qualifier une divinité souvent inférieure en prérogative, habituellement associée dans le culte à un dieu ou une déesse plus influent
+parèdre : nom ou adjectif signifiant littéralement « assis près », « qui est assis à côté de ». Il s'emploie pour qualifier une divinité souvent inférieure en prérogative, habituellement associée dans le culte à un dieu ou une déesse plus influent
 diocèse : Circonscription ecclésiastique placée sous la juridiction d'un évêque ou d'un archevêque
 sérendipité : Capacité, aptitude à faire par hasard une découverte inattendue et à en saisir l'utilité (scientifique, pratique) (anglisisme)
 gymnopédies : festivités religieuses tenues à Sparte, au cours de l'été
@@ -128,7 +128,7 @@ lido : Lagune derrière un cordon littoral
 tombolo : Cordon littoral constitué par une levée de galets ou de sable, reliant une île au continent
 ibéromaurusien :  culture archéologique préhistorique qui s'est développée sur l'actuel Maghreb, occupant une bande littorale allant du nord de la Tunisie au sud du Maroc
 capsien : culture archéologique du Maghreb, qui apparait durant l'Holocène dans la région allant de Gafsa à Tébessa, et qui s'étend ensuite jusqu'à l'ouest de l'Algérie
-aghlabides : dynastie d'émirs de la tribu arabe des Banu Tamim, qui gouvernent, depuis Kairouan, l'Ifriqiya (actuelle Tunisie, le constantinois en Algérie actuelle et la Tripolitaine dans l'actuelle Libye) nominalement, au nom du calife abbasside, à partir de 800, puis la Sicile, après sa conquête, jusqu'à son renversement par le nouveau pouvoir des Fatimides, en 909
+aghlabide : dynastie d'émirs de la tribu arabe des Banu Tamim, qui gouvernent, depuis Kairouan, l'Ifriqiya (actuelle Tunisie, le constantinois en Algérie actuelle et la Tripolitaine dans l'actuelle Libye) nominalement, au nom du calife abbasside, à partir de 800, puis la Sicile, après sa conquête, jusqu'à son renversement par le nouveau pouvoir des Fatimides, en 909
 embrun : Poussière de gouttelettes formée par les vagues qui se brisent, et emportée par le vent
 compendium : Abrégé
 resulgent : Qui reparaît à la surface après un trajet souterrain (eaux)

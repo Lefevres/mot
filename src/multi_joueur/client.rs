@@ -20,7 +20,7 @@ pub async fn client(){
     envoie_a_l_hote(&mut stream, nom.clone()).await.expect("J'envoie le nom");
 
 
-    afficher_str("On attend que l'hote choisisse le nombre de manche…");
+    afficher_str("On attend que l'hote règle les paramètres…");
 
     let mut jeux = récupéré_jeux(&mut stream).await.unwrap();
 

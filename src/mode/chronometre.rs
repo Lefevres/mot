@@ -14,7 +14,7 @@ pub fn chronomètre(jeux:&mut Jeux, durée: usize) -> (usize, usize){
             afficher_score_fin(jeux.joueur.clone());
             return (jeux.joueur.bonne_reponse(),jeux.joueur.mauvaise_reponse())
         }
-        joue_une_manche(jeux,0,fin);
+        joue_une_manche(jeux,jeux.nb_max_manche,fin);
     }
 }
 
