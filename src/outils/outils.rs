@@ -231,6 +231,22 @@ fn demande_nom() -> String{
 }
 
 
+pub fn demander_temp() -> usize{
+    loop {
+        afficher_str("Combien de secondes ?");
+        let entrée = demander();
+
+        match entrée.parse::<usize>() {
+            Ok(num) => {
+                return num
+            }, //  Retourne le nombre valide et quitte la boucle si le nombre n’est pas trop grand, sinon on va dépasser la taille de la liste
+            Err(_) => afficher_str("Entrée invalide, veuillez entrer un nombre entier positif."),
+        }
+    }
+
+}
+
+
 pub fn demander_nb_manche(taille_liste: usize) -> usize {
     loop {
 

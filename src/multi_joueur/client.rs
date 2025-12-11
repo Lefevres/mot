@@ -1,36 +1,68 @@
 use tokio::net::TcpStream;
-use tokio::io::{AsyncWriteExt, AsyncReadExt};
+use tokio::io::{AsyncWriteExt, BufReader, AsyncBufReadExt};
 use crate::jeux::{Jeux, Mode};
 use crate::outils::outils::{demander, se_préparer, transforme_vec_string_en_tuple_string};
 use crate::outils::terminal::{afficher, afficher_str};
+
 
 const PORT: &str = ":9000";
 
 
 #[tokio::main]
 pub async fn client(){
-    let (mut joueur,_,nom,_) = se_préparer("client");
-
+    println!("1");
+    let (_,_,nom,_) = se_préparer("client");
+    println!("2");
     let temp = connection().await.unwrap();
-
+    println!("3");
     let mut stream = temp;
+    println!("4");
     envoie_a_l_hote(&mut stream, nom.clone()).await.expect("J'envoie le nom");
-
+    println!("5");
 
     afficher_str("On attend que l'hote choisisse le nombre de manche…");
-    let donnée_initialisation: (usize,Mode,Vec<(String,String)>) = récupérer_info_initialisation(&mut stream).await;
-    let nb_manche = donnée_initialisation.0;
-    let mode = donnée_initialisation.1;
-    let liste = donnée_initialisation.2;
+    println!("6");
+    let mut jeux = récupéré_jeux(&mut stream).await.unwrap();
+    println!("7");
+    
+    let mut option = false;
+    let mut info:usize = 0;
+
+    match jeux.mode {
+        Mode::Classique | Mode::Chronomètre => {
+            option = true;
+            println!("client est dans match mode");
+            info = lis_message(&mut stream).await.unwrap().parse().unwrap();
+        }
+        _ => ()
+    }
 
     // Lance la partie
-    let mut jeux = Jeux::nouveau(mode,&mut joueur, liste, nb_manche);
-    let résultat = jeux.jouer();
+
+    let résultat = jeux.jouer(if option { Some(info) } else { None });
+    println!("8");
     //let résultat = jouer(&mut joueur, &liste, nb_manche);
     let résultat = résultat.0.to_string() +";"+ &résultat.1.to_string();
+    println!("9");
     envoie_a_l_hote(&mut stream, résultat).await.expect("on a un soucis");
+    println!("10");
     let résultats = reçoit_les_résultats(&mut stream,nom).await;
+    println!("11");
     afficher_résultat(résultats);
+    println!("12");
+}
+
+
+async  fn récupéré_jeux(socket: &mut TcpStream) -> Option<Jeux> {
+    let jeux = lis_message(socket).await.unwrap();
+    println!("Contenu de jeux : {}", jeux);
+    let jeux = serde_json::from_str::<Jeux>(&jeux);
+    match jeux {
+        Ok(jeux) => { Some(jeux) },
+        Err(e) => {eprintln!("Erreur de désérialisation : {}", e);None},
+    }
+
+
 }
 
 
@@ -97,13 +129,18 @@ async fn envoie_a_l_hote(stream : &mut TcpStream, message:String) -> std::io::Re
 
 
 async fn lis_message(stream : &mut TcpStream) -> Result<String,Box<dyn std::error::Error>>{
-    let mut buffer = vec![0; 1024];
-    let n = stream.read(&mut buffer).await?;
-    if n == 0 {
+    println!("je suis au début");
+    let mut reader = BufReader::new(stream);
+    println!("je suis au début enfin un peu moins");
+    let mut buffer = String::new();
+    println!("je suis au milieu");
+    reader.read_line(&mut buffer).await?;
+    println!("je suis au plus loin");
+    if buffer.is_empty() {
         return Err("Le serveur a fermé la connexion".into());
     }
-    let message = String::from_utf8_lossy(&buffer[..n]).to_string();
-    Ok(message)
+    println!("je suis au plus loin");
+    Ok(buffer)
 }
 
 

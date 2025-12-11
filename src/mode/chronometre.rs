@@ -12,7 +12,7 @@ pub fn chronomètre(jeux:&mut Jeux) -> (usize, usize){
     loop {
         if début.elapsed() >= durée {
             afficher_str("Le temp est passer !");
-            afficher_score_fin(jeux.joueur);
+            afficher_score_fin(jeux.joueur.clone());
             return (jeux.joueur.bonne_reponse(),jeux.joueur.mauvaise_reponse())
         }
         joue_une_manche(jeux,0,début+durée);

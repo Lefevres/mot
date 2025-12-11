@@ -1,3 +1,6 @@
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Joueur  {
     bonne_reponse:usize,
     mauvaise_reponse:usize,

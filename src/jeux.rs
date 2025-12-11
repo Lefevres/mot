@@ -7,32 +7,39 @@ use crate::outils::outils::demander_réponse;
 use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_str};
 
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum Mode {
     Classique,
     Chronomètre,
     Survie,
 }
 
-pub struct Jeux<'a> {
-    mode: Mode,
-    pub joueur: &'a mut Joueur,
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Jeux {
+    pub mode: Mode,
+    pub joueur: Joueur,
     liste: Vec<(String, String)>,
     pub nb_max_manche: usize,
 }
 
 
-impl Jeux<'_> {
-    pub fn nouveau(mode: Mode, joueur: &mut Joueur, liste: Vec<(String,String)>, nb_max_manche: usize) -> Jeux<'_> {
+impl Jeux {
+    pub fn nouveau(mode: Mode, joueur: Joueur, liste: Vec<(String,String)>, nb_max_manche: usize) -> Jeux {
         Jeux{mode, joueur, liste, nb_max_manche}
     }
 
-    pub fn jouer(&mut self) -> (usize,usize){
+    pub fn jouer(&mut self, nb_question: Option<usize>) -> (usize,usize){
 
         match self.mode {
 
             Mode::Classique => {
-                classique(self)
+                if nb_question.is_some() {
+                    classique(self, nb_question.unwrap())
+                }else {
+                    afficher_str("bein… y'a un problème");
+                    (0,0)
+                }
+
 
             }
 

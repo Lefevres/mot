@@ -1,7 +1,7 @@
 use crate::jeux::{Jeux, Mode};
 use crate::multi_joueur::client::client;
 use crate::multi_joueur::hote::hote;
-use crate::outils::outils::{demander, se_préparer};
+use crate::outils::outils::{demander, demander_nb_manche, demander_temp, se_préparer};
 use crate::outils::terminal::{afficher, afficher_str};
 
 mod joueur;
@@ -29,8 +29,13 @@ fn main() {
         }else {
             let mode = mode_de_jeu();
             let mut préparation = se_préparer("solitaire");
-            let mut jeux = Jeux::nouveau(mode, &mut préparation.0, préparation.1,préparation.3);
-            jeux.jouer();
+            let mut jeux = Jeux::nouveau(mode.clone(), préparation.0, préparation.1.clone(),préparation.3);
+
+
+            let option = récuperer_détails(mode, préparation.1.len());
+
+
+            jeux.jouer(option);
         }
 
 
@@ -41,6 +46,19 @@ fn main() {
     }
 }
 
+
+fn récuperer_détails(mode: Mode, limite: usize) -> Option<usize> {
+
+    match mode {
+        Mode::Classique => {
+            Some(demander_nb_manche(limite))
+        }
+        Mode::Chronomètre => {
+            Some(demander_temp())
+        }//demander temp
+        _ => None
+    }
+}
 
 fn mode_de_jeu() -> Mode {
     afficher_str("Classique ? Chronomètre ? Survie ?");

@@ -69,7 +69,7 @@ pub fn afficher_score(joueur: &Joueur, nb_manche: usize) {
 
     }
 
-pub fn afficher_score_fin(joueur: &mut Joueur) {
+pub fn afficher_score_fin(joueur: Joueur) {
 
     let total = joueur.bonne_reponse() + joueur.mauvaise_reponse();
     let ratio = if total > 0 {

@@ -10,7 +10,7 @@ pub fn survie(jeux: &mut Jeux) -> (usize, usize) {
        }
     }
 
-    afficher_score_fin(jeux.joueur);
+    afficher_score_fin(&mut jeux.joueur);
     (jeux.joueur.bonne_reponse(),jeux.joueur.mauvaise_reponse())
 }
 
