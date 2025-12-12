@@ -18,7 +18,7 @@ acrimonie : Mauvaise humeur qui s'exprime par des propos acerbes ou hargneux
 fragrence : Parfum subtil, odeur agréable
 hapax : Mot, forme, emploi dont on ne peut relever qu'un exemple
 absoudre : Exempter de peine l'auteur d'une infraction
-adjuvent : Médicament, produit ajouté à un autre pour renforcer ou compléter son action
+adjuvant : Médicament, produit ajouté à un autre pour renforcer ou compléter son action
 syncrétisme : Combinaison de doctrines, de systèmes initialement incompatibles
 tessiture : Étendue des sons qui peuvent être émis normalement par une voix, un instrument
 alluvion : Dépôts (cailloux, sables, boues) provenant d'un transport par les eaux courantes
@@ -53,7 +53,7 @@ turpitude : Caractère de bassesse, d'indignité
 bakélite : Matière plastique qui imite l'ambre, obtenue en traitant le formol par le phénol
 cosmopolite : Qui comprend des personnes de tous les pays, subit des influences de nombreux pays
 didgeridoo : Instrument à vent des aborigènes australiens fait d'un long tuyau de bois évidé, à l'embouchure façonnée dans de la cire d'abeille
-mausade : Qui n'est ni gai ni aimable
+maussade : Qui n'est ni gai ni aimable
 régalien : Qui relève de l'autorité souveraine
 patibulaire : Qui semble appartenir à un criminel (visage, apparence)
 lingua franca : Langue véhiculaire utilisée sur une aire géographique assez vaste
@@ -245,3 +245,34 @@ cynophale : Qui a une tête de chien
 se pâmer : Être au comble de l'admiration
 pâmoison : Fait de se pâmer
 ouraline : Verre dans lequel a été incorporé de l'uranium, la plupart du temps sous forme de diuranate
+imputer : On considère comme un crime
+labile : Précaire, changeant
+nunc est bidendum : C’est maintenant qu’il faut boire (locution latine)
+luron : Personne décidée et énergique
+rose Pompadour : nuance de rose crée par le chimiste Jean Hellot, désignée dans les registres de la manufacture de Sèvre comme « un rose très frais et fort agréable »
+lectisterne : Cérémonie romaine consistant à offrir un festin aux dieux
+pax deorum : fondement de la religion romaine (locution latine)
+supplicatio : Cérémonie romaine déclinable en trois branches, expiatoire, proritiatoire et gratulatoire
+phaéton : Voiture hippomobile, à caisse ouverte haut perchée, à quatre roues
+jaboter : Bavarder
+apoplexie : Perte de connaissance brutale; congestion cérébrale
+isomorphisme : processus d’homogénéisation des organisations et des pratiques organisationnelles caractérisé par une convergence des comportements et règles formelles et informelles
+féru : Qui est très épris, pris d’un vif intérêt
+berrurier : Terme du Moyen français voulant dire guerrier valeureux
+grégaire : Qui vit par troupeaux
+abhorrer : Avoir en horreur
+infant : Titre donné aux enfants des rois d’Espagne et du Portugal qui n’étaient pas les aînés
+déshérence : Situation dans laquelle se trouve un bien ou un patrimoine lorsque son propriétaire est décédé sans laisser d’héritier connu
+dévot : Qui est sincèrement attaché à une religion et à ses pratiques
+libelle : Court écrit satirique, diffamatoire
+entresol : Espace d’un batiment entre le rez-de-chaussée et le premien étage
+pourvoyeur : Personne qui fournit
+attique : La partie supérieure qui vient couronner une construction
+entablement : Saillie au sommet des murs, qui supporte la charpente de la toiture
+architrave : Partie inférieur de l’entable qui porte directement sur le chapiteau de colones
+historiographe : Écrivain chargé officiellement d’écrire l’histoire de son temps
+taffetas : Type de tissage qui consiste à entrecroiser des fils appelés chaîne et trame, afin de confectionner un tissu
+surintendant : Titre de certain ministres, sous l’Ancien Régime
+stiletto : Chaussure au très haut talons effilé
+berrichon : langue d’oïlitan traditionnelle de la région Centre-Val-de-Loire
+chopine : Petite bouteille
