@@ -1,5 +1,6 @@
 use crate::affichage::affichage::Affichage;
-use crate::affichage::terminal::AffichageTerminal;
+use crate::affichage::graphique::AffichageGraphique;
+
 
 mod detail;
 mod affichage;
@@ -14,6 +15,7 @@ mod mode;
 
 
 fn main(){
-    let affichage: Box<dyn Affichage> = Box::new(AffichageTerminal);
+    let affichage: Box<dyn Affichage> = Box::new(AffichageGraphique { score: 3 }); //Box::new(AffichageTerminal);
+    affichage.afficher("bonjour".to_string());
     detail::gère(&affichage);
 }
