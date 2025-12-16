@@ -4,8 +4,7 @@ use crate::mode::chronometre::chronomètre;
 use crate::mode::classique::classique;
 use crate::mode::survie::survie;
 use crate::outils::outils::demander_réponse;
-use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_str};
-
+use crate::Affichage;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum Mode {
@@ -28,15 +27,15 @@ impl Jeux {
         Jeux{mode, joueur, liste, nb_max_manche}
     }
 
-    pub fn jouer(&mut self, nb_question: Option<usize>) -> (usize,usize){
+    pub fn jouer(&mut self, nb_question: Option<usize>, affichage : &Box<dyn Affichage>) -> (usize,usize){
 
         match self.mode {
 
             Mode::Classique => {
                 if nb_question.is_some() {
-                    classique(self, nb_question.unwrap())
+                    classique(self, nb_question.unwrap(), affichage)
                 }else {
-                    afficher_str("bein… y'a un problème");
+                    affichage.afficher_str("bein… y'a un problème");
                     (0,0)
                 }
 
@@ -45,15 +44,15 @@ impl Jeux {
 
             Mode::Chronomètre => {
                 if nb_question.is_some() {
-                    chronomètre(self, nb_question.unwrap())
+                    chronomètre(self, nb_question.unwrap(), affichage)
                 }else {
-                    afficher_str("bein… y'a un problème");
+                    affichage.afficher_str("bein… y'a un problème");
                     (0,0)
                 }
             }
 
             Mode::Survie => {
-                survie(self)
+                survie(self, affichage)
             }
 
         }
@@ -61,9 +60,8 @@ impl Jeux {
     }
 
 
-   pub fn joue_une_manche(&mut self,nb_manche_total:usize) -> bool {
-
-        self.affiche_info(nb_manche_total);
+   pub fn joue_une_manche(&mut self,nb_manche_total:usize, affichage : &Box<dyn Affichage>) -> bool {
+        self.affiche_info(nb_manche_total, &affichage);
         let mot = self.détermine_mot();
         let mut liste_essai:Vec<String> = vec!();
 
@@ -72,25 +70,25 @@ impl Jeux {
 
             match réponse.as_str() {
                 "stop" | "s" => {
-                    afficher_str("\n");
+                    affichage.afficher_str("\n");
                     return true;
                 }
 
                 "indice" | "i" => {
-                    afficher_indice(&mot);
+                    affichage.afficher_indice(&mot);
                 }
 
                 "passe" | "p" => {
                     self.joueur.question_suivante();
                     self.joueur.mauvaise_reponse_aj();
-                    afficher_reponse_precedante(&mot);
+                    affichage.afficher_reponse_precedante(&mot);
                     return false;
                 }
 
                 _ if réponse == mot => { // Si la réponse est égale au mot attention au \n
                     self.joueur.bonne_reponse_aj();
                     self.joueur.question_suivante();
-                    afficher_bonne_reponse();
+                    affichage.afficher_bonne_reponse();
                     return false;
                 }
 
@@ -98,7 +96,7 @@ impl Jeux {
 
                 _ => {  // Cas pour mauvaise réponse
                     self.joueur.mauvaise_reponse_aj();
-                    afficher_mauvaise_reponse();
+                    affichage.afficher_mauvaise_reponse();
                 }
             }
 
@@ -109,10 +107,10 @@ impl Jeux {
     }
 
 
-    pub(crate) fn affiche_info(&self, nb_manche:usize) {
-        afficher_en_tete();
-        afficher_score(&self.joueur, nb_manche);
-        afficher_question(self.joueur.question(),&self.liste);
+    pub(crate) fn affiche_info(&self, nb_manche:usize, affichage : &Box<dyn Affichage>) {
+        affichage.afficher_en_tete();
+        affichage.afficher_score(&self.joueur, nb_manche);
+        affichage.afficher_question(self.joueur.question(),&self.liste);
     }
 
 

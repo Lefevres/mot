@@ -9,7 +9,7 @@ use crossterm::cursor::MoveToColumn;
 use crossterm::event::KeyEventKind;
 use crossterm::style::{Color, SetForegroundColor};
 use crossterm::terminal::Clear;
-use crate::outils::terminal::{afficher, afficher_str};
+use crate::affichage::affichage::Affichage;
 
 pub fn demander() -> String{
     let mut variable = String::new();
@@ -211,7 +211,7 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: &usize,fin: Op
     }
 
     terminal::disable_raw_mode()?;
-    //afficher(format!("\nEntrée finale : {}", entrée));
+    //affichage.afficher(format!("\nEntrée finale : {}", entrée));
     Ok(entrée.into_iter().collect())
 }
 
@@ -223,7 +223,7 @@ pub fn crée_joueur() -> Joueur {
 }
 
 
-pub fn se_préparer<'a>(role : &str) -> (Joueur,Vec<(String,String)>,String, usize){  //rajouter la demande de nom ?
+pub fn se_préparer<'a>(role : &str, affichage : &Box<dyn Affichage>) -> (Joueur,Vec<(String,String)>,String, usize){  //rajouter la demande de nom ?
 
     let joueur= crée_joueur();
     let mut liste=Vec::new();
@@ -235,11 +235,11 @@ pub fn se_préparer<'a>(role : &str) -> (Joueur,Vec<(String,String)>,String, usi
             liste = cree_liste();
         }
         "client" => {
-            nom = demande_nom();
+            nom = demande_nom(&affichage);
         }
         "hote" => {
             liste = cree_liste();
-            nom = demande_nom();
+            nom = demande_nom(&affichage);
 
         }
         _ =>{
@@ -254,38 +254,38 @@ pub fn se_préparer<'a>(role : &str) -> (Joueur,Vec<(String,String)>,String, usi
 }
 
 
-fn demande_nom() -> String{
-    afficher_str("Quel est ton nom ?");
+fn demande_nom(affichage : &Box<dyn Affichage>) -> String{
+    affichage.afficher_str("Quel est ton nom ?");
     demander()
 }
 
 
-pub fn demander_temp() -> usize{
+pub fn demander_temp(affichage : &Box<dyn Affichage>) -> usize{
     loop {
-        afficher_str("Combien de secondes ?");
+        affichage.afficher_str("Combien de secondes ?");
         let entrée = demander();
 
         match entrée.parse::<usize>() {
             Ok(num) => {
                 return num
             }, //  Retourne le nombre valide et quitte la boucle si le nombre n’est pas trop grand, sinon on va dépasser la taille de la liste
-            Err(_) => afficher_str("Entrée invalide, veuillez entrer un nombre entier positif."),
+            Err(_) => affichage.afficher_str("Entrée invalide, veuillez entrer un nombre entier positif."),
         }
     }
 
 }
 
 
-pub fn demander_nb_manche(taille_liste: usize) -> usize {
+pub fn demander_nb_manche(taille_liste: usize, affichage : &Box<dyn Affichage>) -> usize {
     loop {
 
-        afficher_str("Combien de manche ? ");
+        affichage.afficher_str("Combien de manche ? ");
         let min = if taille_liste < usize::MAX {
             taille_liste
         } else {
             usize::MAX
         };
-        afficher(format!("Nombre max de manches : {}", min.to_string()));
+        affichage.afficher(format!("Nombre max de manches : {}", min.to_string()));
         let entree = demander();
 
 
@@ -295,7 +295,7 @@ pub fn demander_nb_manche(taille_liste: usize) -> usize {
                     return num
                 }
             }, //  Retourne le nombre valide et quitte la boucle si le nombre n’est pas trop grand, sinon on va dépasser la taille de la liste
-            Err(_) => afficher_str("Entrée invalide, veuillez entrer un nombre entier positif."),
+            Err(_) => affichage.afficher_str("Entrée invalide, veuillez entrer un nombre entier positif."),
         }
     }
 }

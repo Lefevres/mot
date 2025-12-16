@@ -1,28 +1,29 @@
 use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, BufReader, AsyncBufReadExt, AsyncReadExt};
+use crate::affichage::affichage::Affichage;
 use crate::jeux::{Jeux, Mode};
 use crate::outils::outils::{demander, se_préparer, transforme_vec_string_en_tuple_string};
-use crate::outils::terminal::{afficher, afficher_str};
+
 
 
 const PORT: &str = ":9000";
 
 
 #[tokio::main]
-pub async fn client(){
+pub async fn client(affichage : &Box<dyn Affichage>){
 
-    let (_,_,nom,_) = se_préparer("client");
+    let (_,_,nom,_) = se_préparer("client", affichage);
 
-    let temp = connection().await.unwrap();
+    let temp = connection(&affichage).await.unwrap();
 
     let mut stream = temp;
 
     envoie_a_l_hote(&mut stream, nom.clone()).await.expect("J'envoie le nom");
 
 
-    afficher_str("On attend que l'hote règle les paramètres…");
+    affichage.afficher_str("On attend que l'hote règle les paramètres…");
 
-    let mut jeux = récupéré_jeux(&mut stream).await.unwrap();
+    let mut jeux = récupéré_jeux(&mut stream, &affichage).await.unwrap();
 
 
     let mut option = false;
@@ -39,7 +40,7 @@ pub async fn client(){
 
     // Lance la partie
 
-    let résultat = jeux.jouer(if option { Some(info) } else { None });
+    let résultat = jeux.jouer(if option { Some(info) } else { None },&affichage);
 
     //let résultat = jouer(&mut joueur, &liste, nb_manche);
     let résultat = résultat.0.to_string() +";"+ &résultat.1.to_string();
@@ -48,12 +49,12 @@ pub async fn client(){
 
     let résultats = reçoit_les_résultats(&mut stream,nom).await;
 
-    afficher_résultat(résultats);
+    afficher_résultat(résultats, &affichage);
 
 }
 
 
-async  fn récupéré_jeux(socket: &mut TcpStream) -> Option<Jeux> {
+async  fn récupéré_jeux(socket: &mut TcpStream, affichage : &Box<dyn Affichage>) -> Option<Jeux> {
 
 
 
@@ -64,7 +65,7 @@ async  fn récupéré_jeux(socket: &mut TcpStream) -> Option<Jeux> {
     reader.read_line(&mut jeux).await.expect("TODO: panic message2");
 
     if jeux.is_empty() {
-        afficher_str("Le serveur a fermé la connexion2");
+        affichage.afficher_str("Le serveur a fermé la connexion2");
         return None
     }
 
@@ -80,8 +81,8 @@ async  fn récupéré_jeux(socket: &mut TcpStream) -> Option<Jeux> {
 }
 
 
-fn afficher_résultat(résultats:Vec<(String,usize,usize)>)  {
-    afficher_str("\n");
+fn afficher_résultat(résultats:Vec<(String,usize,usize)>, affichage : &Box<dyn Affichage>)  {
+    affichage.afficher_str("\n");
     for résultat in résultats {
         let nom = résultat.0;
         let bonne_réponse = résultat.1;
@@ -92,7 +93,7 @@ fn afficher_résultat(résultats:Vec<(String,usize,usize)>)  {
         } else {
             0.0
         };
-        afficher(format!("{} a eu {} bonne réponse(s) et {} mauvaise(s) pour un ration de {:.1}%\n",nom,bonne_réponse,mauvaise_réponse,ratio));
+        affichage.afficher(format!("{} a eu {} bonne réponse(s) et {} mauvaise(s) pour un ration de {:.1}%\n",nom,bonne_réponse,mauvaise_réponse,ratio));
     }
 }
 
@@ -145,17 +146,17 @@ async fn lis_message(stream : &mut TcpStream) -> Result<String,Box<dyn std::erro
 }
 
 
-async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
-    afficher_str("Quelle adresse ip ? (\"ip a\" sous linux)");
+async fn connection(affichage : &Box<dyn Affichage>) -> Result<TcpStream,Box<dyn std::error::Error>> {
+    affichage.afficher_str("Quelle adresse ip ? (\"ip a\" sous linux)");
     let ip = demander();
 
     // Adresse IP du serveur
     let addr = ip + PORT;
 
-    afficher(format!("Connexion au serveur {}...", addr));
+    affichage.afficher(format!("Connexion au serveur {}...", addr));
 
     let stream = TcpStream::connect(addr).await?;
-    afficher_str("Connecté !");
+    affichage.afficher_str("Connecté !");
 
     Ok(stream)
 }

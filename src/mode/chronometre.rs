@@ -1,28 +1,28 @@
 use std::time::{Duration, Instant};
+use crate::affichage::affichage::Affichage;
 use crate::jeux::Jeux;
 use crate::outils::outils::{demander_réponse};
-use crate::outils::terminal::{afficher_bonne_reponse, afficher_indice, afficher_mauvaise_reponse, afficher_reponse_precedante, afficher_score_fin, afficher_str};
 
-pub fn chronomètre(jeux:&mut Jeux, durée: usize) -> (usize, usize){
+pub fn chronomètre(jeux:&mut Jeux, durée: usize, affichage : &Box<dyn Affichage>) -> (usize, usize){
 
     let début = Instant::now();
     let fin = début + Duration::from_secs(durée as u64);
 
     loop {
         if Instant::now() >= fin {
-            afficher_str("Le temps est passé !");
-            afficher_score_fin(jeux.joueur.clone());
+            affichage.afficher_str("Le temps est passé !");
+            affichage.afficher_score_fin(jeux.joueur.clone());
             return (jeux.joueur.bonne_reponse(),jeux.joueur.mauvaise_reponse())
         }
-        joue_une_manche(jeux,jeux.nb_max_manche,fin);
+        joue_une_manche(jeux,jeux.nb_max_manche,fin, affichage);
     }
 }
 
 
 
-fn joue_une_manche(jeux:&mut Jeux,nb_manche_total:usize,fin:Instant) -> bool {
+fn joue_une_manche(jeux:&mut Jeux, nb_manche_total:usize, fin:Instant, affichage : &Box<dyn Affichage>) -> bool {
 
-    jeux.affiche_info(nb_manche_total);
+    jeux.affiche_info(nb_manche_total, affichage);
     let mot = jeux.détermine_mot();
     let mut liste_essai:Vec<String> = vec!();
 
@@ -31,25 +31,25 @@ fn joue_une_manche(jeux:&mut Jeux,nb_manche_total:usize,fin:Instant) -> bool {
 
         match réponse.as_str() {
             "stop" | "s" => {
-                afficher_str("\n");
+                affichage.afficher_str("\n");
                 return true;
             }
 
             "indice" | "i" => {
-                afficher_indice(&mot);
+                affichage.afficher_indice(&mot);
             }
 
             "passe" | "p" => {
                 jeux.joueur.question_suivante();
                 jeux.joueur.mauvaise_reponse_aj();
-                afficher_reponse_precedante(&mot);
+                affichage.afficher_reponse_precedante(&mot);
                 return false;
             }
 
             _ if réponse == mot => { // Si la réponse est égale au mot attention au \n
                 jeux.joueur.bonne_reponse_aj();
                 jeux.joueur.question_suivante();
-                afficher_bonne_reponse();
+                affichage.afficher_bonne_reponse();
                 return false;
             }
 
@@ -57,7 +57,7 @@ fn joue_une_manche(jeux:&mut Jeux,nb_manche_total:usize,fin:Instant) -> bool {
 
             _ => {  // Cas pour mauvaise réponse
                 jeux.joueur.mauvaise_reponse_aj();
-                afficher_mauvaise_reponse();
+                affichage.afficher_mauvaise_reponse();
             }
         }
 
