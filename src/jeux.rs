@@ -9,14 +9,14 @@ use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher
 
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-enum Mode_Jeu {
+enum ModeJeu {
     Classique,
     Chronomètre,
     Survie,
 }
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Mode{
-    mode: Mode_Jeu,
+    mode: ModeJeu,
     détail: Option<usize>,
 }
 
@@ -24,9 +24,9 @@ impl Mode{
     pub fn nouveau(mode_jeu: &str) -> Option<Mode>{
 
         match mode_jeu {
-            "classique" => Some(Mode{mode : Mode_Jeu::Classique, détail: Some(demander_nb_manche(300)) }),//limite
-            "chronomètre" => Some(Mode{mode : Mode_Jeu::Chronomètre, détail : Some(demander_temp()) }),
-            "survie" => Some(Mode{mode : Mode_Jeu::Survie, détail : None }),
+            "classique" => Some(Mode{mode : ModeJeu::Classique, détail: Some(demander_nb_manche(300)) }),//limite
+            "chronomètre" => Some(Mode{mode : ModeJeu::Chronomètre, détail : Some(demander_temp()) }),
+            "survie" => Some(Mode{mode : ModeJeu::Survie, détail : None }),
             _ => {
                 eprintln!("On as un problème");
                 None
@@ -56,7 +56,7 @@ impl Jeux {
 
         match self.mode.mode {
 
-            Mode_Jeu::Classique => {
+            ModeJeu::Classique => {
                 if self.mode.détail.is_some() {
                     classique(self, self.mode.détail.unwrap())
                 }else {
@@ -67,7 +67,7 @@ impl Jeux {
 
             }
 
-            Mode_Jeu::Chronomètre => {
+            ModeJeu::Chronomètre => {
                 if self.mode.détail.is_some() {
                     chronomètre(self, self.mode.détail.unwrap())
                 }else {
@@ -76,7 +76,7 @@ impl Jeux {
                 }
             }
 
-            Mode_Jeu::Survie => {
+            ModeJeu::Survie => {
                     survie(self)
 
             }
@@ -137,7 +137,7 @@ impl Jeux {
     pub(crate) fn affiche_info(&self, nb_manche:usize, question: &String) {
         afficher_en_tete();
         afficher_score(&self.joueur, nb_manche);
-        afficher_question(self.joueur.question(),question);
+        afficher_question(question);
     }
 
 
@@ -158,11 +158,6 @@ impl Jeux {
 
     pub fn question(&self) -> &Question {
         &self.question
-    }
-
-
-    pub fn réinitialiser(&self){
-
     }
 
 }

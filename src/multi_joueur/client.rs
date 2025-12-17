@@ -1,7 +1,6 @@
-
 use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, BufReader, AsyncBufReadExt, AsyncReadExt};
-use crate::jeux::{Jeux, Mode};
+use crate::jeux::Jeux;
 use crate::outils::outils::{demande_nom, demander};
 use crate::outils::terminal::{afficher, afficher_str};
 

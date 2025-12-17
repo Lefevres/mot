@@ -1,6 +1,5 @@
 use std::{fs, path::PathBuf};
 use std::env::home_dir;
-use std::path::Iter;
 use std::string::ToString;
 use std::sync::LazyLock;
 use rand::prelude::SliceRandom;
