@@ -6,7 +6,6 @@ pub struct Joueur  {
     mauvaise_reponse: usize,
     question: usize,   //question actuelle
     nom: String,
-    role: String,
 }
 
 
