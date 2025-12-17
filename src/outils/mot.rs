@@ -1,9 +1,40 @@
 use std::{fs, path::PathBuf};
 use std::env::home_dir;
+use std::path::Iter;
 use std::string::ToString;
 use std::sync::LazyLock;
 use rand::prelude::SliceRandom;
 use crate::outils::outils::transforme_vec_string_en_tuple_string;
+
+struct Question{
+    nb_questions: usize,
+    question: Vec<(String,String)>,
+    curseur : usize,
+}
+impl Question {
+    fn new(question: Vec<(String,String)>) -> Question {
+        Question{nb_questions: question.len(), question, curseur: 0}
+    }
+
+    pub fn nb_questions(&self) -> usize {
+        self.nb_questions
+    }
+}
+
+impl Iterator for Question {
+    type Item = (String,String);
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.curseur < self.nb_questions {
+            self.curseur += 1;
+            Some(self.question[self.curseur-1].clone())
+        }
+        else {
+            None
+        }
+    }
+
+
+}
 
 static CHEMIN: LazyLock<PathBuf> = LazyLock::new(|| {
     home_dir().expect("Impossible de trouver le dossier home").join(".mot")
@@ -11,10 +42,10 @@ static CHEMIN: LazyLock<PathBuf> = LazyLock::new(|| {
 static FICHIER: LazyLock<PathBuf> = LazyLock::new(|| CHEMIN.join("mot.txt")); //j'ai retirer //../../
 
 
-pub fn cree_liste() -> Vec<(String, String)> {
+pub fn  cree_liste<'a>() -> Question {
     let fichier = lis_fichier();
     let liste = melange_liste(fichier);
-    liste
+    Question::new(liste)
 }
 
 

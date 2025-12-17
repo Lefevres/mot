@@ -11,6 +11,10 @@ use crossterm::style::{Color, SetForegroundColor};
 use crossterm::terminal::Clear;
 use crate::outils::terminal::{afficher, afficher_str};
 
+
+
+
+
 pub fn demander() -> String{
     let mut variable = String::new();
     io::stdin()
@@ -226,7 +230,7 @@ pub fn crée_joueur() -> Joueur {
 pub fn se_préparer<'a>(role : &str) -> (Joueur,Vec<(String,String)>,String, usize){  //rajouter la demande de nom ?
 
     let joueur= crée_joueur();
-    let mut liste=Vec::new();
+    let mut liste;
     let mut nom = String::new();
 
 
@@ -248,7 +252,7 @@ pub fn se_préparer<'a>(role : &str) -> (Joueur,Vec<(String,String)>,String, usi
         }
     }
 
-    let nb_max_manche = liste.len();
+    let nb_max_manche = liste.nb_questions();
 
     (joueur, liste, nom, nb_max_manche)
 }
