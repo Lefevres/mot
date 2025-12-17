@@ -24,7 +24,7 @@ impl Mode{
     pub fn nouveau(mode_jeu: &str) -> Option<Mode>{
 
         match mode_jeu {
-            "classique" => Some(Mode{mode : Mode_Jeu::Classique, détail: Some(demander_nb_manche(10)) }),//limite
+            "classique" => Some(Mode{mode : Mode_Jeu::Classique, détail: Some(demander_nb_manche(300)) }),//limite
             "chronomètre" => Some(Mode{mode : Mode_Jeu::Chronomètre, détail : Some(demander_temp()) }),
             "survie" => Some(Mode{mode : Mode_Jeu::Survie, détail : None }),
             _ => {
@@ -147,6 +147,16 @@ impl Jeux {
 
     pub fn nombre_question(&self) -> usize {
         self.question.nb_questions()
+    }
+    
+    
+    pub fn mode(&self) -> &Mode {
+        &self.mode
+    }
+    
+    
+    pub fn question(&self) -> &Question {
+        &self.question
     }
 
 }

@@ -226,10 +226,11 @@ pub fn crée_joueur() -> Joueur {
     Joueur::nouveau()
 }
 
-pub fn crée_partie(est_multi: bool) -> Jeux {
-    let question = crée_liste();
-    let mode = mode_de_jeu();
-    let joueur = crée_joueur();
+pub fn crée_partie(est_multi: bool, mut question: Option<Question>, mode: Option<Mode>, joueur: Option<Joueur>) -> Jeux {
+    let question = if question.is_some() {question.unwrap()} else {crée_liste()};
+    let mode = if mode.is_some() {mode.unwrap()} else {mode_de_jeu()};
+    let joueur = if joueur.is_some() {joueur.unwrap()} else {crée_joueur()};
+
     Jeux::nouveau(mode, joueur, question, est_multi)
 }
 
@@ -255,7 +256,7 @@ fn mode_de_jeu() -> Mode {
 
 
 
-fn demande_nom() -> String{
+pub fn demande_nom() -> String{
     afficher_str("Quel est ton nom ?");
     demander()
 }

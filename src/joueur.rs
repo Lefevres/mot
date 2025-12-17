@@ -2,15 +2,16 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Joueur  {
-    bonne_reponse:usize,
-    mauvaise_reponse:usize,
-    question:usize,   //question actuelle
+    bonne_reponse: usize,
+    mauvaise_reponse: usize,
+    question: usize,   //question actuelle
+    nom: String,
 }
 
 
 impl Joueur {
     pub fn nouveau() -> Joueur {
-    Joueur {bonne_reponse : 0, mauvaise_reponse : 0, question : 0 }
+    Joueur {bonne_reponse : 0, mauvaise_reponse : 0, question : 0, nom: "".to_string() }
     } //crée un nouveau Joueur avec les valeurs de base
 
     pub fn bonne_reponse(&self) -> usize{
@@ -43,4 +44,14 @@ impl Joueur {
     pub fn fin(&self, manche:usize) -> bool {
         self.question / 2 == manche
     } //renvoie true si on a fais manche tour
+
+
+    pub fn défini_nom(&mut self, nom: String){
+        self.nom = nom;
+    }
+
+
+    pub fn nom(&self) -> String{
+        self.nom.clone()
+    }
 }

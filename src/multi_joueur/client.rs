@@ -1,8 +1,8 @@
-/*
- tokio::net::TcpStream;
+
+use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, BufReader, AsyncBufReadExt, AsyncReadExt};
 use crate::jeux::{Jeux, Mode};
-use crate::outils::outils::{demander, se_préparer, transforme_vec_string_en_tuple_string};
+use crate::outils::outils::{demande_nom, demander};
 use crate::outils::terminal::{afficher, afficher_str};
 
 
@@ -12,7 +12,8 @@ const PORT: &str = ":9000";
 #[tokio::main]
 pub async fn client(){
 
-    let (_,_,nom,_) = se_préparer("client");
+    //let (_,_,nom,_) = se_préparer("client");
+    let nom = demande_nom();
 
     let temp = connection().await.unwrap();
 
@@ -26,21 +27,21 @@ pub async fn client(){
     let mut jeux = récupéré_jeux(&mut stream).await.unwrap();
 
 
-    let mut option = false;
-    let mut info:usize = 0;
+    //let mut option = false;
+    //let mut info:usize = 0;
 
-    match jeux.mode {
+    /*match jeux.mode {
         Mode::Classique | Mode::Chronomètre => {
             option = true;
 
             info = lis_message(&mut stream).await.unwrap().trim().parse().unwrap();
         }
         _ => ()
-    }
+    }*/
 
     // Lance la partie
 
-    let résultat = jeux.jouer(if option { Some(info) } else { None });
+    let résultat = jeux.jouer();
 
     //let résultat = jouer(&mut joueur, &liste, nb_manche);
     let résultat = résultat.0.to_string() +";"+ &résultat.1.to_string();
@@ -159,4 +160,4 @@ async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
     afficher_str("Connecté !");
 
     Ok(stream)
-}*/
+}

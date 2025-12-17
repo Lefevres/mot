@@ -1,18 +1,19 @@
-/*
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpListener,TcpStream};
 use crate::jeux::{Jeux, Mode};
 use crate::joueur::Joueur;
-use crate::outils::outils::{demander, demander_nb_manche, demander_temp};
+use crate::outils::mot::Question;
+use crate::outils::outils::{crée_partie, demander, demander_nb_manche, demander_temp};
 use crate::outils::terminal::{afficher, afficher_str};
 
 #[tokio::main]
 pub async fn hote(){
 
-    let mode = mode_de_jeu();
+
     let nb_client:usize= demander_nb_joueur();
 
-    let (joueur, liste, mon_nom, nb_manche) = se_préparer("hote");
+
+    let jeux = crée_partie(true, None, None, None);
 
     let clients = connextion_au_client(nb_client).await.unwrap();
 
@@ -22,12 +23,12 @@ pub async fn hote(){
 
 
     //l'hote envoi les jeux aux clients
-    envoi_jeux(&mut sockets, mode.clone(), liste.clone()).await;
+    envoi_jeux(&mut sockets, jeux.mode().clone(), jeux.question().clone()).await;
 
-    let mut option = false;
-    let mut info = 0;
+    //let mut option = false;
+    //let mut info = 0;
 
-    match mode {
+   /* match mode {
 
         Mode::Classique => {
             option = true;
@@ -40,20 +41,20 @@ pub async fn hote(){
             envoi_message_tous(&mut sockets,&info.to_string()).await;
         }
         _ => ()
-    }
+    }*/
    // message_initialisation(&mut sockets, nb_manche, &liste[0..nb_manche].to_vec(),mode.clone()).await;  //fois deux pour question réponse; faire très attention si jouer, tester le multi
 
     let résultats:Vec<(String,String)>;
 
-    noms.insert(0,mon_nom.clone());
+    noms.insert(0, jeux.joueur.nom());
 
-    let mut jeux = Jeux::nouveau(mode.clone(), joueur.clone(), liste, nb_manche);
+    let mut jeux = Jeux::nouveau(jeux.mode().clone(), jeux.joueur.clone(), jeux.question().clone(), true);
 
-    jeux.jouer(if option { Some(info) } else { None });
+    jeux.jouer();
 
-    résultats = met_a_jour_les_résultats(&mut sockets,&joueur).await;
+    résultats = met_a_jour_les_résultats(&mut sockets, &jeux.joueur).await;
 
-    afficher_résultat(nb_client,&noms,mon_nom,&résultats);
+    afficher_résultat(nb_client,&noms,jeux.joueur.nom(),&résultats);
 
     partage_résultat(&mut sockets,résultats,noms).await;
 }
@@ -65,10 +66,10 @@ async fn envoi_message_tous(sockets: &mut Vec<TcpStream>, message: &String) {
 }
 
 
-async fn envoi_jeux(sockets: &mut Vec<TcpStream>, mode: Mode, liste: Vec<(String,String)>){
+async fn envoi_jeux(sockets: &mut Vec<TcpStream>, mode: Mode, question: Question){
     for socket in sockets {
-        let longeur = liste.len();
-        let jeux = Jeux::nouveau(mode.clone(), Joueur::nouveau(), liste.clone(), longeur);
+        let longeur = 6; // a retirer puisque dans question
+        let jeux = Jeux::nouveau(mode.clone(), Joueur::nouveau(), question.clone(), true);
         let jeux_string = serde_json::to_string(&jeux).unwrap();
         envoie_message(socket,jeux_string).await;
     }
@@ -189,4 +190,3 @@ async fn connextion_au_client(nb_client: usize) -> Result<(Vec<String>,Vec<TcpSt
 }
 
 
- */
