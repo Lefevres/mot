@@ -21,9 +21,9 @@ pub struct Mode{
 }
 
 impl Mode{
-    pub fn nouveau(mode_jeu: String) -> Option<Mode>{
+    pub fn nouveau(mode_jeu: &str) -> Option<Mode>{
 
-        match mode_jeu.as_str() {
+        match mode_jeu {
             "classique" => Some(Mode{mode : Mode_Jeu::Classique, Some(demander_nb_manche(limite)) }),
             "chronomètre" => Some(Mode{mode : Mode_Jeu::Chronomètre, Some(demander_temp()) }),
             "survie" => Some(Mode{mode : Mode_Jeu::Survie, None }),
@@ -140,8 +140,9 @@ impl Jeux {
     }
 
 
-    pub(crate) fn détermine_mot(&self) -> String {
-        self.liste[self.joueur.question()].0.clone()
+    pub(crate) fn détermine_mot(&mut self) -> String {
+        self.question.next().unwrap().0
+        //self.liste[self.joueur.question()].0.clone()
     }
 
 }

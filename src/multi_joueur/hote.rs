@@ -2,7 +2,7 @@ use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpListener,TcpStream};
 use crate::jeux::{Jeux, Mode};
 use crate::joueur::Joueur;
-use crate::outils::outils::{demander, demander_nb_manche, demander_temp, se_préparer};
+use crate::outils::outils::{demander, demander_nb_manche, demander_temp};
 use crate::outils::terminal::{afficher, afficher_str};
 
 #[tokio::main]

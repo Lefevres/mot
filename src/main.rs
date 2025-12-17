@@ -29,7 +29,7 @@ fn main() {
 
             let mut jeux = crée_partie(false);
             
-            jeux.jouer(option);
+            jeux.jouer();
         }
 
 

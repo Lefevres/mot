@@ -239,16 +239,16 @@ fn mode_de_jeu() -> Mode {
 
     match demander().as_str() {
         "classique"  | "1" | "cl" => {
-            Mode::Classique
+            Mode::nouveau("classique").unwrap()
         }
         "chronomètre" | "2" | "ch"  => {
-            Mode::Chronomètre
+            Mode::nouveau("chronomètre").unwrap()
         }
-        "survie" | "3" | "s" | "su" => Mode::Survie,
+        "survie" | "3" | "s" | "su" => Mode::nouveau("survie").unwrap(),
 
         _ => {
             afficher_str("bon… bha on va dire classique alors…");
-            Mode::Classique
+            Mode::nouveau("classique").unwrap()
         }
     }
 }
