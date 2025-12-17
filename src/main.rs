@@ -11,8 +11,6 @@ mod mode;
 
 fn main() {
 
-    loop {
-
         if est_ce_multi() {
             match choisir_le_role() {
                 true => {
@@ -25,18 +23,21 @@ fn main() {
             }
 
         }else {
-
             let mut jeux = crée_partie(false, None, None, None);
 
-            jeux.jouer();
+            loop {
+                jeux.jouer();
+                if !rejouer() {
+                    break;
+                }
+                jeux = crée_partie(false, None, Some(jeux.mode().clone()), None);
+
+            }
+
+
         }
 
 
-        if !rejouer(){
-            break;
-        }
-
-    }
 }
 
 

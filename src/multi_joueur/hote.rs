@@ -3,7 +3,7 @@ use tokio::net::{TcpListener,TcpStream};
 use crate::jeux::{Jeux, Mode};
 use crate::joueur::Joueur;
 use crate::outils::mot::Question;
-use crate::outils::outils::{crée_partie, demander, demander_nb_manche, demander_temp};
+use crate::outils::outils::{crée_partie, demande_nom, demander, demander_nb_manche, demander_temp};
 use crate::outils::terminal::{afficher, afficher_str};
 
 #[tokio::main]
@@ -13,7 +13,9 @@ pub async fn hote(){
     let nb_client:usize= demander_nb_joueur();
 
 
-    let jeux = crée_partie(true, None, None, None);
+    let mut jeux = crée_partie(true, None, None, None);
+
+    jeux.joueur.défini_nom(demande_nom());
 
     let clients = connextion_au_client(nb_client).await.unwrap();
 
@@ -25,24 +27,6 @@ pub async fn hote(){
     //l'hote envoi les jeux aux clients
     envoi_jeux(&mut sockets, jeux.mode().clone(), jeux.question().clone()).await;
 
-    //let mut option = false;
-    //let mut info = 0;
-
-   /* match mode {
-
-        Mode::Classique => {
-            option = true;
-            info = demander_nb_manche(liste.len());
-            envoi_message_tous(&mut sockets,&info.to_string()).await;
-        }
-        Mode::Chronomètre => {
-            option = true;
-            info = demander_temp();
-            envoi_message_tous(&mut sockets,&info.to_string()).await;
-        }
-        _ => ()
-    }*/
-   // message_initialisation(&mut sockets, nb_manche, &liste[0..nb_manche].to_vec(),mode.clone()).await;  //fois deux pour question réponse; faire très attention si jouer, tester le multi
 
     let résultats:Vec<(String,String)>;
 

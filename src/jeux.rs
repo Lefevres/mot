@@ -77,7 +77,8 @@ impl Jeux {
             }
 
             Mode_Jeu::Survie => {
-                survie(self)
+                    survie(self)
+
             }
 
         }
@@ -88,7 +89,7 @@ impl Jeux {
    pub fn joue_une_manche(&mut self,nb_manche_total:usize) -> bool {
         let (mot,question) = self.détermine_mot();
         self.affiche_info(nb_manche_total,&question);
-        //let mot = self.question.next().unwrap().0; //de toute façon on fait attention a la limite
+
         let mut liste_essai:Vec<String> = vec!();
 
         loop {  //tant que le mot n'as pas été passer, ou stop
@@ -148,15 +149,20 @@ impl Jeux {
     pub fn nombre_question(&self) -> usize {
         self.question.nb_questions()
     }
-    
-    
+
+
     pub fn mode(&self) -> &Mode {
         &self.mode
     }
-    
-    
+
+
     pub fn question(&self) -> &Question {
         &self.question
+    }
+
+
+    pub fn réinitialiser(&self){
+
     }
 
 }

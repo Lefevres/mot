@@ -12,7 +12,7 @@ const PORT: &str = ":9000";
 #[tokio::main]
 pub async fn client(){
 
-    //let (_,_,nom,_) = se_préparer("client");
+    
     let nom = demande_nom();
 
     let temp = connection().await.unwrap();
@@ -27,17 +27,6 @@ pub async fn client(){
     let mut jeux = récupéré_jeux(&mut stream).await.unwrap();
 
 
-    //let mut option = false;
-    //let mut info:usize = 0;
-
-    /*match jeux.mode {
-        Mode::Classique | Mode::Chronomètre => {
-            option = true;
-
-            info = lis_message(&mut stream).await.unwrap().trim().parse().unwrap();
-        }
-        _ => ()
-    }*/
 
     // Lance la partie
 
