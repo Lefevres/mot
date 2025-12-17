@@ -1,6 +1,3 @@
-use crate::jeux::{Jeux, Mode};
-use crate::multi_joueur::client::client;
-use crate::multi_joueur::hote::hote;
 use crate::outils::outils::{crée_partie, demander, demander_nb_manche, demander_temp};
 use crate::outils::terminal::{afficher, afficher_str};
 
@@ -17,18 +14,18 @@ fn main() {
         if est_ce_multi() {
             match choisir_le_role() {
                 true => {
-                    hote();
+                    //hote();
                 }
 
                 false => {
-                    client();
+                    //client();
                 }
             }
 
         }else {
 
             let mut jeux = crée_partie(false);
-            
+
             jeux.jouer();
         }
 

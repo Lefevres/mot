@@ -1,4 +1,5 @@
-use tokio::net::TcpStream;
+/*
+ tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, BufReader, AsyncBufReadExt, AsyncReadExt};
 use crate::jeux::{Jeux, Mode};
 use crate::outils::outils::{demander, se_préparer, transforme_vec_string_en_tuple_string};
@@ -158,4 +159,4 @@ async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
     afficher_str("Connecté !");
 
     Ok(stream)
-}
+}*/

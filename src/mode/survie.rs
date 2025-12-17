@@ -28,8 +28,9 @@ fn afficher_score_fin(joueur: &mut Joueur) {
 
 fn joue_une_manche(jeux:&mut Jeux) -> bool {
 
-    jeux.affiche_info(jeux.nb_max_manche);
-    let mot = jeux.détermine_mot();
+
+    let (mot,question) = jeux.détermine_mot();
+    jeux.affiche_info(jeux.nombre_question(),&question);
     let mut liste_essai:Vec<String> = vec!();
 
     loop {  //tant que le mot n'as pas été passer, ou stop

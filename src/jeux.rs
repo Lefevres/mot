@@ -24,9 +24,9 @@ impl Mode{
     pub fn nouveau(mode_jeu: &str) -> Option<Mode>{
 
         match mode_jeu {
-            "classique" => Some(Mode{mode : Mode_Jeu::Classique, Some(demander_nb_manche(limite)) }),
-            "chronomètre" => Some(Mode{mode : Mode_Jeu::Chronomètre, Some(demander_temp()) }),
-            "survie" => Some(Mode{mode : Mode_Jeu::Survie, None }),
+            "classique" => Some(Mode{mode : Mode_Jeu::Classique, détail: Some(demander_nb_manche(10)) }),//limite
+            "chronomètre" => Some(Mode{mode : Mode_Jeu::Chronomètre, détail : Some(demander_temp()) }),
+            "survie" => Some(Mode{mode : Mode_Jeu::Survie, détail : None }),
             _ => {
                 eprintln!("On as un problème");
                 None
@@ -40,7 +40,7 @@ impl Mode{
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Jeux {
     mode: Mode,
-    joueur: Joueur,
+    pub(crate) joueur: Joueur,
     question: Question,
     est_multi: bool,
 }
@@ -86,9 +86,9 @@ impl Jeux {
 
 
    pub fn joue_une_manche(&mut self,nb_manche_total:usize) -> bool {
-
-        self.affiche_info(nb_manche_total);
-        let mot = self.question.next().unwrap().0; //de toute façon on fait attention a la limite
+        let (mot,question) = self.détermine_mot();
+        self.affiche_info(nb_manche_total,&question);
+        //let mot = self.question.next().unwrap().0; //de toute façon on fait attention a la limite
         let mut liste_essai:Vec<String> = vec!();
 
         loop {  //tant que le mot n'as pas été passer, ou stop
@@ -133,16 +133,20 @@ impl Jeux {
     }
 
 
-    pub(crate) fn affiche_info(&self, nb_manche:usize) {
+    pub(crate) fn affiche_info(&self, nb_manche:usize, question: &String) {
         afficher_en_tete();
         afficher_score(&self.joueur, nb_manche);
-        afficher_question(self.joueur.question(),&self.question);
+        afficher_question(self.joueur.question(),question);
     }
 
 
-    pub(crate) fn détermine_mot(&mut self) -> String {
-        self.question.next().unwrap().0
+    pub(crate) fn détermine_mot(&mut self) -> (String,String) {
+        self.question.next().unwrap()
         //self.liste[self.joueur.question()].0.clone()
+    }
+
+    pub fn nombre_question(&self) -> usize {
+        self.question.nb_questions()
     }
 
 }
