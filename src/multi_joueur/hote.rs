@@ -3,8 +3,9 @@ use tokio::net::{TcpListener,TcpStream};
 use crate::jeux::{Jeux, Mode};
 use crate::joueur::Joueur;
 use crate::outils::mot::Question;
-use crate::outils::outils::{crée_partie, demande_nom, demander, demander_nb_manche, demander_temp};
+use crate::outils::outils::{crée_partie, demande_nom, demander};
 use crate::outils::terminal::{afficher, afficher_str};
+
 
 #[tokio::main]
 pub async fn hote(){
@@ -19,6 +20,9 @@ pub async fn hote(){
 
     let clients = connextion_au_client(nb_client).await.unwrap();
 
+
+
+    //pour rejouer
     let mut noms = clients.0;
 
     let mut sockets = clients.1;
@@ -41,18 +45,13 @@ pub async fn hote(){
     afficher_résultat(nb_client,&noms,jeux.joueur.nom(),&résultats);
 
     partage_résultat(&mut sockets,résultats,noms).await;
-}
 
-async fn envoi_message_tous(sockets: &mut Vec<TcpStream>, message: &String) {
-    for socket in sockets {
-        envoie_message(socket, message.clone()).await;
-    }
+
 }
 
 
 async fn envoi_jeux(sockets: &mut Vec<TcpStream>, mode: Mode, question: Question){
     for socket in sockets {
-        let longeur = 6; // a retirer puisque dans question
         let jeux = Jeux::nouveau(mode.clone(), Joueur::nouveau(), question.clone(), true);
         let jeux_string = serde_json::to_string(&jeux).unwrap();
         envoie_message(socket,jeux_string).await;

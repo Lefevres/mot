@@ -226,7 +226,7 @@ pub fn crée_joueur() -> Joueur {
     Joueur::nouveau()
 }
 
-pub fn crée_partie(est_multi: bool, mut question: Option<Question>, mode: Option<Mode>, joueur: Option<Joueur>) -> Jeux {
+pub fn crée_partie(est_multi: bool, question: Option<Question>, mode: Option<Mode>, joueur: Option<Joueur>) -> Jeux {
     let question = if question.is_some() {question.unwrap()} else {crée_liste()};
     let mode = if mode.is_some() {mode.unwrap()} else {mode_de_jeu()};
     let joueur = if joueur.is_some() {joueur.unwrap()} else {crée_joueur()};
