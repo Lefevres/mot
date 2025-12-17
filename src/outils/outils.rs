@@ -1,6 +1,6 @@
 use std::io;
 use crate::joueur::Joueur;
-use crate::outils::mot::cree_liste;
+use crate::outils::mot::{cree_liste, Question};
 use std::error::Error;
 use crossterm::{cursor, event::{self, Event, KeyCode}, execute, queue, terminal::{self, ClearType}};
 use std::io::{stdout, Write};
@@ -9,9 +9,14 @@ use crossterm::cursor::MoveToColumn;
 use crossterm::event::KeyEventKind;
 use crossterm::style::{Color, SetForegroundColor};
 use crossterm::terminal::Clear;
+use crate::jeux::Mode;
 use crate::outils::terminal::{afficher, afficher_str};
 
-
+struct Partie{
+    question: Question,
+    mode : Mode,
+    joueur : Joueur,
+}
 
 
 

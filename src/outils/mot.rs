@@ -6,7 +6,7 @@ use std::sync::LazyLock;
 use rand::prelude::SliceRandom;
 use crate::outils::outils::transforme_vec_string_en_tuple_string;
 
-struct Question{
+pub struct Question{
     nb_questions: usize,
     question: Vec<(String,String)>,
     curseur : usize,
