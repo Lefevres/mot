@@ -3,38 +3,62 @@ use crate::joueur::Joueur;
 use crate::mode::chronometre::chronomètre;
 use crate::mode::classique::classique;
 use crate::mode::survie::survie;
-use crate::outils::outils::demander_réponse;
+use crate::outils::mot::Question;
+use crate::outils::outils::{demander_nb_manche, demander_réponse, demander_temp};
 use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_str};
 
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub enum Mode {
+enum Mode_Jeu {
     Classique,
     Chronomètre,
     Survie,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Mode{
+    mode: Mode_Jeu,
+    détail: Option<usize>,
+}
+
+impl Mode{
+    pub fn nouveau(mode_jeu: String) -> Option<Mode>{
+
+        match mode_jeu.as_str() {
+            "classique" => Some(Mode{mode : Mode_Jeu::Classique, Some(demander_nb_manche(limite)) }),
+            "chronomètre" => Some(Mode{mode : Mode_Jeu::Chronomètre, Some(demander_temp()) }),
+            "survie" => Some(Mode{mode : Mode_Jeu::Survie, None }),
+            _ => {
+                eprintln!("On as un problème");
+                None
+            }
+        }
+    }
+
+
+}
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Jeux {
-    pub mode: Mode,
-    pub joueur: Joueur,
-    liste: Vec<(String, String)>,
-    pub nb_max_manche: usize,
+    mode: Mode,
+    joueur: Joueur,
+    question: Question,
+    est_multi: bool,
 }
 
 
 impl Jeux {
-    pub fn nouveau(mode: Mode, joueur: Joueur, liste: Vec<(String,String)>, nb_max_manche: usize) -> Jeux {
-        Jeux{mode, joueur, liste, nb_max_manche}
+
+    pub fn nouveau(mode: Mode, joueur: Joueur, question: Question, est_multi : bool) -> Jeux {
+        Jeux{mode, joueur, question, est_multi }
     }
 
-    pub fn jouer(&mut self, nb_question: Option<usize>) -> (usize,usize){
+    pub fn jouer(&mut self) -> (usize,usize){
 
-        match self.mode {
+        match self.mode.mode {
 
-            Mode::Classique => {
-                if nb_question.is_some() {
-                    classique(self, nb_question.unwrap())
+            Mode_Jeu::Classique => {
+                if self.mode.détail.is_some() {
+                    classique(self, self.mode.détail.unwrap())
                 }else {
                     afficher_str("bein… y'a un problème");
                     (0,0)
@@ -43,16 +67,16 @@ impl Jeux {
 
             }
 
-            Mode::Chronomètre => {
-                if nb_question.is_some() {
-                    chronomètre(self, nb_question.unwrap())
+            Mode_Jeu::Chronomètre => {
+                if self.mode.détail.is_some() {
+                    chronomètre(self, self.mode.détail.unwrap())
                 }else {
                     afficher_str("bein… y'a un problème");
                     (0,0)
                 }
             }
 
-            Mode::Survie => {
+            Mode_Jeu::Survie => {
                 survie(self)
             }
 
@@ -64,7 +88,7 @@ impl Jeux {
    pub fn joue_une_manche(&mut self,nb_manche_total:usize) -> bool {
 
         self.affiche_info(nb_manche_total);
-        let mot = self.détermine_mot();
+        let mot = self.question.next().unwrap().0; //de toute façon on fait attention a la limite
         let mut liste_essai:Vec<String> = vec!();
 
         loop {  //tant que le mot n'as pas été passer, ou stop
@@ -112,7 +136,7 @@ impl Jeux {
     pub(crate) fn affiche_info(&self, nb_manche:usize) {
         afficher_en_tete();
         afficher_score(&self.joueur, nb_manche);
-        afficher_question(self.joueur.question(),&self.liste);
+        afficher_question(self.joueur.question(),&self.question);
     }
 
 

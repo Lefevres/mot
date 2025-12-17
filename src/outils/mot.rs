@@ -4,8 +4,10 @@ use std::path::Iter;
 use std::string::ToString;
 use std::sync::LazyLock;
 use rand::prelude::SliceRandom;
+use serde::{Deserialize, Serialize};
 use crate::outils::outils::transforme_vec_string_en_tuple_string;
 
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Question{
     nb_questions: usize,
     question: Vec<(String,String)>,
@@ -42,7 +44,7 @@ static CHEMIN: LazyLock<PathBuf> = LazyLock::new(|| {
 static FICHIER: LazyLock<PathBuf> = LazyLock::new(|| CHEMIN.join("mot.txt")); //j'ai retirer //../../
 
 
-pub fn  cree_liste<'a>() -> Question {
+pub fn  crée_liste() -> Question {
     let fichier = lis_fichier();
     let liste = melange_liste(fichier);
     Question::new(liste)

@@ -6,8 +6,9 @@ use crate::outils::outils::{demander, demander_nb_manche, demander_temp, se_pré
 use crate::outils::terminal::{afficher, afficher_str};
 
 #[tokio::main]
-pub async fn hote(mode: Mode){
+pub async fn hote(){
 
+    let mode = mode_de_jeu();
     let nb_client:usize= demander_nb_joueur();
 
     let (joueur, liste, mon_nom, nb_manche) = se_préparer("hote");

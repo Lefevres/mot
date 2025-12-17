@@ -1,6 +1,7 @@
 use std::io::stdout;
 use colored::Colorize;
 use crate::joueur::Joueur;
+use crate::outils::mot::Question;
 use crate::outils::outils::demander;
 
 
@@ -14,7 +15,7 @@ pub fn afficher_en_tete(){
     println!("{en_tete}\n{indices}");
 }
 
-pub fn afficher_question(position : usize, liste : &Vec<(String,String)>){  //renvoie le mot attendu
+pub fn afficher_question(position : usize, question : &Question){  //renvoie le mot attendu
         let question = format!("{}", liste[position].1).bright_yellow();
         println!("\n\n{}\n\n\n", question ); //nb_question.0 est la réponse, nb_question.1 est la question
     }

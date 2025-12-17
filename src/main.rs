@@ -1,7 +1,7 @@
 use crate::jeux::{Jeux, Mode};
 use crate::multi_joueur::client::client;
 use crate::multi_joueur::hote::hote;
-use crate::outils::outils::{demander, demander_nb_manche, demander_temp, se_préparer};
+use crate::outils::outils::{crée_partie, demander, demander_nb_manche, demander_temp};
 use crate::outils::terminal::{afficher, afficher_str};
 
 mod joueur;
@@ -17,8 +17,7 @@ fn main() {
         if est_ce_multi() {
             match choisir_le_role() {
                 true => {
-                    let mode = mode_de_jeu();
-                    hote(mode);
+                    hote();
                 }
 
                 false => {
@@ -27,14 +26,9 @@ fn main() {
             }
 
         }else {
-            let mode = mode_de_jeu();
-            let mut préparation = se_préparer("solitaire");
-            let mut jeux = Jeux::nouveau(mode.clone(), préparation.0, préparation.1.clone(),préparation.3);
 
-
-            let option = récuperer_détails(mode, préparation.1.len());
-
-
+            let mut jeux = crée_partie(false);
+            
             jeux.jouer(option);
         }
 
@@ -47,37 +41,9 @@ fn main() {
 }
 
 
-fn récuperer_détails(mode: Mode, limite: usize) -> Option<usize> {
 
-    match mode {
-        Mode::Classique => {
-            Some(demander_nb_manche(limite))
-        }
-        Mode::Chronomètre => {
-            Some(demander_temp())
-        }//demander temp
-        _ => None
-    }
-}
 
-fn mode_de_jeu() -> Mode {
-    afficher_str("Classique ? Chronomètre ? Survie ?");
 
-    match demander().as_str() {
-        "classique"  | "1" | "cl" => {
-            Mode::Classique
-        }
-        "chronomètre" | "2" | "ch"  => {
-            Mode::Chronomètre
-        }
-        "survie" | "3" | "s" | "su" => Mode::Survie,
-
-        _ => {
-            afficher_str("bon… bha on va dire classique alors…");
-            Mode::Classique
-        }
-    }
-}
 
 
 fn est_ce_multi() -> bool{

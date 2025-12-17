@@ -1,6 +1,6 @@
 use std::io;
 use crate::joueur::Joueur;
-use crate::outils::mot::{cree_liste, Question};
+use crate::outils::mot::{crée_liste, Question};
 use std::error::Error;
 use crossterm::{cursor, event::{self, Event, KeyCode}, execute, queue, terminal::{self, ClearType}};
 use std::io::{stdout, Write};
@@ -9,14 +9,9 @@ use crossterm::cursor::MoveToColumn;
 use crossterm::event::KeyEventKind;
 use crossterm::style::{Color, SetForegroundColor};
 use crossterm::terminal::Clear;
-use crate::jeux::Mode;
+use crate::jeux::{Jeux, Mode};
 use crate::outils::terminal::{afficher, afficher_str};
 
-struct Partie{
-    question: Question,
-    mode : Mode,
-    joueur : Joueur,
-}
 
 
 
@@ -231,36 +226,33 @@ pub fn crée_joueur() -> Joueur {
     Joueur::nouveau()
 }
 
+pub fn crée_partie(est_multi: bool) -> Jeux {
+    let question = crée_liste();
+    let mode = mode_de_jeu();
+    let joueur = crée_joueur();
+    Jeux::nouveau(mode, joueur, question, est_multi)
+}
 
-pub fn se_préparer<'a>(role : &str) -> (Joueur,Vec<(String,String)>,String, usize){  //rajouter la demande de nom ?
 
-    let joueur= crée_joueur();
-    let mut liste;
-    let mut nom = String::new();
+fn mode_de_jeu() -> Mode {
+    afficher_str("Classique ? Chronomètre ? Survie ?");
 
-
-    match role {
-        "solitaire" => {
-            liste = cree_liste();
+    match demander().as_str() {
+        "classique"  | "1" | "cl" => {
+            Mode::Classique
         }
-        "client" => {
-            nom = demande_nom();
+        "chronomètre" | "2" | "ch"  => {
+            Mode::Chronomètre
         }
-        "hote" => {
-            liste = cree_liste();
-            nom = demande_nom();
+        "survie" | "3" | "s" | "su" => Mode::Survie,
 
-        }
-        _ =>{
-            liste = cree_liste();
-            eprintln!("attention je suis dans se_préparer et je suis un role qui n'existe pas");
+        _ => {
+            afficher_str("bon… bha on va dire classique alors…");
+            Mode::Classique
         }
     }
-
-    let nb_max_manche = liste.nb_questions();
-
-    (joueur, liste, nom, nb_max_manche)
 }
+
 
 
 fn demande_nom() -> String{
