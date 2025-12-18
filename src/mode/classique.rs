@@ -1,15 +1,39 @@
-use crate::jeux::Jeux;
-use crate::outils::terminal::afficher_score_fin;
+use serde::{Deserialize, Serialize};
+use crate::jeux::{Jeux, Mode};
+use crate::joueur::Joueur;
+use crate::outils::mot::Question;
 
-pub fn classique(jeux: &mut Jeux, nb_question: usize) -> (usize, usize){
-    
-    while !jeux.joueur.fin(nb_question) {
-        if jeux.joue_une_manche(nb_question) {
-            break;
-        }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Classique {
+    joueur: Joueur,
+    question: Question
+}
+
+
+impl Jeux for Classique {
+    fn get_joueur(&self) -> &Joueur {
+        &self.joueur
     }
 
-    afficher_score_fin(jeux.joueur.clone());
+    fn get_joueur_mut(&mut self) -> &mut Joueur {
+        &mut self.joueur
+    }
 
-    (jeux.joueur.bonne_reponse(),jeux.joueur.mauvaise_reponse())
+    fn get_nb_question(&self) -> &usize {
+        &self.question.nb_questions()
+    }
+
+    fn get_question(&self) -> &Question {
+        &self.question
+    }
+
+    fn get_mode(&self) -> &Mode {
+        todo!()
+    }
+}
+
+impl Classique {
+    pub fn nouveau(joueur: Joueur, question: Question) -> Classique {
+        Classique{joueur, question}
+    }
 }

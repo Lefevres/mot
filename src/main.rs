@@ -1,5 +1,4 @@
-use crate::multi_joueur::client::client;
-use crate::multi_joueur::hote::hote;
+use crate::jeux::Jeux;
 use crate::outils::outils::{crée_partie, demander};
 use crate::outils::terminal::{afficher, afficher_str};
 
@@ -14,11 +13,11 @@ fn main() {
         if est_ce_multi() {
             match choisir_le_role() {
                 true => {
-                    hote();
+                    //hote();
                 }
 
                 false => {
-                    client();
+                    //client();
                 }
             }
 
@@ -30,7 +29,7 @@ fn main() {
                 if !rejouer() {
                     break;
                 }
-                jeux = crée_partie(false, None, Some(jeux.mode().clone()), None);
+                jeux = crée_partie(false, None, None, None);
 
             }
 

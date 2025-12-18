@@ -17,8 +17,8 @@ impl Question {
         Question{nb_questions: question.len(), question, curseur: 0}
     }
 
-    pub fn nb_questions(&self) -> usize {
-        self.nb_questions
+    pub fn nb_questions(&self) -> &usize {
+        &self.nb_questions
     }
 }
 

@@ -9,7 +9,9 @@ use crossterm::cursor::MoveToColumn;
 use crossterm::event::KeyEventKind;
 use crossterm::style::{Color, SetForegroundColor};
 use crossterm::terminal::Clear;
-use crate::jeux::{Jeux, Mode};
+use crate::jeux::Mode;
+use crate::mode::chronometre::Chronomètre;
+use crate::mode::classique::Classique;
 use crate::outils::terminal::{afficher, afficher_str};
 
 
@@ -226,30 +228,41 @@ pub fn crée_joueur() -> Joueur {
     Joueur::nouveau()
 }
 
-pub fn crée_partie(est_multi: bool, question: Option<Question>, mode: Option<Mode>, joueur: Option<Joueur>) -> Jeux {
+pub fn crée_partie(est_multi: bool, question: Option<Question>, mode: Option<String>, joueur: Option<Joueur>) -> Mode {
     let question = if question.is_some() {question.unwrap()} else {crée_liste()};
     let mode = if mode.is_some() {mode.unwrap()} else {mode_de_jeu()};
     let joueur = if joueur.is_some() {joueur.unwrap()} else {crée_joueur()};
+    let jeux;
 
-    Jeux::nouveau(mode, joueur, question, est_multi)
+    match mode.as_str() {
+        "classique" => jeux = Mode::ModeClassique(Classique::nouveau(joueur, question)),
+        "chronomètre" => jeux = Mode::ModeChronomètre(Chronomètre::nouveau(joueur, question)),
+        //"survie" => jeux = Mode::ModeSurvie(Survie::new(joueur, question)),
+        _ => {
+            println!("Mais qu'est ce que je fais là ? ");
+            jeux = Mode::ModeClassique(Classique::nouveau(joueur, question));
+        }
+    }
+    jeux
+
 }
 
 
-fn mode_de_jeu() -> Mode {
+fn mode_de_jeu() -> String {
     afficher_str("Classique ? Chronomètre ? Survie ?");
 
     match demander().as_str() {
         "classique"  | "1" | "cl" => {
-            Mode::nouveau("classique").unwrap()
+            "classique".to_string()
         }
         "chronomètre" | "2" | "ch"  => {
-            Mode::nouveau("chronomètre").unwrap()
+            "chronomètre".to_string()
         }
-        "survie" | "3" | "s" | "su" => Mode::nouveau("survie").unwrap(),
+        "survie" | "3" | "s" | "su" => "survie".to_string(),
 
         _ => {
             afficher_str("bon… bha on va dire classique alors…");
-            Mode::nouveau("classique").unwrap()
+            "classique".to_string()
         }
     }
 }
@@ -262,20 +275,7 @@ pub fn demande_nom() -> String{
 }
 
 
-pub fn demander_temp() -> usize{
-    loop {
-        afficher_str("Combien de secondes ?");
-        let entrée = demander();
 
-        match entrée.parse::<usize>() {
-            Ok(num) => {
-                return num
-            }, //  Retourne le nombre valide et quitte la boucle si le nombre n’est pas trop grand, sinon on va dépasser la taille de la liste
-            Err(_) => afficher_str("Entrée invalide, veuillez entrer un nombre entier positif."),
-        }
-    }
-
-}
 
 
 pub fn demander_nb_manche(taille_liste: usize) -> usize {

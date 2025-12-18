@@ -1,4 +1,4 @@
-use crate::jeux::Jeux;
+/*use crate::jeux::Jeux;
 use crate::joueur::Joueur;
 use crate::outils::outils::demander_réponse;
 use crate::outils::terminal::{afficher, afficher_bonne_reponse, afficher_indice, afficher_reponse_precedante, afficher_str};
@@ -73,4 +73,4 @@ fn joue_une_manche(jeux:&mut Jeux) -> bool {
 
     }
 
-}
+}*/

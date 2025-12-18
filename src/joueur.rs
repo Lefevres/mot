@@ -4,14 +4,14 @@ use serde::{Deserialize, Serialize};
 pub struct Joueur  {
     bonne_reponse: usize,
     mauvaise_reponse: usize,
-    question: usize,   //question actuelle
+    nb_question: usize,   //nb_question actuelle
     nom: String,
 }
 
 
 impl Joueur {
     pub fn nouveau() -> Joueur {
-    Joueur {bonne_reponse : 0, mauvaise_reponse : 0, question : 0, nom: "".to_string() }
+    Joueur {bonne_reponse : 0, mauvaise_reponse : 0, nb_question : 0, nom: "".to_string() }
     } //crée un nouveau Joueur avec les valeurs de base
 
     pub fn bonne_reponse(&self) -> usize{
@@ -32,17 +32,17 @@ impl Joueur {
         self.mauvaise_reponse
     }  //ajoute un au nombre de mauvaise réponse puis le renvoie
 
-    pub fn question(&self) -> usize{
-        self.question
-    }  //renvoie le nombre de question répondue
+    pub fn nb_question(&self) -> usize{
+        self.nb_question
+    }  //renvoie le nombre de nb_question répondue
 
     pub fn question_suivante(&mut self) -> usize{
-        self.question += 2;
-        self.question
-    }  //augmente question de deux pour accéder a la question suivante
+        self.nb_question += 2;
+        self.nb_question
+    }  //augmente nb_question de deux pour accéder a la nb_question suivante
 
-    pub fn fin(&self, manche:usize) -> bool {
-        self.question / 2 == manche
+    pub fn fin(&self, manche: &usize) -> bool {
+        self.nb_question / 2 == *manche
     } //renvoie true si on a fais manche tour
 
 

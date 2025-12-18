@@ -1,69 +1,74 @@
 use std::time::{Duration, Instant};
-use crate::jeux::Jeux;
-use crate::outils::outils::{demander_réponse};
-use crate::outils::terminal::{afficher_bonne_reponse, afficher_indice, afficher_mauvaise_reponse, afficher_reponse_precedante, afficher_score_fin, afficher_str};
+use serde::{Deserialize, Serialize};
+use crate::jeux::{Jeux, Mode};
+use crate::joueur::Joueur;
+use crate::mode::classique::Classique;
+use crate::outils::mot::Question;
+use crate::outils::outils::demander;
+use crate::outils::terminal::{afficher_score_fin, afficher_str};
 
-pub fn chronomètre(jeux:&mut Jeux, durée: usize) -> (usize, usize){
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Chronomètre{
+    joueur: Joueur,
+    question: Question
+}
 
-    let début = Instant::now();
-    let fin = début + Duration::from_secs(durée as u64);
+impl Jeux for Chronomètre{
+    fn get_joueur(&self) -> &Joueur {
+        &self.joueur
+    }
 
-    loop {
-        if Instant::now() >= fin {
-            afficher_str("Le temps est passé !");
-            afficher_score_fin(jeux.joueur.clone());
-            return (jeux.joueur.bonne_reponse(),jeux.joueur.mauvaise_reponse())
+    fn get_joueur_mut(&mut self) -> &mut Joueur {
+        &mut self.joueur
+    }
+
+    fn get_nb_question(&self) -> &usize {
+        &self.question.nb_questions()
+    }
+
+    fn get_question(&self) -> &Question {
+        &self.question
+    }
+
+    fn get_mode(&self) -> &Mode {
+        todo!()
+    }
+
+    fn jouer(&mut self) -> (usize, usize) {
+        let début = Instant::now();
+        let durée = demander_temps();
+        let fin = début + Duration::from_secs(durée as u64);
+
+        loop {
+            if Instant::now() >= fin {
+                afficher_str("Le temps est passé !");
+                afficher_score_fin(self.get_joueur().clone());
+                return (self.get_joueur().bonne_reponse(),self.get_joueur().mauvaise_reponse())
+            }
+            let nb_question = self.get_nb_question().clone();
+            self.joue_une_manche(&nb_question, Some(fin));
         }
-        joue_une_manche(jeux,jeux.nombre_question(),fin);
     }
 }
 
 
+impl Chronomètre {
+    pub fn nouveau(joueur: Joueur, question: Question) -> Chronomètre {
+        Chronomètre{joueur, question}
+    }
+}
 
-fn joue_une_manche(jeux:&mut Jeux,nb_manche_total:usize,fin:Instant) -> bool {
+pub fn demander_temps() -> usize{
+    loop {
+        afficher_str("Combien de secondes ?");
+        let entrée = demander();
 
-
-    let (mot, question) = jeux.détermine_mot();
-    jeux.affiche_info(nb_manche_total,&question);
-    let mut liste_essai:Vec<String> = vec!();
-
-    loop {  //tant que le mot n'as pas été passer, ou stop
-        let réponse = demander_réponse(&mut liste_essai, &mot.chars().count(), Option::from(fin)).unwrap();
-
-        match réponse.as_str() {
-            "stop" | "s" => {
-                afficher_str("\n");
-                return true;
-            }
-
-            "indice" | "i" => {
-                afficher_indice(&mot);
-            }
-
-            "passe" | "p" => {
-                jeux.joueur.question_suivante();
-                jeux.joueur.mauvaise_reponse_aj();
-                afficher_reponse_precedante(&mot);
-                return false;
-            }
-
-            _ if réponse == mot => { // Si la réponse est égale au mot attention au \n
-                jeux.joueur.bonne_reponse_aj();
-                jeux.joueur.question_suivante();
-                afficher_bonne_reponse();
-                return false;
-            }
-
-            _ if réponse.trim() == "" => (),
-
-            _ => {  // Cas pour mauvaise réponse
-                jeux.joueur.mauvaise_reponse_aj();
-                afficher_mauvaise_reponse();
-            }
+        match entrée.parse::<usize>() {
+            Ok(num) => {
+                return num
+            }, //  Retourne le nombre valide et quitte la boucle si le nombre n’est pas trop grand, sinon on va dépasser la taille de la liste
+            Err(_) => afficher_str("Entrée invalide, veuillez entrer un nombre entier positif."),
         }
-
-        liste_essai.push(réponse);
-
     }
 
 }

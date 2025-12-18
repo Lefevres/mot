@@ -54,7 +54,7 @@ pub fn afficher_mauvaise_reponse() {
         println!("\nÇa n'est malheureusement pas ça \n");
     }
 
-pub fn afficher_score(joueur: &Joueur, nb_manche: usize) {
+pub fn afficher_score(joueur: &Joueur, nb_manche: &usize) {
 
         let total = joueur.bonne_reponse() + joueur.mauvaise_reponse();
         let ratio = if total > 0 {
@@ -64,7 +64,7 @@ pub fn afficher_score(joueur: &Joueur, nb_manche: usize) {
         };
         println!(
             "\nScore : {} bonne(s) réponse(s), {} mauvaise(s) réponse(s) — Ratio : {:.1}%            Question {}/{}",
-            joueur.bonne_reponse(), joueur.mauvaise_reponse(), ratio, joueur.question()/2+1,nb_manche
+            joueur.bonne_reponse(), joueur.mauvaise_reponse(), ratio, joueur.nb_question()/2+1,nb_manche
         );
 
     }

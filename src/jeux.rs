@@ -1,32 +1,27 @@
 use serde::{Deserialize, Serialize};
 use crate::joueur::Joueur;
-use crate::mode::chronometre::chronomètre;
-use crate::mode::classique::classique;
-use crate::mode::survie::survie;
 use crate::outils::mot::Question;
-use crate::outils::outils::{demander_nb_manche, demander_réponse, demander_temp};
-use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_str};
-
+use crate::outils::outils::demander_réponse;
+use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_score_fin, afficher_str};
+use crate::mode::chronometre::Chronomètre;
+use crate::mode::classique::Classique;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-enum ModeJeu {
-    Classique,
-    Chronomètre,
-    Survie,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct Mode{
-    mode: ModeJeu,
-    détail: Option<usize>,
+pub enum Mode {
+    ModeClassique(Classique),
+    ModeChronomètre(Chronomètre),
+    //ModeSurvie(Survie),
 }
 
-impl Mode{
+
+
+/*impl Mode{
     pub fn nouveau(mode_jeu: &str) -> Option<Mode>{
 
         match mode_jeu {
-            "classique" => Some(Mode{mode : ModeJeu::Classique, détail: Some(demander_nb_manche(300)) }),//limite
-            "chronomètre" => Some(Mode{mode : ModeJeu::Chronomètre, détail : Some(demander_temp()) }),
-            "survie" => Some(Mode{mode : ModeJeu::Survie, détail : None }),
+            "classique" => Some(Mode{mode : Mode::Classique}),
+            "chronomètre" => Some(Mode{mode : Mode::Chronomètre}),
+            "survie" => Some(Mode{mode : Mode::Survie}),
             _ => {
                 eprintln!("On as un problème");
                 None
@@ -36,94 +31,98 @@ impl Mode{
 
 
 }
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct Jeux {
-    mode: Mode,
-    pub(crate) joueur: Joueur,
-    question: Question,
-    est_multi: bool,
-}
-
-
-impl Jeux {
-
-    pub fn nouveau(mode: Mode, joueur: Joueur, question: Question, est_multi : bool) -> Jeux {
+*/
+pub trait Jeux {
+    /*fn nouveau(mode: Mode, joueur: Joueur, question: Question, est_multi : bool) -> Jeux {
         Jeux{mode, joueur, question, est_multi }
-    }
+    }*/
 
-    pub fn jouer(&mut self) -> (usize,usize){
+    fn get_joueur(&self) -> &Joueur;
+    fn get_joueur_mut(&mut self) -> &mut Joueur;
+    fn get_nb_question(&self) -> &usize;
+    fn get_question(&self) -> &Question;
+    fn get_mode(&self) -> &Mode;
 
-        match self.mode.mode {
+    fn jouer(&mut self) -> (usize, usize){
 
-            ModeJeu::Classique => {
-                if self.mode.détail.is_some() {
-                    classique(self, self.mode.détail.unwrap())
-                }else {
-                    afficher_str("bein… y'a un problème");
-                    (0,0)
-                }
-
-
+        while !self.get_joueur().fin(self.get_nb_question()) {
+            let nb_manche = self.get_nb_question().clone();
+            if self.joue_une_manche(&nb_manche, None) {
+                break;
             }
-
-            ModeJeu::Chronomètre => {
-                if self.mode.détail.is_some() {
-                    chronomètre(self, self.mode.détail.unwrap())
-                }else {
-                    afficher_str("bein… y'a un problème");
-                    (0,0)
-                }
-            }
-
-            ModeJeu::Survie => {
-                    survie(self)
-
-            }
-
         }
 
+        afficher_score_fin(self.get_joueur().clone());
+
+        (self.get_joueur().bonne_reponse(),self.get_joueur().mauvaise_reponse())
+
+
     }
 
 
-   pub fn joue_une_manche(&mut self,nb_manche_total:usize) -> bool {
+    fn stop(&self) -> bool{
+        afficher_str("\n");
+        true
+    }
+
+
+    fn indice(&self, mot: &String) {
+        afficher_indice(&mot);
+    }
+
+
+    fn passe(&mut self, mot: &String) -> bool{
+        self.get_joueur_mut().question_suivante();
+        self.get_joueur_mut().mauvaise_reponse_aj();
+        afficher_reponse_precedante(&mot);
+        false
+    }
+
+
+    fn bonne_réponse(&mut self) -> bool {
+        self.get_joueur_mut().bonne_reponse_aj();
+        self.get_joueur_mut().question_suivante();
+        afficher_bonne_reponse();
+        false
+    }
+
+
+    fn mauvaise_reponse(&mut self){
+        self.get_joueur_mut().mauvaise_reponse_aj();
+        afficher_mauvaise_reponse();
+    }
+
+
+    fn joue_une_manche(&mut self, nb_manche_total: &usize, fin: std::option::Option<std::time::Instant>) -> bool {
         let (mot,question) = self.détermine_mot();
         self.affiche_info(nb_manche_total,&question);
 
         let mut liste_essai:Vec<String> = vec!();
 
         loop {  //tant que le mot n'as pas été passer, ou stop
-            let réponse = demander_réponse(&mut liste_essai,&mot.chars().count(),None).unwrap();
+            let réponse = demander_réponse(&mut liste_essai,&mot.chars().count(),fin).unwrap();
 
             match réponse.as_str() {
                 "stop" | "s" => {
-                    afficher_str("\n");
-                    return true;
+                    return self.stop()
                 }
 
                 "indice" | "i" => {
-                    afficher_indice(&mot);
+                    self.indice(&mot);
                 }
 
                 "passe" | "p" => {
-                    self.joueur.question_suivante();
-                    self.joueur.mauvaise_reponse_aj();
-                    afficher_reponse_precedante(&mot);
-                    return false;
+                    return self.passe(&mot);
                 }
 
                 _ if réponse == mot => { // Si la réponse est égale au mot attention au \n
-                    self.joueur.bonne_reponse_aj();
-                    self.joueur.question_suivante();
-                    afficher_bonne_reponse();
-                    return false;
+                    return self.bonne_réponse()
                 }
 
                 _ if réponse.trim() == "" => (),
 
                 _ => {  // Cas pour mauvaise réponse
-                    self.joueur.mauvaise_reponse_aj();
-                    afficher_mauvaise_reponse();
+                    self.mauvaise_reponse()
                 }
             }
 
@@ -134,30 +133,40 @@ impl Jeux {
     }
 
 
-    pub(crate) fn affiche_info(&self, nb_manche:usize, question: &String) {
+    fn affiche_info(&self, nb_manche: &usize, question: &String) {
         afficher_en_tete();
-        afficher_score(&self.joueur, nb_manche);
+        afficher_score(&self.get_joueur(), nb_manche);
         afficher_question(question);
     }
 
 
-    pub(crate) fn détermine_mot(&mut self) -> (String,String) {
-        self.question.next().unwrap()
+    fn détermine_mot(&mut self) -> (String,String) {
+        self.get_question().clone().next().unwrap()
         //self.liste[self.joueur.question()].0.clone()
     }
 
-    pub fn nombre_question(&self) -> usize {
-        self.question.nb_questions()
+    fn nombre_question(&self) -> &usize {
+        self.get_nb_question()
     }
 
 
-    pub fn mode(&self) -> &Mode {
-        &self.mode
+    fn mode(&self) -> &Mode {
+        &self.get_mode()
     }
 
 
-    pub fn question(&self) -> &Question {
-        &self.question
+    fn question(&self) -> &Question {
+        &self.get_question()
     }
-
 }
+
+
+/*#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Jeux {
+    mode: Mode,
+    pub(crate) joueur: Joueur,
+    question: Question,
+    est_multi: bool,
+}*/
+
+
