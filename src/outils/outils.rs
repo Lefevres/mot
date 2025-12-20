@@ -288,29 +288,7 @@ pub fn demande_nom() -> String{
 
 
 
-pub fn demander_nb_manche(taille_liste: usize) -> usize {
-    loop {
 
-        afficher_str("Combien de manche ? ");
-        let min = if taille_liste < usize::MAX {
-            taille_liste
-        } else {
-            usize::MAX
-        };
-        afficher(format!("Nombre max de manches : {}", min.to_string()));
-        let entree = demander();
-
-
-        match entree.parse::<usize>() {
-            Ok(num) => {
-                if num <= min {
-                    return num
-                }
-            }, //  Retourne le nombre valide et quitte la boucle si le nombre n’est pas trop grand, sinon on va dépasser la taille de la liste
-            Err(_) => afficher_str("Entrée invalide, veuillez entrer un nombre entier positif."),
-        }
-    }
-}
 
 
 pub fn transforme_vec_string_en_tuple_string(vecteur: Vec<String>) -> Vec<(String,String)> {

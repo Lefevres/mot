@@ -22,8 +22,8 @@ impl Jeux for Chronomètre{
         &mut self.joueur
     }
 
-    fn get_nb_question(&self) -> &usize {
-        &self.question.nb_questions()
+    fn get_nb_question(&mut self) -> usize {
+        *self.question.nb_questions()
     }
 
     fn quel_est_la_question(&mut self) -> Option<(String, String)> {

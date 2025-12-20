@@ -14,12 +14,13 @@ pub trait Jeux {
 
     fn get_joueur(&self) -> &Joueur;
     fn get_joueur_mut(&mut self) -> &mut Joueur;
-    fn get_nb_question(&self) -> &usize;
+    fn get_nb_question(&mut self) -> usize;
     fn quel_est_la_question(&mut self) -> Option<(String,String)>;
 
 
     fn jouer(&mut self) -> (usize, usize) {
-        while !self.get_joueur().fin(self.get_nb_question()) {
+        let nombre = &self.get_nb_question();
+        while !self.get_joueur().fin(nombre) {
             let nb_manche = self.get_nb_question().clone();
             if self.joue_une_manche(&nb_manche, None) {
                 break;
@@ -112,7 +113,7 @@ pub trait Jeux {
 
 
 
-    fn nombre_question(&self) -> &usize {
+    fn nombre_question(&mut self) -> usize {
         self.get_nb_question()
     }
 

@@ -20,13 +20,13 @@ impl Question {
     pub fn nb_questions(&self) -> &usize {
         &self.nb_questions
     }
-    
-    
+
+
 }
 
 impl Iterator for Question {
     type Item = (String,String);
-    
+
     fn next(&mut self) -> Option<Self::Item> {
         if self.curseur < self.nb_questions {
             self.curseur += 1;
