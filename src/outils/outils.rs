@@ -9,7 +9,7 @@ use crossterm::cursor::MoveToColumn;
 use crossterm::event::KeyEventKind;
 use crossterm::style::{Color, SetForegroundColor};
 use crossterm::terminal::Clear;
-use crate::jeux::Mode;
+use crate::jeux::Jeux;
 use crate::mode::chronometre::Chronomètre;
 use crate::mode::classique::Classique;
 use crate::outils::terminal::{afficher, afficher_str};
@@ -228,19 +228,29 @@ pub fn crée_joueur() -> Joueur {
     Joueur::nouveau()
 }
 
-pub fn crée_partie(est_multi: bool, question: Option<Question>, mode: Option<String>, joueur: Option<Joueur>) -> Mode {
+
+/*pub fn crée_partie(est_multi: bool, question: Option<Question>, mode: Option<String>, joueur: Option<Joueur>){
     let question = if question.is_some() {question.unwrap()} else {crée_liste()};
     let mode = if mode.is_some() {mode.unwrap()} else {mode_de_jeu()};
     let joueur = if joueur.is_some() {joueur.unwrap()} else {crée_joueur()};
-    let jeux;
+
+}*/
+
+
+
+pub fn crée_partie(est_multi: bool, question: Option<Question>, mode: Option<String>, joueur: Option<Joueur>) -> Box<dyn Jeux> {
+    let question = if question.is_some() {question.unwrap()} else {crée_liste()};
+    let mode = if mode.is_some() {mode.unwrap()} else {mode_de_jeu()};
+    let joueur = if joueur.is_some() {joueur.unwrap()} else {crée_joueur()};
+    let jeux: Box<dyn Jeux>;
 
     match mode.as_str() {
-        "classique" => jeux = Mode::ModeClassique(Classique::nouveau(joueur, question)),
-        "chronomètre" => jeux = Mode::ModeChronomètre(Chronomètre::nouveau(joueur, question)),
+        "classique" => jeux = Box::new(Classique::nouveau(joueur, question)),
+        "chronomètre" => jeux = Box::new(Chronomètre::nouveau(joueur, question)),
         //"survie" => jeux = Mode::ModeSurvie(Survie::new(joueur, question)),
         _ => {
             println!("Mais qu'est ce que je fais là ? ");
-            jeux = Mode::ModeClassique(Classique::nouveau(joueur, question));
+            jeux = Box::new(Classique::nouveau(joueur, question));
         }
     }
     jeux

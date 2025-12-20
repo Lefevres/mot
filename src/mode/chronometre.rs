@@ -1,6 +1,6 @@
 use std::time::{Duration, Instant};
 use serde::{Deserialize, Serialize};
-use crate::jeux::{Jeux, Mode};
+use crate::jeux::{Jeux};
 use crate::joueur::Joueur;
 use crate::mode::classique::Classique;
 use crate::outils::mot::Question;
@@ -26,13 +26,10 @@ impl Jeux for Chronomètre{
         &self.question.nb_questions()
     }
 
-    fn get_question(&self) -> &Question {
-        &self.question
+    fn quel_est_la_question(&mut self) -> Option<(String, String)> {
+        self.question.next()
     }
-
-    fn get_mode(&self) -> &Mode {
-        todo!()
-    }
+    
 
     fn jouer(&mut self) -> (usize, usize) {
         let début = Instant::now();

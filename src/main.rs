@@ -1,4 +1,5 @@
 use crate::jeux::Jeux;
+use crate::mode::classique::Classique;
 use crate::outils::outils::{crée_partie, demander};
 use crate::outils::terminal::{afficher, afficher_str};
 
@@ -22,6 +23,7 @@ fn main() {
             }
 
         }else {
+            
             let mut jeux = crée_partie(false, None, None, None);
 
             loop {

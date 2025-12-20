@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use crate::jeux::{Jeux, Mode};
+use crate::jeux::Jeux;
 use crate::joueur::Joueur;
 use crate::outils::mot::Question;
 
@@ -23,12 +23,8 @@ impl Jeux for Classique {
         &self.question.nb_questions()
     }
 
-    fn get_question(&self) -> &Question {
-        &self.question
-    }
-
-    fn get_mode(&self) -> &Mode {
-        todo!()
+    fn quel_est_la_question(&mut self) -> Option<(String, String)> {
+        self.question.next()
     }
 }
 
