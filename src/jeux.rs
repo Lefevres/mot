@@ -8,13 +8,12 @@ use crate::mode::classique::Classique;
 
 
 pub trait Jeux {
-    /*fn nouveau(mode: Mode, joueur: Joueur, question: Question, est_multi : bool) -> Jeux {
-        Jeux{mode, joueur, question, est_multi }
-    }*/
+
 
     fn get_joueur(&self) -> &Joueur;
     fn get_joueur_mut(&mut self) -> &mut Joueur;
     fn get_nb_question(&mut self) -> usize;
+    fn get_string_mode(&self) -> &str;
     fn quel_est_la_question(&mut self) -> Option<(String,String)>;
 
 

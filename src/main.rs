@@ -23,7 +23,7 @@ fn main() {
             }
 
         }else {
-            
+
             let mut jeux = crée_partie(false, None, None, None);
 
             loop {
@@ -31,7 +31,7 @@ fn main() {
                 if !rejouer() {
                     break;
                 }
-                jeux = crée_partie(false, None, None, None);
+                jeux = crée_partie(false, None, Some(jeux.get_string_mode().to_string()), None);
 
             }
 

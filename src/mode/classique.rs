@@ -33,6 +33,10 @@ impl Jeux for Classique {
 
     }
 
+    fn get_string_mode(&self) -> &str {
+        "classique"
+    }
+
     fn quel_est_la_question(&mut self) -> Option<(String, String)> {
         self.question.next()
     }

@@ -26,10 +26,14 @@ impl Jeux for Chronomètre{
         *self.question.nb_questions()
     }
 
+    fn get_string_mode(&self) -> &str {
+        "chronomètre"
+    }
+
     fn quel_est_la_question(&mut self) -> Option<(String, String)> {
         self.question.next()
     }
-    
+
 
     fn jouer(&mut self) -> (usize, usize) {
         let début = Instant::now();
