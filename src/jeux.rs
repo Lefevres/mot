@@ -16,6 +16,8 @@ pub trait Jeux {
     fn get_string_mode(&self) -> &str;
     fn quel_est_la_question(&mut self) -> Option<(String,String)>;
 
+    fn défini_le_nom(&self);
+
 
     fn jouer(&mut self) -> (usize, usize) {
         let nombre = &self.get_nb_question();

@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use crate::jeux::Jeux;
 use crate::joueur::Joueur;
 use crate::outils::mot::Question;
-use crate::outils::outils::demander;
+use crate::outils::outils::{demande_nom, demander};
 use crate::outils::terminal::{afficher, afficher_str};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -39,6 +39,10 @@ impl Jeux for Classique {
 
     fn quel_est_la_question(&mut self) -> Option<(String, String)> {
         self.question.next()
+    }
+
+    fn défini_le_nom(&mut self) {
+        self.joueur.nom = demande_nom();
     }
 }
 

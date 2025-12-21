@@ -5,7 +5,7 @@ pub struct Joueur  {
     bonne_reponse: usize,
     mauvaise_reponse: usize,
     nb_question: usize,   //nb_question actuelle
-    nom: String,
+    mut pub(crate) nom: String,
 }
 
 

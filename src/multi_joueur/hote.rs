@@ -1,7 +1,7 @@
-/*
+use serde::de::Unexpected::Option;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpListener,TcpStream};
-use crate::jeux::{Jeux, Mode};
+use crate::jeux::{Jeux};
 use crate::joueur::Joueur;
 use crate::outils::mot::Question;
 use crate::outils::outils::{crée_partie, demande_nom, demander};
@@ -16,8 +16,8 @@ pub async fn hote(){
 
 
     let mut jeux = crée_partie(true, None, None, None);
+    jeux.défini_le_nom();
 
-    jeux.joueur.défini_nom(demande_nom());
 
     let clients = connextion_au_client(nb_client).await.unwrap();
 
@@ -37,6 +37,7 @@ pub async fn hote(){
 
     noms.insert(0, jeux.joueur.nom());
 
+
     let mut jeux = Jeux::nouveau(jeux.mode().clone(), jeux.joueur.clone(), jeux.question().clone(), true);
 
     jeux.jouer();
@@ -51,9 +52,9 @@ pub async fn hote(){
 }
 
 
-async fn envoi_jeux(sockets: &mut Vec<TcpStream>, mode: Mode, question: Question){
+async fn envoi_jeux(sockets: &mut Vec<TcpStream>, mode: String, question: Question){
     for socket in sockets {
-        let jeux = Jeux::nouveau(mode.clone(), Joueur::nouveau(), question.clone(), true);
+        let jeux = crée_partie(true, Some(question.clone()), Some(mode.clone()), None);
         let jeux_string = serde_json::to_string(&jeux).unwrap();
         envoie_message(socket,jeux_string).await;
     }
@@ -172,6 +173,3 @@ async fn connextion_au_client(nb_client: usize) -> Result<(Vec<String>,Vec<TcpSt
 
     Ok((noms_joueurs,sockets))
 }
-
-
-*/
