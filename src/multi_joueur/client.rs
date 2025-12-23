@@ -14,7 +14,7 @@ pub async fn client(){
     
     let nom = demande_nom();
 
-    let temp = connection().await.unwrap();
+    let temp = connection().await;
 
     let mut stream = temp;
 
@@ -134,18 +134,34 @@ async fn lis_message(stream : &mut TcpStream) -> Result<String,Box<dyn std::erro
     Ok(message)
 }
 
-
-async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
-    afficher_str("Quelle adresse ip ? (\"ip a\" sous linux)");
+/// Permet au client de rejoindre une partie.
+///
+///
+/// # Comportement
+/// - Se connecte à l'hote via TCP
+/// - Renvoie le socket
+///
+async fn connection() -> TcpStream {
+    afficher_str("Quelle adresse ip ? (\"ip a\" sous linux, ip config sous windows)");
     let ip = demander();
 
     // Adresse IP du serveur
-    let addr = ip + PORT;
+    let addresse = ip + PORT;
 
-    afficher(format!("Connexion au serveur {}...", addr));
+    afficher(format!("Connexion au serveur {}...", &addresse));
+    let socket;
+    loop{
+        match TcpStream::connect(&addresse).await {
+            Ok(stream) => {
+                afficher_str("Connecté !");
+                socket = stream;
+                break
+            }
+            Err(e) => {
+                tokio::time::sleep(std::time::Duration::from_secs(3)).await;
+            }
+        }
+    }
 
-    let stream = TcpStream::connect(addr).await?;
-    afficher_str("Connecté !");
-
-    Ok(stream)
+    socket
 }
