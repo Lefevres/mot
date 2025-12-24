@@ -2,8 +2,8 @@ use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpListener,TcpStream};
 use crate::jeux::{Jeux, Mode};
 use crate::joueur::Joueur;
-use crate::outils::mot::Question;
-use crate::outils::outils::{crée_partie, demande_nom, demander};
+use crate::outils::mot::{crée_liste, Question};
+use crate::outils::outils::{crée_partie, demande_nom, demander, rejouer};
 use crate::outils::terminal::{afficher, afficher_str};
 
 
@@ -27,24 +27,38 @@ pub async fn hote(){
 
     let mut sockets = clients.1;
 
-
-    //l'hote envoi les jeux aux clients
-    envoi_jeux(&mut sockets, jeux.mode().clone(), jeux.question().clone()).await;
-
-
-    let résultats:Vec<(String,String)>;
-
     noms.insert(0, jeux.joueur.nom());
 
-    let mut jeux = Jeux::nouveau(jeux.mode().clone(), jeux.joueur.clone(), jeux.question().clone(), true);
+    loop{
+        //l'hote envoi les jeux aux clients
+        envoi_jeux(&mut sockets, jeux.mode().clone(), jeux.question().clone()).await;
 
-    jeux.jouer();
 
-    résultats = met_a_jour_les_résultats(&mut sockets, &jeux.joueur).await;
+        let résultats:Vec<(String,String)>;
 
-    afficher_résultat(nb_client,&noms,jeux.joueur.nom(),&résultats);
 
-    partage_résultat(&mut sockets,résultats,noms).await;
+
+
+
+        let mut jeux = Jeux::nouveau(jeux.mode().clone(), jeux.joueur.clone(), jeux.question().clone(), true);
+
+        jeux.jouer();
+
+        résultats = met_a_jour_les_résultats(&mut sockets, &jeux.joueur).await;
+
+        afficher_résultat(nb_client,&noms,jeux.joueur.nom(),&résultats);
+
+        partage_résultat(&mut sockets,résultats,&noms).await;
+
+        if !rejouer(){
+            break;
+        }
+
+        jeux.change_question(crée_liste());
+
+
+    }
+
 
 
 }
@@ -70,7 +84,10 @@ async fn met_a_jour_les_résultats(sockets :&mut Vec<TcpStream>,moi:&Joueur) -> 
         let résultat = (bonne_réponse.to_string(),mauvaise_réponse.to_string());
         résultats.push(résultat);
     }
-    résultats = ajoute_mes_résultats(résultats, moi);
+    if résultats[0].0 != moi.nom(){
+        résultats = ajoute_mes_résultats(résultats, moi);
+    }
+
     résultats
 }
 
@@ -101,7 +118,7 @@ fn ajoute_mes_résultats(mut résultats: Vec<(String, String)>, moi:&Joueur) -> 
 }
 
 
-async fn partage_résultat(sockets: &mut Vec<TcpStream>,résultats:Vec<(String,String)>, noms :Vec<String>){
+async fn partage_résultat(sockets: &mut Vec<TcpStream>,résultats:Vec<(String,String)>, noms :&Vec<String>){
     let mut message = "".to_string();
     for i in 0..noms.len() {
         message += &*noms[i]; //nom;br;mr

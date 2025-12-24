@@ -1,6 +1,6 @@
 use crate::multi_joueur::client::client;
 use crate::multi_joueur::hote::hote;
-use crate::outils::outils::{crée_partie, demander};
+use crate::outils::outils::{crée_partie, demander, rejouer};
 use crate::outils::terminal::{afficher, afficher_str};
 
 mod joueur;
@@ -90,16 +90,3 @@ fn choisir_le_role() -> bool {
 }
 
 
-fn rejouer() -> bool{
-    afficher(String::from("\n\nrejouer ? "));
-
-    loop{
-        let réponse = demander();
-        match réponse.as_str() {
-            "oui" | "o" =>  return true,
-            "non" | "n" => return false,
-            _ => afficher_str("si tu n'arrive même pas a répondre a une question aussi simple tu n'es pas prêt pour la suite"),
-        }
-    }
-
-}

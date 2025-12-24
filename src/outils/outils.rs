@@ -220,6 +220,27 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: &usize,fin: Op
 }
 
 
+/// Demande si le joueur veut rejouer.
+///
+///
+/// # Comportement
+/// - Demande si le joueur veut rejouer
+///
+/// # Retour
+/// - la réponse, sous forme de booléen. Oui pour rejouer, non sinon
+pub fn rejouer() -> bool{
+    afficher(String::from("\n\nrejouer ? "));
+
+    loop{
+        let réponse = demander();
+        match réponse.as_str() {
+            "oui" | "o" =>  return true,
+            "non" | "n" => return false,
+            _ => afficher_str("si tu n'arrive même pas a répondre a une question aussi simple tu n'es pas prêt pour la suite"),
+        }
+    }
+
+}
 
 
 pub fn crée_joueur() -> Joueur {

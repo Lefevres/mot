@@ -52,6 +52,7 @@ impl Jeux {
         Jeux{mode, joueur, question, est_multi }
     }
 
+
     pub fn jouer(&mut self) -> (usize,usize){
 
         match self.mode.mode {
@@ -86,7 +87,7 @@ impl Jeux {
     }
 
 
-   pub fn joue_une_manche(&mut self,nb_manche_total:usize) -> bool {
+   pub fn joue_une_manche(&mut self, nb_manche_total:usize) -> bool {
         let (mot,question) = self.détermine_mot();
         self.affiche_info(nb_manche_total,&question);
 
@@ -134,16 +135,15 @@ impl Jeux {
     }
 
 
-    pub(crate) fn affiche_info(&self, nb_manche:usize, question: &String) {
+    pub fn affiche_info(&self, nb_manche:usize, question: &String) {
         afficher_en_tete();
         afficher_score(&self.joueur, nb_manche);
         afficher_question(question);
     }
 
 
-    pub(crate) fn détermine_mot(&mut self) -> (String,String) {
+    pub fn détermine_mot(&mut self) -> (String,String) {
         self.question.next().unwrap()
-        //self.liste[self.joueur.question()].0.clone()
     }
 
     pub fn nombre_question(&self) -> usize {
@@ -158,6 +158,20 @@ impl Jeux {
 
     pub fn question(&self) -> &Question {
         &self.question
+    }
+
+
+
+    /// Permet de changer les questions.
+    ///
+    /// # Paramètre
+    /// - Prend un self mutable et des questions
+    ///
+    /// # Comportement
+    /// - Remplace les questions
+    ///
+    pub fn change_question(&mut self, questions : Question) {
+        self.question = questions;
     }
 
 }
