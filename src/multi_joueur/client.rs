@@ -19,7 +19,7 @@ pub async fn client(){
     envoie_a_l_hote(&mut stream, nom.clone()).await.expect("J'envoie le nom");
 
 
-    afficher_str("On attend que l'hote règle les paramètres…");
+    afficher_str("On attend que tout le monde soit prêt…");
 
     loop{
         
@@ -41,7 +41,12 @@ pub async fn client(){
         afficher_résultat(résultats);
 
         if !rejouer() {
+            envoie_a_l_hote(&mut stream, "n".to_string()).await.expect("on a un soucis");
             break;
+        }
+        else {
+            envoie_a_l_hote(&mut stream, "o".to_string()).await.expect("bon bha ça marche pas");
+            afficher_str("on attend tout les joueurs");
         }
     }
 
