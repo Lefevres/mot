@@ -3,7 +3,7 @@ use crate::joueur::Joueur;
 use crate::mode::chronometre::chronomètre;
 use crate::mode::classique::classique;
 use crate::mode::survie::survie;
-use crate::outils::mot::Question;
+use crate::outils::mot::{nombre_de_question_max, Question};
 use crate::outils::outils::{demander_nb_manche, demander_réponse, demander_temp};
 use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_str};
 
@@ -24,7 +24,7 @@ impl Mode{
     pub fn nouveau(mode_jeu: &str) -> Option<Mode>{
 
         match mode_jeu {
-            "classique" => Some(Mode{mode : ModeJeu::Classique, détail: Some(demander_nb_manche(300)) }),//limite
+            "classique" => Some(Mode{mode : ModeJeu::Classique, détail: Some(demander_nb_manche(nombre_de_question_max())) }),
             "chronomètre" => Some(Mode{mode : ModeJeu::Chronomètre, détail : Some(demander_temp()) }),
             "survie" => Some(Mode{mode : ModeJeu::Survie, détail : None }),
             _ => {
