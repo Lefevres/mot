@@ -84,7 +84,6 @@ pub fn rejouer() -> bool{
 /// Fonction gérérale permettant de créer une partie de zéro ou non.
 ///
 /// # Paramètre
-/// - un booléen est_multi
 /// - une potentielle Question
 /// - un potentiel Mode
 /// - un potentiel Joueur.
@@ -96,12 +95,12 @@ pub fn rejouer() -> bool{
 /// Si les paramètres n’existent pas, ils sont définie,
 /// enfin, on crée d’une structure Jeux avec ces paramètres.
 ///
-pub fn crée_partie(est_multi: bool, question: Option<Question>, mode: Option<Mode>, joueur: Option<Joueur>) -> Jeux {
+pub fn crée_partie(question: Option<Question>, mode: Option<Mode>, joueur: Option<Joueur>) -> Jeux {
     let question = if question.is_some() {question.unwrap()} else {crée_liste()};
     let mode = if mode.is_some() {mode.unwrap()} else {crée_mode_de_jeu()};
     let joueur = if joueur.is_some() {joueur.unwrap()} else {Joueur::nouveau()};
 
-    Jeux::nouveau(mode, joueur, question, est_multi)
+    Jeux::nouveau(mode, joueur, question)
 }
 
 

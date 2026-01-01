@@ -24,14 +24,14 @@ fn main() {
             }
 
         }else {
-            let mut jeux = crée_partie(false, None, None, None);
+            let mut jeux = crée_partie( None, None, None);
 
             loop {
                 jeux.jouer();
                 if !rejouer() {
                     break;
                 }
-                jeux = crée_partie(false, None, Some(jeux.mode().clone()), None);
+                jeux = crée_partie(None, Some(jeux.mode().clone()), None);
 
             }
 

@@ -42,14 +42,13 @@ pub struct Jeux {
     mode: Mode,
     pub(crate) joueur: Joueur,
     question: Question,
-    est_multi: bool,
 }
 
 
 impl Jeux {
 
-    pub fn nouveau(mode: Mode, joueur: Joueur, question: Question, est_multi : bool) -> Jeux {
-        Jeux{mode, joueur, question, est_multi }
+    pub fn nouveau(mode: Mode, joueur: Joueur, question: Question) -> Jeux {
+        Jeux{mode, joueur, question }
     }
 
 

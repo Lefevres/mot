@@ -14,7 +14,7 @@ pub fn hote(){
     let mut nb_client:usize= demander_nb_joueur();
 
 
-    let mut jeux = crée_partie(true, None, None, None);
+    let mut jeux = crée_partie(None, None, None);
 
     jeux.joueur.défini_nom(demande_nom());
 
@@ -48,7 +48,7 @@ pub fn hote(){
 
 
         if nb_client > 0{
-            résultats = met_a_jour_les_résultats(&mut sockets, &jeux.joueur);
+            résultats = met_a_jour_les_résultats(&mut sockets);
         }
 
 
@@ -113,7 +113,7 @@ fn joueur_restant(sockets :&mut Vec<TcpStream>) -> Vec<usize>{
 
 fn envoi_jeux(sockets: &mut Vec<TcpStream>, mode: Mode, question: Question){
     for socket in sockets {
-        let jeux = Jeux::nouveau(mode.clone(), Joueur::nouveau(), question.clone(), true);
+        let jeux = Jeux::nouveau(mode.clone(), Joueur::nouveau(), question.clone());
         let jeux_string = serde_json::to_string(&jeux).unwrap();
         envoie_message(socket,jeux_string);
     }
@@ -121,7 +121,7 @@ fn envoi_jeux(sockets: &mut Vec<TcpStream>, mode: Mode, question: Question){
 
 
 
-fn met_a_jour_les_résultats(sockets :&mut Vec<TcpStream>,moi:&Joueur) -> Vec<(String,String)> {
+fn met_a_jour_les_résultats(sockets :&mut Vec<TcpStream>) -> Vec<(String,String)> {
     let mut résultats: Vec<(String, String)> = Vec::new();
     for mut socket in sockets {
         let buffer = lis_buffer(&mut socket).unwrap();
