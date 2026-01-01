@@ -33,7 +33,7 @@ fat : Qui montre sa prétention de façon déplaisante et un peu ridicule
 irmis : L'institut régional de médecine et d'ingénierie du sport
 circonspet : Qui est attentif et prudent dans ses actes
 diacre : Une personne qui assiste le dirigeant d'une église locale chrétienne et a la responsabilité de certaines activités
-endémie :  Persistance habituelle d'une maladie infectieuse et contagieuse dans une région donnée
+endémie : Persistance habituelle d'une maladie infectieuse et contagieuse dans une région donnée
 godiche : Benêt, maladroit
 gadin : chute
 suranné : Qui a cessé d'être en usage, qui évoque une époque révolue
@@ -126,7 +126,7 @@ gradient : Taux de variation spatiale (d'une grandeur physique)
 lagune : Étendue d'eau de mer, comprise entre la terre ferme et un cordon littoral
 lido : Lagune derrière un cordon littoral
 tombolo : Cordon littoral constitué par une levée de galets ou de sable, reliant une île au continent
-ibéromaurusien :  culture archéologique préhistorique qui s'est développée sur l'actuel Maghreb, occupant une bande littorale allant du nord de la Tunisie au sud du Maroc
+ibéromaurusien : culture archéologique préhistorique qui s'est développée sur l'actuel Maghreb, occupant une bande littorale allant du nord de la Tunisie au sud du Maroc
 capsien : culture archéologique du Maghreb, qui apparait durant l'Holocène dans la région allant de Gafsa à Tébessa, et qui s'étend ensuite jusqu'à l'ouest de l'Algérie
 aghlabide : dynastie d'émirs de la tribu arabe des Banu Tamim, qui gouvernent, depuis Kairouan, l'Ifriqiya (actuelle Tunisie, le constantinois en Algérie actuelle et la Tripolitaine dans l'actuelle Libye) nominalement, au nom du calife abbasside, à partir de 800, puis la Sicile, après sa conquête, jusqu'à son renversement par le nouveau pouvoir des Fatimides, en 909
 embrun : Poussière de gouttelettes formée par les vagues qui se brisent, et emportée par le vent
@@ -187,7 +187,7 @@ mellomane : Personne qui connaît et aime la musique, spécialement classique
 faire chabrot : coutume de la moitié sud de la France qui consiste, quand il reste un fond de soupe ou de potage, à ajouter dans l'assiette du vin rouge pour diluer ce bouillon puis de porter le plat à la bouche, et à l'avaler à grandes goulées
 impétrant : Personne qui obtient de l'autorité compétente quelque chose qu'elle a sollicité (charge, titre, diplôme)
 récipiendaire : Personne qui vient d'être reçue dans une assemblée
-anthologie :  Mémorable, historique, qui restera dans les annales
+anthologie : Mémorable, historique, qui restera dans les annales
 abjurer : Abandonner solennellement (une opinion religieuse)
 opaline : Substance vitreuse dont on fait des objets décoratifs
 consortium : Groupement d'entreprises
@@ -278,26 +278,26 @@ berrichon : langue d’oïlitan traditionnelle de la région Centre-Val-de-Loire
 chopine : Petite bouteille
 zigomar : individu peu recommandable, manquant de sérieux
 homéostasie : Caractéristique d'un écosystème qui résiste aux changements et conserve un état d'équilibre
-minute : nom donné à l'original d'un document émanant d'une juridiction ou d'un officier public
+minute : nom donné à l'original d'un document émanant d'une juridiction ou d'un officier public
 greffe : Bureau où l'on garde les minutes des actes de procédure
-goitre : Tumeur du corps thyroïde, qui déforme la partie entérieure du cou
+goitre : Tumeur du corps thyroïde, qui déforme la partie entérieure du cou
 œcuménisme : Tendance idéale à vouloir l'union entre toutes les personnes professant des idéologies différentes
 prolepse : Figure de rhétorique par laquelle on va au-devant des objections
-houlette : Bâton de berger
-échauder : Plonger, tremper dans l'eau bouillante
-astre occlu : Terme français pour l'anglisisme trou noir, nom donné par Laplace
+houlette : Bâton de berger
+échauder : Plonger, tremper dans l'eau bouillante
+astre occlu : Terme français pour l'anglisisme trou noir, nom donné par Laplace
 chantre : Chanteur dans un service religieux
 saisine : Prérogative de saisir pour faire exercer un droit
 prérogative : Avantage ou droit attaché à une fonction, un état
 ab initio : depuis le début (locution latine)
-in medias res : Procédé littéraire qui consiste à placer le lecteur sans beaucoup de préalables au milieu de l'action (locution latino)
-myosotis : Plante à petites fleurs généralement bleues qui croît dans les lieux humides
+in medias res : Procédé littéraire qui consiste à placer le lecteur sans beaucoup de préalables au milieu de l'action (locution latino)
+myosotis : Plante à petites fleurs généralement bleues qui croît dans les lieux humides
 numéraire : Monnaie ayant cours légal
 ad nauseam : sophisme fondé sur la répétition d'une affirmation (locution latino)
-sophisme : Raisonnement fallacieux ouvertement absurde destiné à tromper l'interlocuteur
-quorum : Nombre minimum de membres présents pour qu'une assemblé puisse valablement délibérer
-chaland : Bateau à fond plat pour le transport des marchandises
-coursive : Couloir étroit à l'intérieur d'un navire
+sophisme : Raisonnement fallacieux ouvertement absurde destiné à tromper l'interlocuteur
+quorum : Nombre minimum de membres présents pour qu'une assemblé puisse valablement délibérer
+chaland : Bateau à fond plat pour le transport des marchandises
+coursive : Couloir étroit à l'intérieur d'un navire
 fauvisme : Mouvement pictural né au début du XXe siècle de peintre français qui employaient des couleurs vives et violentes et revendiquaient un art basé sur l'instinct
 cosmogonie : Science de la formation des objets céléstes
 énantiosème : mot qui signifie une chose et son contraire
@@ -312,14 +312,14 @@ antithétique : Qui emploie l’antithèse.
 acmé : Apogé, point culminant.
 glabel : Espace situé entre les sourcils.
 santon : Figurine provençale ornant les crèches de Noël.
-cotillon : Jupon, parfois en flanelle, qui était porté surtout les paysannes.
-cotte : Au Moyen Âge, tunique portée par les hommes et par les femmes.
+cotillon : Jupon, parfois en flanelle, qui était porté surtout les paysannes.
+cotte : Au Moyen Âge, tunique portée par les hommes et par les femmes.
 cirque : Amphithéâtre naturel de parois abruptes, d’origine glaciaire.
-subodorer : Deviner, pressentir.
+subodorer : Deviner, pressentir.
 béké : Créole né aux Antilles françaises.
 brocard : Petit trait moqueur, raillerie.
 sarouel : Pantalon flottant à large fond, porté traditionnellement en Afrique du Nord.
-vert-de-gris : Dépôt verdâtre qui se forme à l’air humide sur le cuivre, le bronze.
+vert-de-gris : Dépôt verdâtre qui se forme à l’air humide sur le cuivre, le bronze.
 mormon : Un membre d’une secte américaine fondée par Joseph Smith qui proffisse a théocratie et pratiquait à l’origine la polygamie. Secte aussi nomée «Eglise de Jésus-Christ des saints des derniers jours».
 plantureux : Très abondant.
 mulâtre : Personne métisse née d’un parent noir, d’ascendance africaine, et d’un parent blanc, d’ascendance européenne.
@@ -329,7 +329,7 @@ douaire : Droit de l’épouse survivante sur les biens le son mari.
 pinacle : Sommet d’un édifice.
 pataphysique : Science fictive des épiphénomènes, «des solutions imaginaires».
 épiphénomène : Phénomène accessoire qui accompagne un phénomène essentiel sans être pour rien dans son apparition.
-râble : Partie charnue du dos, chez certains quadrupèdes.
+râble : Partie charnue du dos, chez certains quadrupèdes.
 aune : Ancienne mesure de longueur française, utilisée surtout pour mesurer les étoffes.
 vindicatif : Porté à la vengeance.
 pontif : Titre donné aux évêques et, en particulier, au pape, évêque de Rome et chef suprême de la chrétienté.
@@ -337,5 +337,5 @@ flegme : Attitude de quelqu’un qui garde son sang-froid, son calme dans toutes
 débonnaire : D’une bonté extrême, un peu faible.
 apostolique : Adjectif qui qualifie ce qui se rapporte aux douze Apôtre, à leur mission ou au pape.
 tulipomanie : Soudain engouement pour les tulipes dans le nord des Provinces-Unies, qui entraîna l’augmentation démesurée puis l’effondrement des cours du bulbe de tulipe.
-abduction : Forme de raisonnement intuitif qui consiste à supprimer les solutions improbable. Cette notion s’oppose à une logique d’exploration systématique.
+abduction : Forme de raisonnement intuitif qui consiste à supprimer les solutions improbable. Cette notion s’oppose à une logique d’exploration systématique.
 litanie : Répétition ennuyeuse et monotone.
