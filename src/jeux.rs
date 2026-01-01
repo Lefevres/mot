@@ -3,7 +3,7 @@ use crate::joueur::Joueur;
 use crate::mode::chronometre::chronomètre;
 use crate::mode::classique::classique;
 use crate::mode::survie::survie;
-use crate::outils::mot::Question;
+use crate::outils::mot::{nombre_de_question_max, Question};
 use crate::outils::outils::{demander_nb_manche, demander_réponse, demander_temp};
 use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_str};
 
@@ -24,7 +24,7 @@ impl Mode{
     pub fn nouveau(mode_jeu: &str) -> Option<Mode>{
 
         match mode_jeu {
-            "classique" => Some(Mode{mode : ModeJeu::Classique, détail: Some(demander_nb_manche(300)) }),//limite
+            "classique" => Some(Mode{mode : ModeJeu::Classique, détail: Some(demander_nb_manche(nombre_de_question_max())) }),
             "chronomètre" => Some(Mode{mode : ModeJeu::Chronomètre, détail : Some(demander_temp()) }),
             "survie" => Some(Mode{mode : ModeJeu::Survie, détail : None }),
             _ => {
@@ -51,6 +51,7 @@ impl Jeux {
     pub fn nouveau(mode: Mode, joueur: Joueur, question: Question, est_multi : bool) -> Jeux {
         Jeux{mode, joueur, question, est_multi }
     }
+
 
     pub fn jouer(&mut self) -> (usize,usize){
 
@@ -86,7 +87,7 @@ impl Jeux {
     }
 
 
-   pub fn joue_une_manche(&mut self,nb_manche_total:usize) -> bool {
+   pub fn joue_une_manche(&mut self, nb_manche_total:usize) -> bool {
         let (mot,question) = self.détermine_mot();
         self.affiche_info(nb_manche_total,&question);
 
@@ -134,16 +135,15 @@ impl Jeux {
     }
 
 
-    pub(crate) fn affiche_info(&self, nb_manche:usize, question: &String) {
+    pub fn affiche_info(&self, nb_manche:usize, question: &String) {
         afficher_en_tete();
         afficher_score(&self.joueur, nb_manche);
         afficher_question(question);
     }
 
 
-    pub(crate) fn détermine_mot(&mut self) -> (String,String) {
+    pub fn détermine_mot(&mut self) -> (String,String) {
         self.question.next().unwrap()
-        //self.liste[self.joueur.question()].0.clone()
     }
 
     pub fn nombre_question(&self) -> usize {
@@ -158,6 +158,20 @@ impl Jeux {
 
     pub fn question(&self) -> &Question {
         &self.question
+    }
+
+
+
+    /// Permet de changer les questions.
+    ///
+    /// # Paramètre
+    /// - Prend un self mutable et des questions
+    ///
+    /// # Comportement
+    /// - Remplace les questions par celle passer en paramètre
+    ///
+    pub fn change_question(&mut self, questions : Question) {
+        self.question = questions;
     }
 
 }

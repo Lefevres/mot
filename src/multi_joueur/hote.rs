@@ -2,8 +2,8 @@ use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpListener,TcpStream};
 use crate::jeux::{Jeux, Mode};
 use crate::joueur::Joueur;
-use crate::outils::mot::Question;
-use crate::outils::outils::{crée_partie, demande_nom, demander};
+use crate::outils::mot::{crée_liste, Question};
+use crate::outils::outils::{crée_partie, demande_nom, demander, rejouer};
 use crate::outils::terminal::{afficher, afficher_str};
 
 
@@ -11,7 +11,7 @@ use crate::outils::terminal::{afficher, afficher_str};
 pub async fn hote(){
 
 
-    let nb_client:usize= demander_nb_joueur();
+    let mut nb_client:usize= demander_nb_joueur();
 
 
     let mut jeux = crée_partie(true, None, None, None);
@@ -27,26 +27,87 @@ pub async fn hote(){
 
     let mut sockets = clients.1;
 
-
-    //l'hote envoi les jeux aux clients
-    envoi_jeux(&mut sockets, jeux.mode().clone(), jeux.question().clone()).await;
-
-
-    let résultats:Vec<(String,String)>;
-
     noms.insert(0, jeux.joueur.nom());
 
-    let mut jeux = Jeux::nouveau(jeux.mode().clone(), jeux.joueur.clone(), jeux.question().clone(), true);
+    loop{
 
-    jeux.jouer();
-
-    résultats = met_a_jour_les_résultats(&mut sockets, &jeux.joueur).await;
-
-    afficher_résultat(nb_client,&noms,jeux.joueur.nom(),&résultats);
-
-    partage_résultat(&mut sockets,résultats,noms).await;
+        //l'hote envoi les jeux aux clients
+        envoi_jeux(&mut sockets, jeux.mode().clone(), jeux.question().clone()).await;
 
 
+        let mut résultats:Vec<(String, String)> = Vec::new();
+
+
+
+
+
+        //let mut jeux = Jeux::nouveau(jeux.mode().clone(), jeux.joueur.clone(), jeux.question().clone(), true);
+
+        jeux.joueur.remet_les_questions_a_zero();
+        jeux.jouer();
+
+
+        if nb_client > 0{
+            résultats = met_a_jour_les_résultats(&mut sockets, &jeux.joueur).await;
+        }
+
+
+        résultats = ajoute_mes_résultats(résultats, &jeux.joueur);
+
+
+
+        if résultats.len() > 0 {
+            afficher_résultat(nb_client,&noms,jeux.joueur.nom(),&résultats);
+        }
+
+
+
+        if nb_client > 0 {
+            partage_résultat(&mut sockets,&résultats,&noms).await;
+        }
+        else {
+            afficher_str("tu es tout seul");
+        }
+
+
+        if !rejouer(){
+            break;
+        }
+        else {
+            afficher_str("on attend les autres joueurs");
+            let a_retirer = joueur_restant(&mut sockets).await;
+
+            if nb_client != a_retirer.len() {
+                for nombre in a_retirer {
+                    noms.remove(nombre+1); //il y a le nom de l'hote
+                    sockets.remove(nombre);
+                }
+            }
+            else {
+                let nom = noms.get(0).unwrap();
+                noms = Vec::from([nom.clone()]);
+                sockets = Vec::new();
+            }
+
+        }
+        nb_client = sockets.len();
+        jeux.change_question(crée_liste());
+
+
+    }
+}
+
+async fn joueur_restant(sockets :&mut Vec<TcpStream>) -> Vec<usize>{
+    let mut a_retirer:Vec<usize> = Vec::new();
+    let mut compteur = 0;
+    for socket in sockets {
+        let message = lis_buffer(socket).await.unwrap();
+        if message == "n".to_string() {
+            a_retirer.push(compteur);
+        }
+        compteur += 1;
+    }
+    a_retirer
 }
 
 
@@ -70,17 +131,29 @@ async fn met_a_jour_les_résultats(sockets :&mut Vec<TcpStream>,moi:&Joueur) -> 
         let résultat = (bonne_réponse.to_string(),mauvaise_réponse.to_string());
         résultats.push(résultat);
     }
-    résultats = ajoute_mes_résultats(résultats, moi);
+
+
+
+
+
     résultats
+}
+
+async fn envoie_a_tout_les_client(sockets :&mut Vec<TcpStream>, message :&mut String ) {
+    for mut socket in sockets {
+        envoie_message(socket, message.clone()).await;
+    }
 }
 
 fn afficher_résultat(nb_client:usize, noms :&Vec<String>, mon_nom :String, résultats :&Vec<(String,String)>) {
     afficher_str("\n");
+
     for i in 0..nb_client+1 { //pour l'hote
         let nom = noms[i].clone();
         if *nom == mon_nom{
             continue;
         }
+
         let bonne_réponse:usize = résultats[i].0.parse().unwrap();
         let mauvaise_réponse:usize = résultats[i].1.parse().unwrap();
         let total = bonne_réponse+mauvaise_réponse;
@@ -101,7 +174,7 @@ fn ajoute_mes_résultats(mut résultats: Vec<(String, String)>, moi:&Joueur) -> 
 }
 
 
-async fn partage_résultat(sockets: &mut Vec<TcpStream>,résultats:Vec<(String,String)>, noms :Vec<String>){
+async fn partage_résultat(sockets: &mut Vec<TcpStream>,résultats: &Vec<(String,String)>, noms :&Vec<String>){
     let mut message = "".to_string();
     for i in 0..noms.len() {
         message += &*noms[i]; //nom;br;mr
@@ -142,7 +215,7 @@ async fn lis_buffer(socket:&mut TcpStream) -> Result<String,Box<dyn std::error::
 }
 
 
-async fn envoie_message(socket:&mut TcpStream, message:String){
+async fn envoie_message(socket:&mut TcpStream, message: String){
     let message = message + "\n";
     let message_bytes = message.as_bytes();
     socket.write_all(message_bytes).await.unwrap();

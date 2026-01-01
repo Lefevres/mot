@@ -1,7 +1,7 @@
 use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, BufReader, AsyncBufReadExt, AsyncReadExt};
 use crate::jeux::Jeux;
-use crate::outils::outils::{demande_nom, demander};
+use crate::outils::outils::{demande_nom, demander, rejouer};
 use crate::outils::terminal::{afficher, afficher_str};
 
 
@@ -11,34 +11,44 @@ const PORT: &str = ":9000";
 #[tokio::main]
 pub async fn client(){
 
-    
     let nom = demande_nom();
 
-    let temp = connection().await.unwrap();
+    let mut stream = connection().await;
 
-    let mut stream = temp;
 
     envoie_a_l_hote(&mut stream, nom.clone()).await.expect("J'envoie le nom");
 
 
-    afficher_str("On attend que l'hote règle les paramètres…");
+    afficher_str("On attend que tout le monde soit prêt…");
 
-    let mut jeux = récupéré_jeux(&mut stream).await.unwrap();
+    loop{
+        
+        let mut jeux = récupéré_jeux(&mut stream).await.unwrap();
 
 
 
-    // Lance la partie
+        // Lance la partie
 
-    let résultat = jeux.jouer();
+        let résultat = jeux.jouer();
 
-    //let résultat = jouer(&mut joueur, &liste, nb_manche);
-    let résultat = résultat.0.to_string() +";"+ &résultat.1.to_string();
+        //let résultat = jouer(&mut joueur, &liste, nb_manche);
+        let résultat = résultat.0.to_string() +";"+ &résultat.1.to_string();
 
-    envoie_a_l_hote(&mut stream, résultat).await.expect("on a un soucis");
+        envoie_a_l_hote(&mut stream, résultat).await.expect("on a un soucis");
 
-    let résultats = reçoit_les_résultats(&mut stream,nom).await;
+        let résultats = reçoit_les_résultats(&mut stream,&nom).await;
 
-    afficher_résultat(résultats);
+        afficher_résultat(résultats);
+
+        if !rejouer() {
+            envoie_a_l_hote(&mut stream, "n".to_string()).await.expect("on a un soucis");
+            break;
+        }
+        else {
+            envoie_a_l_hote(&mut stream, "o".to_string()).await.expect("bon bha ça marche pas");
+            afficher_str("on attend tout les joueurs");
+        }
+    }
 
 }
 
@@ -51,10 +61,10 @@ async  fn récupéré_jeux(socket: &mut TcpStream) -> Option<Jeux> {
 
     let mut jeux = String::new();
 
-    reader.read_line(&mut jeux).await.expect("TODO: panic message2");
+    reader.read_line(&mut jeux).await.expect("je panic");
 
     if jeux.is_empty() {
-        afficher_str("Le serveur a fermé la connexion2");
+        afficher_str("J’ai pas trouver, le serveur a fermer la connexion ?");
         return None
     }
 
@@ -87,7 +97,7 @@ fn afficher_résultat(résultats:Vec<(String,usize,usize)>)  {
 }
 
 
-async fn reçoit_les_résultats(socket: &mut TcpStream,mon_nom : String) -> Vec<(String,usize,usize)> {
+async fn reçoit_les_résultats(socket: &mut TcpStream,mon_nom : &String) -> Vec<(String,usize,usize)> {
     let message = lis_message(socket).await.unwrap();
     let message = message.trim().to_string();
     let préparation_retour = message.split(";")
@@ -96,7 +106,7 @@ async fn reçoit_les_résultats(socket: &mut TcpStream,mon_nom : String) -> Vec<
     let mut résultats:Vec<(String, usize, usize)> = Vec::new();
     for i in (0..préparation_retour.len()).step_by(3) {
         let nom = &préparation_retour[i];
-        if *nom == mon_nom{
+        if nom == mon_nom{
             continue;
         }
 
@@ -134,18 +144,34 @@ async fn lis_message(stream : &mut TcpStream) -> Result<String,Box<dyn std::erro
     Ok(message)
 }
 
-
-async fn connection() -> Result<TcpStream,Box<dyn std::error::Error>> {
-    afficher_str("Quelle adresse ip ? (\"ip a\" sous linux)");
+/// Permet au client de rejoindre une partie.
+///
+///
+/// # Comportement
+/// - Se connecte à l'hote via TCP
+/// - Renvoie le socket
+///
+async fn connection() -> TcpStream {
+    afficher_str("Quelle adresse ip ? (\"ip a\" sous linux, ip config sous windows)");
     let ip = demander();
 
     // Adresse IP du serveur
-    let addr = ip + PORT;
+    let addresse = ip + PORT;
 
-    afficher(format!("Connexion au serveur {}...", addr));
+    afficher(format!("Connexion au serveur {}...", &addresse));
+    let socket;
+    loop{
+        match TcpStream::connect(&addresse).await {
+            Ok(stream) => {
+                afficher_str("Connecté !");
+                socket = stream;
+                break
+            }
+            Err(e) => {
+                tokio::time::sleep(std::time::Duration::from_secs(3)).await;
+            }
+        }
+    }
 
-    let stream = TcpStream::connect(addr).await?;
-    afficher_str("Connecté !");
-
-    Ok(stream)
+    socket
 }

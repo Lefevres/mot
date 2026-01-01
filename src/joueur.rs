@@ -54,4 +54,8 @@ impl Joueur {
     pub fn nom(&self) -> String{
         self.nom.clone()
     }
+
+    pub fn remet_les_questions_a_zero(&mut self){
+        self.question = 0;
+    }
 }

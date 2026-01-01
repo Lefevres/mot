@@ -1,5 +1,6 @@
 use std::{fs, path::PathBuf};
 use std::env::home_dir;
+use std::io::BufRead;
 use std::string::ToString;
 use std::sync::LazyLock;
 use rand::prelude::SliceRandom;
@@ -47,6 +48,13 @@ pub fn  crée_liste() -> Question {
     let fichier = lis_fichier();
     let liste = melange_liste(fichier);
     Question::new(liste)
+}
+
+pub fn nombre_de_question_max() -> usize{
+    fs::read_to_string(FICHIER.clone())
+        .expect("je n’ai pas réussi a compter le nombre de ligne du fichier pour déterminer le nombre de question maximal")
+        .lines()
+        .count()
 }
 
 
