@@ -167,7 +167,8 @@ fn connection() -> TcpStream {
                 break
             }
             Err(e) => {
-                tokio::time::sleep(std::time::Duration::from_secs(3));
+                std::thread::sleep(std::time::Duration::from_secs(3));
+
             }
         }
     }
