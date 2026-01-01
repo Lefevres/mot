@@ -11,7 +11,7 @@ mod jeux;
 mod mode;
 
 fn main() {
-
+    println!("bonjour");
         if est_ce_multi() {
             match choisir_le_role() {
                 true => {
@@ -37,8 +37,6 @@ fn main() {
 
 
         }
-
-
 }
 
 
@@ -50,8 +48,7 @@ fn main() {
 fn est_ce_multi() -> bool{
 
     loop {
-        afficher_str("Mode de jeu : solitaire ou multi_joueur ?");
-        let mode = demander();
+        let mode = demander(Some("Mode de jeu : solitaire ou multi_joueur ?"));
         match mode.trim() {
             "solitaire" | "1" | "s" | "S" | "SOLITAIRE" => {
                 return false
@@ -70,9 +67,8 @@ fn est_ce_multi() -> bool{
 
 
 fn choisir_le_role() -> bool {
-    afficher_str("Role : hote ou client");
     loop {
-        match demander().trim() {
+        match demander(Some("Role : hote ou client")).trim() {
             "hote" | "h" | "1" => {
                 return true
             }

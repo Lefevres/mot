@@ -184,9 +184,8 @@ fn partage_résultat(sockets: &mut Vec<TcpStream>,résultats: &Vec<(String,Strin
 
 
 fn demander_nb_joueur() -> usize {
-    afficher_str("Pour combien de joueur ? (hormis toi)");
     loop {
-        let nb_joueur = demander();
+        let nb_joueur = demander(Some("Pour combien de joueur ? (hormis toi)"));
 
         if nb_joueur.parse::<i32>().is_ok(){
             return nb_joueur.parse::<i32>().unwrap() as usize;

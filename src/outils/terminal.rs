@@ -46,8 +46,7 @@ pub fn afficher_bonne_reponse() {
     }
 
 fn attendre_validation(){
-    println!("Entrer pour continuer : \n");
-    demander();
+    demander(Some("Entrer pour continuer : \n"));
 }
 
 pub fn afficher_mauvaise_reponse() {

@@ -10,27 +10,31 @@ use crossterm::event::KeyEventKind;
 use crossterm::style::{Color, SetForegroundColor};
 use crossterm::terminal::Clear;
 use crate::jeux::{Jeux, Mode};
-use crate::outils::terminal::{afficher, afficher_str};
+use crate::outils::terminal::afficher_str;
 
 
 
 /// Fonction gérérale permettant de recevoir une entrée utilisateur et d’effectuer dessus quelque opération basique.
 ///
 /// # Paramètre
-/// - Ne prend pas de paramètre
+/// - Un option de littérale de chaine de caractère
 ///
 /// # Retour
 /// - Renvoi un string de la saisie utilisateur
 ///
 /// # Comportement
-/// - Demande une saisie utilisateur, la modifie et la renvoie
+/// Affiche si fourni le paramètre,
+/// puis demande une saisie utilisateur, la modifie et la renvoie.
 ///
 /// # Opérations
 /// - Supprime les espaces aux extremité de la saisie
 /// - Remplace les lettres majuscules par des minuscules
 /// - Transforme le résultat en string
 ///
-pub fn demander() -> String{
+pub fn demander(a_afficher :Option<&str>) -> String{
+    if a_afficher.unwrap().is_empty(){
+        afficher_str(a_afficher.unwrap());
+    }
     let mut variable = String::new();
     io::stdin()
         .read_line(&mut variable)
@@ -67,10 +71,8 @@ fn conv_vec_char_vers_string(chaine: &Vec<char>) -> String{
 /// # Retour
 /// - la réponse, sous forme de booléen. Oui pour rejouer, non sinon
 pub fn rejouer() -> bool{
-    afficher(String::from("\n\nrejouer ? "));
-
     loop{
-        let réponse = demander();
+        let réponse = demander(Some("rejouer"));
         match réponse.as_str() {
             "oui" | "o" =>  return true,
             "non" | "n" => return false,
@@ -118,9 +120,7 @@ pub fn crée_partie(question: Option<Question>, mode: Option<Mode>, joueur: Opti
 /// si le mode de jeux est mal choisi, on choisit par défaut le mode classique.
 ///
 fn crée_mode_de_jeu() -> Mode {
-    afficher_str("Classique ? Chronomètre ? Survie ?");
-
-    match demander().as_str() {
+    match demander(Some("Classique ? Chronomètre ? Survie ?")).as_str() {
         "classique"  | "1" | "cl" => {
             Mode::nouveau("classique").unwrap()
         }
@@ -139,8 +139,7 @@ fn crée_mode_de_jeu() -> Mode {
 
 
 pub fn demande_nom() -> String{
-    afficher_str("Quel est ton nom ?");
-    demander()
+    demander(Some("Quel est ton nom ?"))
 }
 
 

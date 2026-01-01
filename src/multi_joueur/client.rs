@@ -151,8 +151,7 @@ fn lis_message(stream : &mut TcpStream) -> Result<String,Box<dyn std::error::Err
 /// - Renvoie le socket
 ///
 fn connection() -> TcpStream {
-    afficher_str("Quelle adresse ip ? (\"ip a\" sous linux, ip config sous windows)");
-    let ip = demander();
+    let ip = demander(Some("Quelle adresse ip ? (\"ip a\" sous linux, ip config sous windows)"));
 
     // Adresse IP du serveur
     let addresse = ip + PORT;

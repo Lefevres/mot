@@ -15,10 +15,10 @@ pub fn classique(jeux: &mut Jeux, nb_question: usize) -> (usize, usize){
     (jeux.joueur.bonne_reponse(),jeux.joueur.mauvaise_reponse())
 }
 
-/// Fonction déterminant le nombre de manche qui serons jouer en mode Classique.
+/// Fonction déterminant le nombre de manches qui serons jouer en mode Classique.
 ///
 /// # Paramètre
-/// - Le nombre de question maximum sous forme d’usize.
+/// - Le nombre de questions maximum sous forme d’usize.
 ///
 /// # Retour
 /// - le nombre de question sous forme d’usize.
@@ -38,7 +38,7 @@ pub fn demander_nb_manche(taille_liste: usize) -> usize {
             usize::MAX
         };
         afficher(format!("Nombre max de manches : {}", max.to_string()));
-        let entree = demander();
+        let entree = demander(None);
 
 
         match entree.parse::<usize>() {

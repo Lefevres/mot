@@ -83,8 +83,7 @@ fn joue_une_manche(jeux:&mut Jeux,nb_manche_total:usize,fin:Instant) -> bool {
 ///
 pub fn demander_temp() -> usize{
     loop {
-        afficher_str("Combien de secondes ?");
-        let entrée = demander();
+        let entrée = demander(Some("Combien de secondes ?"));
 
         match entrée.parse::<usize>() {
             Ok(num) => {
