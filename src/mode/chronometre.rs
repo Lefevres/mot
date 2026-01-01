@@ -1,6 +1,6 @@
 use std::time::{Duration, Instant};
 use crate::jeux::Jeux;
-use crate::outils::outils::{demander_réponse};
+use crate::outils::outils::{demander, demander_réponse};
 use crate::outils::terminal::{afficher_bonne_reponse, afficher_indice, afficher_mauvaise_reponse, afficher_reponse_precedante, afficher_score_fin, afficher_str};
 
 pub fn chronomètre(jeux:&mut Jeux, durée: usize) -> (usize, usize){
@@ -64,6 +64,34 @@ fn joue_une_manche(jeux:&mut Jeux,nb_manche_total:usize,fin:Instant) -> bool {
 
         liste_essai.push(réponse);
 
+    }
+
+}
+
+/// Fonction permettant de déterminer le temps que va durée la partie en mode Chronomètre.
+///
+/// # Paramètre
+/// - Aucun paramètre.
+///
+/// # Retour
+/// - le temps en seconde sous forme d’usize.
+///
+/// # Comportement
+/// Demande au joueur le nombre de secondes,
+/// essai de le convertire en nombre,
+/// si l’entrée n’est pas convertible en nombre on redemande au joueur.
+///
+pub fn demander_temp() -> usize{
+    loop {
+        afficher_str("Combien de secondes ?");
+        let entrée = demander();
+
+        match entrée.parse::<usize>() {
+            Ok(num) => {
+                return num
+            }, //  Retourne le nombre valide et quitte la boucle si le nombre n’est pas trop grand, sinon on va dépasser la taille de la liste
+            Err(_) => afficher_str("Entrée invalide, veuillez entrer un nombre entier positif."),
+        }
     }
 
 }

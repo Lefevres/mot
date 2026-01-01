@@ -5,7 +5,7 @@ use std::string::ToString;
 use std::sync::LazyLock;
 use rand::prelude::SliceRandom;
 use serde::{Deserialize, Serialize};
-use crate::outils::outils::transforme_vec_string_en_tuple_string;
+
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Question{
@@ -84,4 +84,15 @@ fn melange_liste(mut liste:Vec<String>) -> Vec<(String,String)>{
         .collect::<Vec<String>>();
 
     transforme_vec_string_en_tuple_string(nouvelle_liste)
+}
+
+fn transforme_vec_string_en_tuple_string(vecteur: Vec<String>) -> Vec<(String,String)> {
+    let mut nouvelle_liste_2_0:Vec<(String,String)> = vec![];
+
+    let mut compteur = 0;
+    while compteur < vecteur.len() {
+        nouvelle_liste_2_0.push((vecteur[compteur].to_string(), vecteur[compteur+1].to_string()));
+        compteur += 2;
+    }
+    nouvelle_liste_2_0
 }

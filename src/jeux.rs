@@ -1,10 +1,10 @@
 use serde::{Deserialize, Serialize};
 use crate::joueur::Joueur;
-use crate::mode::chronometre::chronomètre;
-use crate::mode::classique::classique;
+use crate::mode::chronometre::{chronomètre, demander_temp};
+use crate::mode::classique::{classique, demander_nb_manche};
 use crate::mode::survie::survie;
 use crate::outils::mot::{nombre_de_question_max, Question};
-use crate::outils::outils::{demander_nb_manche, demander_réponse, demander_temp};
+use crate::outils::outils::{demander_réponse};
 use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_str};
 
 

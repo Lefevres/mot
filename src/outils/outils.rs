@@ -14,7 +14,22 @@ use crate::outils::terminal::{afficher, afficher_str};
 
 
 
-
+/// Fonction gérérale permettant de recevoir une entrée utilisateur et d’effectuer dessus quelque opération basique.
+///
+/// # Paramètre
+/// - Ne prend pas de paramètre
+///
+/// # Retour
+/// - Renvoi un string de la saisie utilisateur
+///
+/// # Comportement
+/// - Demande une saisie utilisateur, la modifie et la renvoie
+///
+/// # Opérations
+/// - Supprime les espaces aux extremité de la saisie
+/// - Remplace les lettres majuscules par des minuscules
+/// - Transforme le résultat en string
+///
 pub fn demander() -> String{
     let mut variable = String::new();
     io::stdin()
@@ -24,8 +39,109 @@ pub fn demander() -> String{
 }
 
 
+/// Fonction gérérale permettant de transformer un vecteur de caractère en un string.
+///
+/// # Paramètre
+/// - Un vecteur de caractères.
+///
+/// # Retour
+/// - Renvoie une chaine de caractères.
+///
+/// # Comportement
+/// - Transforme le vecteur de caractère passer en paramètre en chaine de caractère.
+///
 fn conv_vec_char_vers_string(chaine: &Vec<char>) -> String{
     chaine.into_iter().collect::<String>()
+}
+
+
+
+
+
+/// Demande si le joueur veut rejouer.
+///
+///
+/// # Comportement
+/// - Demande si le joueur veut rejouer
+///
+/// # Retour
+/// - la réponse, sous forme de booléen. Oui pour rejouer, non sinon
+pub fn rejouer() -> bool{
+    afficher(String::from("\n\nrejouer ? "));
+
+    loop{
+        let réponse = demander();
+        match réponse.as_str() {
+            "oui" | "o" =>  return true,
+            "non" | "n" => return false,
+            _ => afficher_str("si tu n'arrive même pas a répondre a une question aussi simple tu n'es pas prêt pour la suite"),
+        }
+    }
+
+}
+
+
+/// Fonction gérérale permettant de créer une partie de zéro ou non.
+///
+/// # Paramètre
+/// - un booléen est_multi
+/// - une potentielle Question
+/// - un potentiel Mode
+/// - un potentiel Joueur.
+///
+/// # Retour
+/// - Une structure de Jeux.
+///
+/// # Comportement
+/// Si les paramètres n’existent pas, ils sont définie,
+/// enfin, on crée d’une structure Jeux avec ces paramètres.
+///
+pub fn crée_partie(est_multi: bool, question: Option<Question>, mode: Option<Mode>, joueur: Option<Joueur>) -> Jeux {
+    let question = if question.is_some() {question.unwrap()} else {crée_liste()};
+    let mode = if mode.is_some() {mode.unwrap()} else {crée_mode_de_jeu()};
+    let joueur = if joueur.is_some() {joueur.unwrap()} else {Joueur::nouveau()};
+
+    Jeux::nouveau(mode, joueur, question, est_multi)
+}
+
+
+/// Fonction générale permettant de créer un mode de jeu.
+///
+/// # Paramètre
+/// - Aucun paramètre.
+///
+/// # Retour
+/// - Une structure de Mode.
+///
+/// # Comportement
+/// Demande le mode de jeu au joueur,
+/// crée le Mode de jeux suivant le choix du joueur,
+/// si le mode de jeux est mal choisi, on choisit par défaut le mode classique.
+///
+fn crée_mode_de_jeu() -> Mode {
+    afficher_str("Classique ? Chronomètre ? Survie ?");
+
+    match demander().as_str() {
+        "classique"  | "1" | "cl" => {
+            Mode::nouveau("classique").unwrap()
+        }
+        "chronomètre" | "2" | "ch"  => {
+            Mode::nouveau("chronomètre").unwrap()
+        }
+        "survie" | "3" | "s" | "su" => Mode::nouveau("survie").unwrap(),
+
+        _ => {
+            afficher_str("bon… bha on va dire classique alors…");
+            Mode::nouveau("classique").unwrap()
+        }
+    }
+}
+
+
+
+pub fn demande_nom() -> String{
+    afficher_str("Quel est ton nom ?");
+    demander()
 }
 
 
@@ -215,122 +331,5 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: &usize,fin: Op
     }
 
     terminal::disable_raw_mode()?;
-    //afficher(format!("\nEntrée finale : {}", entrée));
     Ok(entrée.into_iter().collect())
-}
-
-
-/// Demande si le joueur veut rejouer.
-///
-///
-/// # Comportement
-/// - Demande si le joueur veut rejouer
-///
-/// # Retour
-/// - la réponse, sous forme de booléen. Oui pour rejouer, non sinon
-pub fn rejouer() -> bool{
-    afficher(String::from("\n\nrejouer ? "));
-
-    loop{
-        let réponse = demander();
-        match réponse.as_str() {
-            "oui" | "o" =>  return true,
-            "non" | "n" => return false,
-            _ => afficher_str("si tu n'arrive même pas a répondre a une question aussi simple tu n'es pas prêt pour la suite"),
-        }
-    }
-
-}
-
-
-pub fn crée_joueur() -> Joueur {
-    Joueur::nouveau()
-}
-
-pub fn crée_partie(est_multi: bool, question: Option<Question>, mode: Option<Mode>, joueur: Option<Joueur>) -> Jeux {
-    let question = if question.is_some() {question.unwrap()} else {crée_liste()};
-    let mode = if mode.is_some() {mode.unwrap()} else {mode_de_jeu()};
-    let joueur = if joueur.is_some() {joueur.unwrap()} else {crée_joueur()};
-
-    Jeux::nouveau(mode, joueur, question, est_multi)
-}
-
-
-fn mode_de_jeu() -> Mode {
-    afficher_str("Classique ? Chronomètre ? Survie ?");
-
-    match demander().as_str() {
-        "classique"  | "1" | "cl" => {
-            Mode::nouveau("classique").unwrap()
-        }
-        "chronomètre" | "2" | "ch"  => {
-            Mode::nouveau("chronomètre").unwrap()
-        }
-        "survie" | "3" | "s" | "su" => Mode::nouveau("survie").unwrap(),
-
-        _ => {
-            afficher_str("bon… bha on va dire classique alors…");
-            Mode::nouveau("classique").unwrap()
-        }
-    }
-}
-
-
-
-pub fn demande_nom() -> String{
-    afficher_str("Quel est ton nom ?");
-    demander()
-}
-
-
-pub fn demander_temp() -> usize{
-    loop {
-        afficher_str("Combien de secondes ?");
-        let entrée = demander();
-
-        match entrée.parse::<usize>() {
-            Ok(num) => {
-                return num
-            }, //  Retourne le nombre valide et quitte la boucle si le nombre n’est pas trop grand, sinon on va dépasser la taille de la liste
-            Err(_) => afficher_str("Entrée invalide, veuillez entrer un nombre entier positif."),
-        }
-    }
-
-}
-
-
-pub fn demander_nb_manche(taille_liste: usize) -> usize {
-    loop {
-
-        afficher_str("Combien de manche ? ");
-        let min = if taille_liste < usize::MAX {
-            taille_liste
-        } else {
-            usize::MAX
-        };
-        afficher(format!("Nombre max de manches : {}", min.to_string()));
-        let entree = demander();
-
-
-        match entree.parse::<usize>() {
-            Ok(num) => {
-                if num <= min {
-                    return num
-                }
-            }, //  Retourne le nombre valide et quitte la boucle si le nombre n’est pas trop grand, sinon on va dépasser la taille de la liste
-            Err(_) => afficher_str("Entrée invalide, veuillez entrer un nombre entier positif."),
-        }
-    }
-}
-
-
-pub fn transforme_vec_string_en_tuple_string(vecteur: Vec<String>) -> Vec<(String,String)> {
-    let mut nouvelle_liste_2_0:Vec<(String,String)> = vec![];
-
-    let mut compteur = 0;
-    while compteur < vecteur.len() {
-        nouvelle_liste_2_0.push((vecteur[compteur].to_string(), vecteur[compteur+1].to_string()));
-        compteur += 2;
-    }
-    nouvelle_liste_2_0
 }
