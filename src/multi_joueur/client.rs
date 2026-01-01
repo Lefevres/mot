@@ -61,10 +61,10 @@ async  fn récupéré_jeux(socket: &mut TcpStream) -> Option<Jeux> {
 
     let mut jeux = String::new();
 
-    reader.read_line(&mut jeux).await.expect("TODO: panic message2");
+    reader.read_line(&mut jeux).await.expect("je panic");
 
     if jeux.is_empty() {
-        afficher_str("Le serveur a fermé la connexion2");
+        afficher_str("J’ai pas trouver, le serveur a fermer la connexion ?");
         return None
     }
 

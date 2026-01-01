@@ -168,7 +168,7 @@ impl Jeux {
     /// - Prend un self mutable et des questions
     ///
     /// # Comportement
-    /// - Remplace les questions
+    /// - Remplace les questions par celle passer en paramètre
     ///
     pub fn change_question(&mut self, questions : Question) {
         self.question = questions;

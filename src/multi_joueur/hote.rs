@@ -31,8 +31,6 @@ pub async fn hote(){
 
     loop{
 
-        println!("nb_client: {}", nb_client);
-
         //l'hote envoi les jeux aux clients
         envoi_jeux(&mut sockets, jeux.mode().clone(), jeux.question().clone()).await;
 
@@ -43,8 +41,9 @@ pub async fn hote(){
 
 
 
-        let mut jeux = Jeux::nouveau(jeux.mode().clone(), jeux.joueur.clone(), jeux.question().clone(), true);
+        //let mut jeux = Jeux::nouveau(jeux.mode().clone(), jeux.joueur.clone(), jeux.question().clone(), true);
 
+        jeux.joueur.remet_les_questions_a_zero();
         jeux.jouer();
 
 
@@ -60,9 +59,7 @@ pub async fn hote(){
         if résultats.len() > 0 {
             afficher_résultat(nb_client,&noms,jeux.joueur.nom(),&résultats);
         }
-        else {
-            println!("résultat n'est pas suppérieur a zéro");
-        }
+
 
 
         if nb_client > 0 {
@@ -98,9 +95,6 @@ pub async fn hote(){
 
 
     }
-
-
-
 }
 
 async fn joueur_restant(sockets :&mut Vec<TcpStream>) -> Vec<usize>{
@@ -153,15 +147,13 @@ async fn envoie_a_tout_les_client(sockets :&mut Vec<TcpStream>, message :&mut St
 
 fn afficher_résultat(nb_client:usize, noms :&Vec<String>, mon_nom :String, résultats :&Vec<(String,String)>) {
     afficher_str("\n");
-    println!("il y a {} client", nb_client);
-    println!("il y a {} nom", noms.len());
-    println!("résultat fait {}", résultats.len());
+
     for i in 0..nb_client+1 { //pour l'hote
         let nom = noms[i].clone();
         if *nom == mon_nom{
             continue;
         }
-        println!("i est égale a {}", i);
+
         let bonne_réponse:usize = résultats[i].0.parse().unwrap();
         let mauvaise_réponse:usize = résultats[i].1.parse().unwrap();
         let total = bonne_réponse+mauvaise_réponse;
