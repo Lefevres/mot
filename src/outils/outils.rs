@@ -29,17 +29,18 @@ use crate::outils::terminal::afficher_str;
 /// # Opérations
 /// - Supprime les espaces aux extremité de la saisie
 /// - Remplace les lettres majuscules par des minuscules
-/// - Transforme le résultat en string
 ///
 pub fn demander(a_afficher :Option<&str>) -> String{
-    if a_afficher.unwrap().is_empty(){
-        afficher_str(a_afficher.unwrap());
+    if let Some(texte) = a_afficher {
+        if !texte.is_empty() {
+            afficher_str(texte);
+        }
     }
     let mut variable = String::new();
     io::stdin()
         .read_line(&mut variable)
         .expect("il y a un problème dans demander de outils");
-    variable.trim().to_lowercase().to_string()
+    variable.trim().to_lowercase()
 }
 
 

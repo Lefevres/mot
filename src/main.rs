@@ -11,7 +11,6 @@ mod jeux;
 mod mode;
 
 fn main() {
-    println!("bonjour");
         if est_ce_multi() {
             match choisir_le_role() {
                 true => {
