@@ -166,7 +166,7 @@ fn connection() -> TcpStream {
                 socket = stream;
                 break
             }
-            Err(e) => {
+            Err(_e) => {
                 std::thread::sleep(std::time::Duration::from_secs(3));
 
             }

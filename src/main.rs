@@ -1,7 +1,8 @@
 use crate::multi_joueur::client::client;
 use crate::multi_joueur::hote::hote;
+use crate::outils::terminal::afficher_str;
 use crate::outils::outils::{crée_partie, demander, rejouer};
-use crate::outils::terminal::{afficher, afficher_str};
+
 
 mod joueur;
 mod multi_joueur;

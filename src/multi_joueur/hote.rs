@@ -122,28 +122,20 @@ fn envoi_jeux(sockets: &mut Vec<TcpStream>, mode: Mode, question: Question){
 
 
 fn met_a_jour_les_résultats(sockets :&mut Vec<TcpStream>,moi:&Joueur) -> Vec<(String,String)> {
-    let mut résultats:Vec<(String,String)> = Vec::new();
+    let mut résultats: Vec<(String, String)> = Vec::new();
     for mut socket in sockets {
         let buffer = lis_buffer(&mut socket).unwrap();
-        let mut itérateur = buffer.splitn(2,";");
+        let mut itérateur = buffer.splitn(2, ";");
         let bonne_réponse = itérateur.next().unwrap();
         let mauvaise_réponse = itérateur.next().unwrap();
-        let résultat = (bonne_réponse.to_string(),mauvaise_réponse.to_string());
+        let résultat = (bonne_réponse.to_string(), mauvaise_réponse.to_string());
         résultats.push(résultat);
     }
-
-
-
 
 
     résultats
 }
 
-fn envoie_a_tout_les_client(sockets :&mut Vec<TcpStream>, message :&mut String ) {
-    for mut socket in sockets {
-        envoie_message(socket, message.clone());
-    }
-}
 
 fn afficher_résultat(nb_client:usize, noms :&Vec<String>, mon_nom :String, résultats :&Vec<(String,String)>) {
     afficher_str("\n");
