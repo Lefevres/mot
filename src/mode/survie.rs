@@ -17,11 +17,13 @@ pub fn survie(jeux: &mut Jeux) -> (usize, usize) {
 
 
 fn afficher_score_fin(joueur: &mut Joueur) {
+    let manche:&str;
     if joueur.bonne_reponse() > 1 {
-        afficher(format!("Bravo tu as tenue {} manches",joueur.bonne_reponse()));
+        manche = "manches";
     }else {
-        afficher(format!("Bravo tu as tenue {} manche",joueur.bonne_reponse()));
+        manche = "manche";
     }
+    afficher(format!("Bravo tu as tenue {} {}",joueur.bonne_reponse(), manche));
 
 }
 
@@ -30,7 +32,7 @@ fn joue_une_manche(jeux:&mut Jeux) -> bool {
 
 
     let (mot,question) = jeux.détermine_mot();
-    jeux.affiche_info(jeux.nombre_question(),&question);
+    jeux.affiche_info(jeux.nombre_question(),&question, mot.len());
     let mut liste_essai:Vec<String> = vec!();
 
     loop {  //tant que le mot n'as pas été passer, ou stop

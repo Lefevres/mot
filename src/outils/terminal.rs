@@ -14,6 +14,11 @@ pub fn afficher_en_tete(){
     println!("{en_tete}\n{indices}");
 }
 
+
+pub fn afficher_nb_lettre(nb_lettre: usize){
+    println!("\nC’est un mot de {} lettres", nb_lettre);
+}
+
 pub fn afficher_question(question : &str){  //renvoie le mot attendu
         let question = format!("{}", question).bright_yellow();
         println!("\n\n{}\n\n\n", question ); //nb_question.0 est la réponse, nb_question.1 est la question
@@ -31,8 +36,7 @@ pub fn afficher_indice(mot: &String) {
         indice.push_str("_ ");
     }
 
-    println!("\n\nC’est un mot de {} lettres", len);
-    println!("{}", indice);
+    println!("\n\n{}", indice);
 }
 
 pub fn afficher_reponse_precedante(mot : &String){

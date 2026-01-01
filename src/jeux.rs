@@ -5,7 +5,7 @@ use crate::mode::classique::{classique, demander_nb_manche};
 use crate::mode::survie::survie;
 use crate::outils::mot::{nombre_de_question_max, Question};
 use crate::outils::outils::{demander_réponse};
-use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_str};
+use crate::outils::terminal::{afficher_bonne_reponse, afficher_en_tete, afficher_indice, afficher_mauvaise_reponse, afficher_question, afficher_reponse_precedante, afficher_score, afficher_str, afficher_nb_lettre};
 
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -88,7 +88,7 @@ impl Jeux {
 
    pub fn joue_une_manche(&mut self, nb_manche_total:usize) -> bool {
         let (mot,question) = self.détermine_mot();
-        self.affiche_info(nb_manche_total,&question);
+        self.affiche_info(nb_manche_total,&question, mot.len());
 
         let mut liste_essai:Vec<String> = vec!();
 
@@ -134,9 +134,10 @@ impl Jeux {
     }
 
 
-    pub fn affiche_info(&self, nb_manche:usize, question: &String) {
+    pub fn affiche_info(&self, nb_manche:usize, question: &String, nb_lettre: usize) {
         afficher_en_tete();
         afficher_score(&self.joueur, nb_manche);
+        afficher_nb_lettre(nb_lettre);
         afficher_question(question);
     }
 

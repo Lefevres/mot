@@ -24,7 +24,7 @@ fn joue_une_manche(jeux:&mut Jeux,nb_manche_total:usize,fin:Instant) -> bool {
 
 
     let (mot, question) = jeux.détermine_mot();
-    jeux.affiche_info(nb_manche_total,&question);
+    jeux.affiche_info(nb_manche_total,&question, mot.len());
     let mut liste_essai:Vec<String> = vec!();
 
     loop {  //tant que le mot n'as pas été passer, ou stop
