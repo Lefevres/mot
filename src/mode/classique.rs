@@ -6,6 +6,7 @@ pub fn classique(jeux: &mut Jeux, nb_question: usize) -> (usize, usize){
     
     while !jeux.joueur.fin(nb_question) {
         if jeux.joue_une_manche(nb_question) {
+            jeux.devrais_je_arreter = true;
             break;
         }
     }
