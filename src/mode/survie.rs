@@ -6,6 +6,7 @@ use crate::outils::terminal::{afficher, afficher_bonne_reponse, afficher_indice,
 pub fn survie(jeux: &mut Jeux) -> (usize, usize) {
     loop {
        if joue_une_manche(jeux) {
+            jeux.devrais_je_arreter = true;
             break;
        }
     }

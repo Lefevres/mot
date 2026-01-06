@@ -27,7 +27,7 @@ fn main() {
 
             loop {
                 jeux.jouer();
-                if !rejouer() {
+                if jeux.devrais_je_arreter || !rejouer() {
                     break;
                 }
                 jeux = crée_partie(None, Some(jeux.mode().clone()), None);

@@ -12,10 +12,14 @@ pub fn chronomètre(jeux:&mut Jeux, durée: usize) -> (usize, usize){
         if Instant::now() >= fin {
             afficher_str("Le temps est passé !");
             afficher_score_fin(jeux.joueur.clone());
-            return (jeux.joueur.bonne_reponse(),jeux.joueur.mauvaise_reponse())
+            break;
         }
-        joue_une_manche(jeux,jeux.nombre_question(),fin);
+        if joue_une_manche(jeux,jeux.nombre_question(),fin){
+            jeux.devrais_je_arreter = true;
+            break;
+        }
     }
+    (jeux.joueur.bonne_reponse(),jeux.joueur.mauvaise_reponse())
 }
 
 

@@ -42,13 +42,14 @@ pub struct Jeux {
     mode: Mode,
     pub(crate) joueur: Joueur,
     question: Question,
+    pub devrais_je_arreter : bool,
 }
 
 
 impl Jeux {
 
     pub fn nouveau(mode: Mode, joueur: Joueur, question: Question) -> Jeux {
-        Jeux{mode, joueur, question }
+        Jeux{mode, joueur, question, devrais_je_arreter: false}
     }
 
 
