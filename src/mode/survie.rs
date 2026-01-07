@@ -18,12 +18,12 @@ pub fn survie(jeux: &mut Jeux) -> (usize, usize) {
 
 
 fn afficher_score_fin(joueur: &mut Joueur) {
-    let manche:&str;
-    if joueur.bonne_reponse() > 1 {
-        manche = "manches";
-    }else {
-        manche = "manche";
-    }
+    let manche:&str = if joueur.bonne_reponse() > 1 {
+        "manches"
+    } else {
+        "manche"
+    };
+
     afficher(format!("Bravo tu as tenue {} {}",joueur.bonne_reponse(), manche));
 
 }

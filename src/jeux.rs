@@ -135,7 +135,7 @@ impl Jeux {
     }
 
 
-    pub fn affiche_info(&self, nb_manche:usize, question: &String, nb_lettre: usize) {
+    pub fn affiche_info(&self, nb_manche:usize, question: &str, nb_lettre: usize) {
         afficher_en_tete();
         afficher_score(&self.joueur, nb_manche);
         afficher_nb_lettre(nb_lettre);

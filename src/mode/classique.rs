@@ -38,7 +38,7 @@ pub fn demander_nb_manche(taille_liste: usize) -> usize {
         } else {
             usize::MAX
         };
-        afficher(format!("Nombre max de manches : {}", max.to_string()));
+        afficher(format!("Nombre max de manches : {}", max));
         let entree = demander(None);
 
 

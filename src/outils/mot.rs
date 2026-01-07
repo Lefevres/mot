@@ -58,13 +58,11 @@ pub fn nombre_de_question_max() -> usize{
 
 
 fn lis_fichier() -> Vec<String>{
-    let contenu = fs::read_to_string(FICHIER.clone())
+    fs::read_to_string(FICHIER.clone())
         .expect("Erreur lecture fichier mot")
         .lines()  // découpe en lignes
         .map(|s| s.to_string())
-        .collect::<Vec<String>>();
-
-    contenu
+        .collect::<Vec<String>>()
 }
 
 fn melange_liste(mut liste:Vec<String>) -> Vec<(String,String)>{

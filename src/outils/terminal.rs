@@ -20,12 +20,12 @@ pub fn afficher_nb_lettre(nb_lettre: usize){
 }
 
 pub fn afficher_question(question : &str){  //renvoie le mot attendu
-        let question = format!("{}", question).bright_yellow();
+        let question = question.to_string().bright_yellow();
         println!("\n\n{}\n\n\n", question ); //nb_question.0 est la réponse, nb_question.1 est la question
     }
 
 
-pub fn afficher_indice(mot: &String) {
+pub fn afficher_indice(mot: &str) {
     let len = mot.chars().count();
     let revelation = len / 3;
 
@@ -39,7 +39,7 @@ pub fn afficher_indice(mot: &String) {
     println!("\n\n{}", indice);
 }
 
-pub fn afficher_reponse_precedante(mot : &String){
+pub fn afficher_reponse_precedante(mot : &str){
         println!("\nLa réponse était {}\n",mot.green());
         attendre_validation();
     }

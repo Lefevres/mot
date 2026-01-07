@@ -31,11 +31,11 @@ use crate::outils::terminal::afficher_str;
 /// - Remplace les lettres majuscules par des minuscules
 ///
 pub fn demander(a_afficher :Option<&str>) -> String{
-    if let Some(texte) = a_afficher {
-        if !texte.is_empty() {
+    if let Some(texte) = a_afficher
+        && !texte.is_empty() {
             afficher_str(texte);
-        }
     }
+
     let mut variable = String::new();
     io::stdin()
         .read_line(&mut variable)
@@ -56,7 +56,7 @@ pub fn demander(a_afficher :Option<&str>) -> String{
 /// - Transforme le vecteur de caractère passer en paramètre en chaine de caractère.
 ///
 fn conv_vec_char_vers_string(chaine: &Vec<char>) -> String{
-    chaine.into_iter().collect::<String>()
+    chaine.iter().collect()
 }
 
 
@@ -99,9 +99,9 @@ pub fn rejouer() -> bool{
 /// enfin, on crée d’une structure Jeux avec ces paramètres.
 ///
 pub fn crée_partie(question: Option<Question>, mode: Option<Mode>, joueur: Option<Joueur>) -> Jeux {
-    let question = if question.is_some() {question.unwrap()} else {crée_liste()};
-    let mode = if mode.is_some() {mode.unwrap()} else {crée_mode_de_jeu()};
-    let joueur = if joueur.is_some() {joueur.unwrap()} else {Joueur::nouveau()};
+    let question = question.unwrap_or_else(crée_liste);
+    let mode = mode.unwrap_or_else(crée_mode_de_jeu);
+    let joueur = joueur.unwrap_or_else(Joueur::nouveau);
 
     Jeux::nouveau(mode, joueur, question)
 }
@@ -157,8 +157,8 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: &usize,fin: Op
 
     loop {
         // attend un événement clavier
-        if event::poll(std::time::Duration::from_millis(50))? {
-            if let Event::Key(key) = event::read()? {
+        if event::poll(std::time::Duration::from_millis(50))?
+            && let Event::Key(key) = event::read()? {
                 // Traiter uniquement la pression initiale (évite les doublons)
                 if key.kind != KeyEventKind::Press {   //windows c’est vraiment nul !
                     continue;
@@ -296,13 +296,13 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: &usize,fin: Op
             }
         }
 
-        if fin.is_some() {
+        if let Some(fin_val) = fin {
             //affichage dynamique du temp
             let sauvegarde_position_curseur = cursor::position()?;
-            let nombre = fin.unwrap() - Instant::now();
+            let nombre = fin_val - Instant::now();
 
 
-            if fin.unwrap() <= Instant::now() + Duration::from_secs(10) {
+            if fin_val <= Instant::now() + Duration::from_secs(10) {
                 queue!(sortie, SetForegroundColor(Color::Red))?;
             }
 
@@ -320,14 +320,11 @@ pub fn demander_réponse(liste_essai: &mut Vec<String>,nb_lettre: &usize,fin: Op
             sortie.flush()?;
         }
 
-        if fin.is_some() {
-            if fin.unwrap() <= Instant::now() {
+        if let Some (fin_val) = fin
+            && fin_val <= Instant::now() {
                 terminal::disable_raw_mode()?;
                 return Ok("stop".to_string());
             }
-        }
-
-    }
 
     terminal::disable_raw_mode()?;
     Ok(entrée.into_iter().collect())

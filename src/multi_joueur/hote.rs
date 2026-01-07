@@ -56,7 +56,7 @@ pub fn hote(){
 
 
 
-        if résultats.len() > 0 {
+        if !résultats.is_empty() {
             afficher_résultat(nb_client,&noms,jeux.joueur.nom(),&résultats);
         }
 
@@ -84,7 +84,7 @@ pub fn hote(){
                 }
             }
             else {
-                let nom = noms.get(0).unwrap();
+                let nom = noms.first().unwrap();
                 noms = Vec::from([nom.clone()]);
                 sockets = Vec::new();
             }
@@ -99,13 +99,11 @@ pub fn hote(){
 
 fn joueur_restant(sockets :&mut Vec<TcpStream>) -> Vec<usize>{
     let mut a_retirer:Vec<usize> = Vec::new();
-    let mut compteur = 0;
-    for socket in sockets {
+    for (compteur, socket) in sockets.iter_mut().enumerate() {
         let message = lis_buffer(socket).unwrap();
-        if message == "n".to_string() {
+        if message == "n" {
             a_retirer.push(compteur);
         }
-        compteur += 1;
     }
     a_retirer
 }
@@ -123,11 +121,9 @@ fn envoi_jeux(sockets: &mut Vec<TcpStream>, mode: Mode, question: Question){
 
 fn met_a_jour_les_résultats(sockets :&mut Vec<TcpStream>) -> Vec<(String,String)> {
     let mut résultats: Vec<(String, String)> = Vec::new();
-    for mut socket in sockets {
-        let buffer = lis_buffer(&mut socket).unwrap();
-        let mut itérateur = buffer.splitn(2, ";");
-        let bonne_réponse = itérateur.next().unwrap();
-        let mauvaise_réponse = itérateur.next().unwrap();
+    for socket in sockets {
+        let buffer = lis_buffer(socket).unwrap();
+        let (bonne_réponse, mauvaise_réponse) = buffer.split_once(";").unwrap();
         let résultat = (bonne_réponse.to_string(), mauvaise_réponse.to_string());
         résultats.push(résultat);
     }
@@ -177,8 +173,8 @@ fn partage_résultat(sockets: &mut Vec<TcpStream>,résultats: &Vec<(String,Strin
         message += ";";
     }
     message.pop();
-    for mut socket in sockets {
-        envoie_message(&mut socket,message.clone());
+    for socket in sockets {
+        envoie_message(socket,message.clone());
     }
 }
 
