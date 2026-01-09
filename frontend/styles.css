@@ -1,4 +1,5 @@
-@import "bulma/css/bulma.min.css";
+
+
 #jeu {
   display: none;
 }
@@ -7,5 +8,13 @@
 }
 
 #nombre-de-manche{
+    display: none;
+}
+
+#nombre-seconde{
+    display: none;
+}
+
+#role{
     display: none;
 }

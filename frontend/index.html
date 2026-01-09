@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <title>Mot</title>
+    <!--
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"> //bulma
+    -->
     <link rel="stylesheet" href="styles.css" />
   </head>
 
@@ -36,28 +39,68 @@
 
       <p id="reponse">Vous n'avez pas encore fait de choix.</p>
 
-     </div>
+      <div id="role">
+        <div class="control">
+          <p>Quel role ? </p>
+          <label>
+            <input type="radio" name="role" id="hote" value="hote" onchange="role_f()">
+            Hote
+          </label>
+          <label>
+            <input type="radio" name="role" id="client" value="client" onchange="role_f()" checked>
+            Client
+          </label>
+        </div>
+      </div>
 
 
-    <div id="selection-mode-jeu">
-      <div class="control">
-        <p>Mode de jeu ? </p>
-        <label>
-          <input type="radio" name="mode" id="classique" value="classique" onchange="details()">
-          Classique
-        </label>
-        <label>
-          <input type="radio" name="mode" id="chronomètre" value="chronomètre" onchange="details()">
-          Chronomètre
-        </label>
-        <label>
-          <input type="radio" name="mode" id="survie" value="survie" onchange="lance()">
-          Survie
-        </label>
+      <div id="selection-mode-jeu">
+        <div class="control">
+          <p>Mode de jeu ? </p>
+          <label>
+            <input type="radio" name="mode" id="classique" value="classique" onchange="details()">
+            Classique
+          </label>
+          <label>
+            <input type="radio" name="mode" id="chronomètre" value="chronomètre" onchange="details()">
+            Chronomètre
+          </label>
+          <label>
+            <input type="radio" name="mode" id="survie" value="survie" onchange="details()">
+            Survie
+          </label>
+
+
+        </div>
+
+
+        <div id="nombre-de-manche">
+          <div class="control">
+            <p>Sélectionne un nombre de manche :</p>
+            <input type="range" id="manche" min="0" max="50" value="50" class="slider" oninput="change_manche()" />
+            <p id="valeur_manche">15 manches</p>
+          </div>
+        </div>
+
+
+        <div id="nombre-seconde">
+          <div class="control">
+            <p>Sélectionne un nombre de secondes :</p>
+            <input type="range" id="seconde" min="0" max="120" value="30" class="slider" oninput="change_secondes()" />
+            <p id="valeur_seconde">30 secondes</p>
+          </div>
+        </div>
 
 
       </div>
-    </div>
+
+
+
+      <button> Jouer !</button>
+     </div>
+
+
+
 
 
   <div id="jeu">
@@ -74,19 +117,11 @@
       {stop/s} pour arrêter
     </div>
     </article>
-  </div>
-
-  <div id="nombre-de-manche">
-    <div class="control">
-      <p>Sélectionne un nombre de manche :</p>
-      <input type="range" id="manche" min="0" max="50" value="50" class="slider" oninput="change_manche()" />
-      <p id="valeur_manche">Valeur : 50</p>
-    </div>
-
-
 
 
   </div>
+
+
 
 
 

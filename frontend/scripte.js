@@ -2,9 +2,15 @@ async function details(){
         const mode = document.querySelector('input[name="mode"]:checked');
           if (mode.value === "classique"){
                 document.getElementById('nombre-de-manche').style.display = 'block';
+              document.getElementById('nombre-seconde').style.display = 'none';
           }
-          else{
-              //document.getElementById('nombre-de-manche').style.display = 'none';  //chronomètre
+          else if (mode.value === "chronomètre"){
+              document.getElementById('nombre-de-manche').style.display = 'none';
+              document.getElementById('nombre-seconde').style.display = 'block';
+          }
+          else if (mode.value === "survie"){
+              document.getElementById('nombre-de-manche').style.display = 'none';
+              document.getElementById('nombre-seconde').style.display = 'none';
           }
       }
 
@@ -25,10 +31,16 @@ async function details(){
           const reponse = document.querySelector('input[name="multi_non"]:checked');
           if (reponse) {
             if (reponse.value === "seul"){
+                console.log("je suis là");
+                document.getElementById("role").style.display = "none";
                 document.getElementById("selection-mode-jeu").style.display = "block";
             }
             else {
-                document.getElementById("selection-mode-jeu").style.display = "none";
+                const role = document.querySelector('input[name="role"]:checked');
+                if (role.value === "client"){
+                    document.getElementById("selection-mode-jeu").style.display = "none";
+                }
+                document.getElementById("role").style.display = "block";
             }
 
           } else {
@@ -51,28 +63,45 @@ async function details(){
   }
 
 
-  async function reponse(){}
   async function max_manche(){
       try {
           const max_manche = await window.__TAURI__.core.invoke("nombre_question");
-          console.log("Valeur de max_manche:", max_manche);  // Afficher la valeur dans le terminal
+          console.log("Valeur de max_manche:", max_manche);
           return max_manche;
       } catch (error) {
           console.error("Erreur lors de l'appel Tauri:", error);
-          return 75;  // Valeur par défaut en cas d'erreur
+          return 75;
       }
   }
 
   async function modifie_max(){
     const max = await max_manche();
       console.log("max_manche dans modifie_max:", max);
-    document.getElementById("manche").max = max; // Appliquer la valeur à l'attribut max du slider
+    document.getElementById("manche").max = max;
       document.getElementById("manche").value = 10;
-    document.getElementById("valeur_manche").textContent = "Valeur : 10"; //
+    document.getElementById("valeur_manche").textContent = "10 manches";
   }
 
   async function change_manche(){
     const valeur = document.getElementById("manche");
-      document.getElementById("valeur_manche").textContent = "Valeur : "+valeur.value;
+      document.getElementById("valeur_manche").textContent = valeur.value + " manches";
   }
+
+    async function change_secondes(){
+        const valeur = document.getElementById("seconde");
+        document.getElementById("valeur_seconde").textContent = valeur.value + " secondes";
+    }
+
+    async function role_f(){
+        const role = document.querySelector('input[name="role"]:checked').value;
+        console.log(role);
+        if (role === "hote") {
+            document.getElementById("selection-mode-jeu").style.display = "block";
+        } else if (role === "client") {
+            document.getElementById("selection-mode-jeu").style.display = "none";
+            console.log("bonjour");
+        }
+
+    }
+
 document.addEventListener("DOMContentLoaded", modifie_max);
