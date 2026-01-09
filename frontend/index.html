@@ -2,25 +2,129 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Tauri</title>
+    <title>Mot</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
 
   <body>
+  <div id="page-accueil">
     <h1>Tauri OK 🚀</h1>
 
     <input id="name" placeholder="Ton nom" />
-    <button onclick="hello()">Dire bonjour</button>
+    <button class="button" onclick="hello()">Dire bonjour</button>
+    <button class="button" onclick="commence()"> Commencer ? </button>
 
 
     <p id="result"></p>
+    </div>
+
+
+    <div id="page-paramètre" style="display:none;">
+      <h2>Page des paramètres</h2>
+      <p>On configure les paramètres...</p>
+      <div class="control">
+        <p>Multi-joueur ?</p>
+          <label class="radio">
+            <input type="radio" name="multi_non" value="seul" />
+            Seul
+          </label>
+          <label class="radio">
+            <input type="radio" name="multi_non" value="multi" />
+            Multi_joueur
+          </label>
+      </div>
+
+
+      <button class="button" onclick="confirmer()"> Confirmer</button>
+      <p id="reponse">Vous n'avez pas encore fait de choix.</p>
+
+     </div>
+
+
+    <div id="selection-mode-jeu">
+      <div class="control">
+        <p>Mode de jeu ? </p>
+        <label>
+          <input type="radio" name="mode" id="classique">
+          Classique
+        </label>
+        <label>
+          <input type="radio" name="mode" id="chronomètre">
+          Chronomètre
+        </label>
+        <label>
+          <input type="radio" name="mode" id="survie">
+          Survie
+        </label>
+
+
+      </div>
+    </div>
+
+
+  <div id="jeu">
+
+    <article class="message">
+    <div class="message-header">
+      <p>Règle</p>
+      <button class="delete" aria-label="delete"></button>
+    </div>
+    <div class="message-body">
+      Les mots sont sans majuscule (sauf pour les noms propre) mais avec accent, les locutions latine ne prenne pas de tiret.
+      {indice/i} pour avoir le nombre de lettres
+      {passe/p} pour changer de mot
+      {stop/s} pour arrêter
+    </div>
+    </article>
+  </div>
+
+
+
+
+
+
+
+
+
+
 
     <script>
+      async function en_tete(){
+
+      }
+      async function cache(){
+      document.querySelectorAll('*').forEach(function(element) {
+              element.style.display = 'none';
+          });
+      }
+
+      async function confirmer(){
+
+
+          document.getElementById("selection-mode-jeu").style.display = "block";
+
+          const reponse = document.querySelector('input[name="multi_non"]:checked');
+          if (reponse) {
+            // Mettre à jour le texte avec la réponse choisie
+            document.getElementById("reponse").textContent = "Vous avez choisi : " + reponse.value;
+          } else {
+            // Si aucune option n'est sélectionnée
+            document.getElementById("reponse").textContent = "Vous n'avez pas encore fait de choix.";
+          }
+      }
+
   async function hello() {
     const response = await window.__TAURI__.core.invoke("say_hello", {
       name: document.getElementById("name").value
     });
 
     document.getElementById("result").textContent = response;
+  }
+
+      async function commence() {
+     // Affiche la “page-paramètre” et cache la page d’accueil
+    document.getElementById("page-accueil").style.display = "none";
+    document.getElementById("page-paramètre").style.display = "block";
   }
 </script>
 

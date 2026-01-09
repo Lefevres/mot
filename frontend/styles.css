@@ -1,0 +1,7 @@
+@import "bulma/css/bulma.min.css";
+#jeu {
+  display: none;
+}
+#selection-mode-jeu{
+    display: none;
+}
