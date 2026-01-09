@@ -53,11 +53,26 @@ async function details(){
 
   async function reponse(){}
   async function max_manche(){
-    const max_manche = await window.__TAURI__.core.invoke("nombre_question()");
+      try {
+          const max_manche = await window.__TAURI__.core.invoke("nombre_question");
+          console.log("Valeur de max_manche:", max_manche);  // Afficher la valeur dans le terminal
+          return max_manche;
+      } catch (error) {
+          console.error("Erreur lors de l'appel Tauri:", error);
+          return 75;  // Valeur par défaut en cas d'erreur
+      }
   }
 
   async function modifie_max(){
     const max = await max_manche();
-    document.getElementById("manche").max = max;
+      console.log("max_manche dans modifie_max:", max);
+    document.getElementById("manche").max = max; // Appliquer la valeur à l'attribut max du slider
+      document.getElementById("manche").value = 10;
+    document.getElementById("valeur_manche").textContent = "Valeur : 10"; //
   }
-document.addEventListener("DOMContentLoaded", setSliderMax);
+
+  async function change_manche(){
+    const valeur = document.getElementById("manche");
+      document.getElementById("valeur_manche").textContent = "Valeur : "+valeur.value;
+  }
+document.addEventListener("DOMContentLoaded", modifie_max);

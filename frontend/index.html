@@ -79,9 +79,11 @@
   <div id="nombre-de-manche">
     <div class="control">
       <p>Sélectionne un nombre de manche :</p>
-      <input type="range" id="manche" min="0" max="50" value="50" class="slider" onchange="updateValue()" />
-      <p id="slider-value">Valeur : 50</p>
+      <input type="range" id="manche" min="0" max="50" value="50" class="slider" oninput="change_manche()" />
+      <p id="valeur_manche">Valeur : 50</p>
     </div>
+
+
 
 
   </div>
