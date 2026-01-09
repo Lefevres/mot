@@ -31,11 +31,13 @@ async function details(){
           const reponse = document.querySelector('input[name="multi_non"]:checked');
           if (reponse) {
             if (reponse.value === "seul"){
-                console.log("je suis là");
+                console.log("je suis seul");
                 document.getElementById("role").style.display = "none";
+                document.getElementById("nom").style.display = "none";
                 document.getElementById("selection-mode-jeu").style.display = "block";
             }
             else {
+                console.log("je ne suis pas seul");
                 const role = document.querySelector('input[name="role"]:checked');
                 if (role.value === "client"){
                     document.getElementById("selection-mode-jeu").style.display = "none";
@@ -50,11 +52,49 @@ async function details(){
       }
 
   async function hello() {
+    console.log("hello");
     const response = await window.__TAURI__.core.invoke("say_hello", {
       name: document.getElementById("name").value
     });
 
     document.getElementById("result").textContent = response;
+  }
+
+  async function lancer(){
+      console.log("lancer");
+      const multi = document.querySelector('input[name="multi_non"]:checked');
+      const nom = document.getElementById("nom").value;
+      if (multi === "multi") {
+          if (nom === "") {
+              document.getElementById("impossible").textContent = "⚠️ Il vous faut un nom pour continuer";
+              return;
+          }
+      }
+      document.getElementById("page-paramètre").style.display = "none";
+      document.getElementById("page-jeu").style.display = "block";
+
+
+      let details_;  // Déclare la variable details
+
+          // Si le mode est "classique"
+          if (modeSelection === "classique") {
+              details_ = document.getElementById("manche");  // Affecte le slider "manche"
+          }
+          // Si le mode est "chronomètre"
+          else if (modeSelection === "chronomètre") {
+              details_ = document.getElementById("seconde");  // Affecte le slider "seconde"
+          }
+
+
+
+    console.log("on m'a appelé");
+      await window.__TAURI__.core.invoke("commence", {
+          multi: document.querySelector('input[name="multi_non"]:checked'),
+          mode: document.querySelector('input[name="mode"]:checked'),
+          details: details_,
+          role: document.querySelector('input[name="role"]:checked'),
+          nom: document.getElementById("nom").value
+      });
   }
 
       async function commence() {
@@ -98,6 +138,10 @@ async function details(){
         console.log(role);
         if (role === "hote") {
             document.getElementById("selection-mode-jeu").style.display = "block";
+            const mode = document.querySelector('input[name="selection-mode-jeu"]:checked').value;
+            if (mode === "classique" || mode === ""){
+                document.getElementById("nombre-de-manche").style.display = "block";
+            }
         } else if (role === "client") {
             document.getElementById("selection-mode-jeu").style.display = "none";
             console.log("bonjour");
@@ -105,8 +149,6 @@ async function details(){
 
     }
 
-    async function lancer(){
-        console.log("lancer");
-    }
+
 
 document.addEventListener("DOMContentLoaded", modifie_max);

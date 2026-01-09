@@ -22,7 +22,7 @@
     </div>
 
 
-    <div id="page-paramètre" style="display:none;">
+  <div id="page-paramètre" style="display:none;">
       <h2>Page des paramètres</h2>
       <p>On configure les paramètres...</p>
       <div class="control">
@@ -39,8 +39,8 @@
 
       <p id="reponse">Vous n'avez pas encore fait de choix.</p>
 
-      <div id="nom">
-        <input class="input" type="text" placeholder="Nom" />
+      <div id="nom_d">
+        <input class="input" type="text" placeholder="Nom" id="nom" />
       </div>
 
       <div id="role">
@@ -62,7 +62,7 @@
         <div class="control">
           <p>Mode de jeu ? </p>
           <label>
-            <input type="radio" name="mode" id="classique" value="classique" onchange="details()">
+            <input type="radio" name="mode" id="classique" value="classique" onchange="details()" checked>
             Classique
           </label>
           <label>
@@ -101,13 +101,15 @@
 
 
       <button id="lancer" onclick="lancer()"> Jouer !</button>
+
+      <p id="impossible"></p>
      </div>
 
 
 
 
 
-  <div id="jeu">
+  <div id="page-jeu">
 
     <article class="message">
     <div class="message-header">
@@ -121,6 +123,11 @@
       {stop/s} pour arrêter
     </div>
     </article>
+
+
+    <div id="question">
+
+    </div>
 
 
   </div>

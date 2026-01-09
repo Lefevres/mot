@@ -1,5 +1,8 @@
+use crate::jeux::Mode;
+use crate::mode::classique::classique;
 use crate::multi_joueur::client::client;
 use crate::multi_joueur::hote::hote;
+use crate::outils::mot;
 use crate::outils::terminal::afficher_str;
 use crate::outils::outils::{crée_partie, demander, rejouer};
 
@@ -10,32 +13,32 @@ pub mod outils;
 mod jeux;
 pub mod mode;
 
-pub fn main() {
-        if est_ce_multi() {
-            match choisir_le_role() {
-                true => {
-                    hote();
-                }
+pub fn main(multi: bool, mode: String, detail: usize, role: String, nom: String ) {
+    println!("le multi est {multi}, le mode est {mode}, le detail est {detail}, le role est {role}, le nom est {nom}");
+    if !multi{
+        let mode_v = match mode.as_str() {
+            "classique" => Mode::nouveau_simple("classique", Some(detail)).unwrap(),
+            "chronomètre" => Mode::nouveau_simple("chronomètre", Some(detail)).unwrap(),
+            "survie" => Mode::nouveau_simple("survie", Some(detail)).unwrap(),
+            _ => Mode::nouveau_simple("classique", Some(detail)).unwrap(),
+        };
 
-                false => {
-                    client();
-                }
+        let mut jeux = crée_partie(None, Some(mode_v), None);
+
+        jeux.jouer();
+    }
+    else {
+        match role.as_str() {
+            "hote" => {
+                hote();
             }
 
-        }else {
-            let mut jeux = crée_partie( None, None, None);
-
-            loop {
-                jeux.jouer();
-                if jeux.devrais_je_arreter || !rejouer() {
-                    break;
-                }
-                jeux = crée_partie(None, Some(jeux.mode().clone()), None);
-
+            "client" => {
+                client();
             }
-
-
+            _ => client(),
         }
+    }
 }
 
 

@@ -33,6 +33,18 @@ impl Mode{
             }
         }
     }
+    
+    pub fn nouveau_simple(mode_jeu: &str,detail: Option<usize>) -> Option<Mode>{
+        match mode_jeu {
+            "classique" => Some(Mode{mode : ModeJeu::Classique, détail: detail }) ,
+            "chronomètre" => Some(Mode{mode : ModeJeu::Chronomètre, détail: detail }) ,
+            "survie" => Some(Mode{mode : ModeJeu::Survie, détail : None }),
+            _ => {
+                eprintln!("On as un problème");
+                None
+            }
+        }
+    }
 
 
 }

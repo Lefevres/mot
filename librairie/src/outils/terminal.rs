@@ -20,6 +20,7 @@ pub fn afficher_nb_lettre(nb_lettre: usize){
 }
 
 pub fn afficher_question(question : &str){  //renvoie le mot attendu
+    
         let question = question.to_string().bright_yellow();
         println!("\n\n{}\n\n\n", question ); //nb_question.0 est la réponse, nb_question.1 est la question
     }

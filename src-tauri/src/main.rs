@@ -14,14 +14,16 @@ fn say_hello(name: String) -> String {
 
 
 #[tauri::command]
-fn commence(){
-  main_mot();
+fn commence(multi: bool, mode: String, detail: usize, role: String, nom: String )  {
+  main_mot(multi, mode, detail, role, nom);
 }
 
 #[tauri::command]
 fn nombre_question() -> usize {
   mot::nombre_de_question_max()
 }
+
+
 
 
 fn main() {

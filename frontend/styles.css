@@ -1,6 +1,6 @@
 
 
-#jeu {
+#page-jeu {
   display: none;
 }
 #selection-mode-jeu{
@@ -21,4 +21,8 @@
 
 #nom{
     display: none;
+}
+
+#impossible{
+    color: red;
 }
