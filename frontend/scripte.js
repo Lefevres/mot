@@ -40,6 +40,7 @@ async function details(){
                 if (role.value === "client"){
                     document.getElementById("selection-mode-jeu").style.display = "none";
                 }
+                document.getElementById("nom").style.display = "block";
                 document.getElementById("role").style.display = "block";
             }
 
@@ -102,6 +103,10 @@ async function details(){
             console.log("bonjour");
         }
 
+    }
+
+    async function lancer(){
+        console.log("lancer");
     }
 
 document.addEventListener("DOMContentLoaded", modifie_max);
