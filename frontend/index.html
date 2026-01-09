@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Tauri</title>
+  </head>
+
+  <body>
+    <h1>Tauri OK 🚀</h1>
+
+    <input id="name" placeholder="Ton nom" />
+    <button onclick="hello()">Dire bonjour</button>
+
+
+    <p id="result"></p>
+
+    <script>
+  async function hello() {
+    const response = await window.__TAURI__.core.invoke("say_hello", {
+      name: document.getElementById("name").value
+    });
+
+    document.getElementById("result").textContent = response;
+  }
+</script>
+
+
+  </body>
+</html>
+
