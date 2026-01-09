@@ -49,6 +49,7 @@ pub fn  crée_liste() -> Question {
     Question::new(liste)
 }
 
+
 pub fn nombre_de_question_max() -> usize{
     fs::read_to_string(FICHIER.clone())
         .expect("je n’ai pas réussi a compter le nombre de ligne du fichier pour déterminer le nombre de question maximal")

@@ -6,9 +6,9 @@ use crate::outils::outils::{crée_partie, demander, rejouer};
 
 mod joueur;
 mod multi_joueur;
-mod outils;
+pub mod outils;
 mod jeux;
-mod mode;
+pub mod mode;
 
 pub fn main() {
         if est_ce_multi() {

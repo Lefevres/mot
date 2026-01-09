@@ -25,17 +25,15 @@
       <div class="control">
         <p>Multi-joueur ?</p>
           <label class="radio">
-            <input type="radio" name="multi_non" value="seul" />
+            <input type="radio" name="multi_non" value="seul" onchange="confirmer()" />
             Seul
           </label>
           <label class="radio">
-            <input type="radio" name="multi_non" value="multi" />
+            <input type="radio" name="multi_non" value="multi" onchange="confirmer()" />
             Multi_joueur
           </label>
       </div>
 
-
-      <button class="button" onclick="confirmer()"> Confirmer</button>
       <p id="reponse">Vous n'avez pas encore fait de choix.</p>
 
      </div>
@@ -45,15 +43,15 @@
       <div class="control">
         <p>Mode de jeu ? </p>
         <label>
-          <input type="radio" name="mode" id="classique">
+          <input type="radio" name="mode" id="classique" value="classique" onchange="details()">
           Classique
         </label>
         <label>
-          <input type="radio" name="mode" id="chronomètre">
+          <input type="radio" name="mode" id="chronomètre" value="chronomètre" onchange="details()">
           Chronomètre
         </label>
         <label>
-          <input type="radio" name="mode" id="survie">
+          <input type="radio" name="mode" id="survie" value="survie" onchange="lance()">
           Survie
         </label>
 
@@ -78,6 +76,15 @@
     </article>
   </div>
 
+  <div id="nombre-de-manche">
+    <div class="control">
+      <p>Sélectionne un nombre de manche :</p>
+      <input type="range" id="manche" min="0" max="50" value="50" class="slider" onchange="updateValue()" />
+      <p id="slider-value">Valeur : 50</p>
+    </div>
+
+
+  </div>
 
 
 
@@ -85,50 +92,7 @@
 
 
 
-
-
-
-    <script>
-      async function en_tete(){
-
-      }
-      async function cache(){
-      document.querySelectorAll('*').forEach(function(element) {
-              element.style.display = 'none';
-          });
-      }
-
-      async function confirmer(){
-
-
-          document.getElementById("selection-mode-jeu").style.display = "block";
-
-          const reponse = document.querySelector('input[name="multi_non"]:checked');
-          if (reponse) {
-            // Mettre à jour le texte avec la réponse choisie
-            document.getElementById("reponse").textContent = "Vous avez choisi : " + reponse.value;
-          } else {
-            // Si aucune option n'est sélectionnée
-            document.getElementById("reponse").textContent = "Vous n'avez pas encore fait de choix.";
-          }
-      }
-
-  async function hello() {
-    const response = await window.__TAURI__.core.invoke("say_hello", {
-      name: document.getElementById("name").value
-    });
-
-    document.getElementById("result").textContent = response;
-  }
-
-      async function commence() {
-     // Affiche la “page-paramètre” et cache la page d’accueil
-    document.getElementById("page-accueil").style.display = "none";
-    document.getElementById("page-paramètre").style.display = "block";
-  }
-</script>
-
-
+<script src="scripte.js"></script>
   </body>
 </html>
 
