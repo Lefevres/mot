@@ -62,7 +62,7 @@ async function details(){
 
   async function lancer(){
       console.log("lancer");
-      const multi = document.querySelector('input[name="multi_non"]:checked');
+      const multi = document.querySelector('input[name="multi_non"]:checked').value;
       const nom = document.getElementById("nom").value;
       if (multi === "multi") {
           if (nom === "") {
@@ -74,15 +74,16 @@ async function details(){
       document.getElementById("page-jeu").style.display = "block";
 
 
+      const modeSelection = document.querySelector('input[name="mode"]:checked').value;
       let details_;  // Déclare la variable details
 
           // Si le mode est "classique"
           if (modeSelection === "classique") {
-              details_ = document.getElementById("manche");  // Affecte le slider "manche"
+              details_ = document.getElementById("manche");
           }
           // Si le mode est "chronomètre"
           else if (modeSelection === "chronomètre") {
-              details_ = document.getElementById("seconde");  // Affecte le slider "seconde"
+              details_ = document.getElementById("seconde");
           }
 
 

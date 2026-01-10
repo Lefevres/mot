@@ -28,7 +28,7 @@ fn nombre_question() -> usize {
 
 fn main() {
   tauri::Builder::default()
-      .invoke_handler(tauri::generate_handler![say_hello, nombre_question])
+      .invoke_handler(tauri::generate_handler![say_hello, nombre_question, commence])
       .run(tauri::generate_context!())
       .expect("error while running tauri application");
 }
