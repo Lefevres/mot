@@ -1,7 +1,6 @@
 use std::fs;
 use std::io;
 use crate::question::vocabulaire::Vocabulaire;
-use std::path::PathBuf;
 
 pub struct Definition{
     liste: Vec<String>,
@@ -20,7 +19,7 @@ impl Definition{
     ///
     /// # Comportement
     /// - Crée un itérateur de définition tiré du fichier passer en paramètre
-    pub fn nouveau(fichier_chemin: &PathBuf) -> Result<Definition, io::Error>{
+    pub fn nouveau(fichier_chemin: &str) -> Result<Definition, io::Error>{
         let fichier = fs::read_to_string(fichier_chemin)?;
         Ok(Definition{
         liste: fichier

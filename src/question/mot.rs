@@ -1,5 +1,7 @@
 use std::fs;
+use std::io;
 use crate::question::vocabulaire::Vocabulaire;
+use std::path::PathBuf;
 
 pub struct Mot{
     liste: Vec<String>,
@@ -18,17 +20,17 @@ impl Mot{
     ///
     /// # Comportement
     /// - Crée un itérateur de mot tiré du fichier passer en paramètre
-    pub fn nouveau(fichier: &str) -> Mot{
-        Mot{
-        liste : fs::read_to_string(fichier)
-            .expect("Je n'arrive pas a lire le mot")
+    pub fn nouveau(fichier_chemin: &PathBuf) -> Result<Mot, io::Error>{
+        let fichier = fs::read_to_string(fichier_chemin)?;
+        Ok(Mot{
+        liste : fichier
             .lines()
             .flat_map(|ligne| ligne.split(":")) 
             .step_by(2)
             .map(|v| v.trim().to_string())
             .collect::<Vec<String>>(),
         curseur : 0
-        }
+        })
     }
 
     /// Fonction renvoyant le nombre de mot disponible
