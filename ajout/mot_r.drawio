@@ -1,0 +1,96 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64; rv:146.0) Gecko/20100101 Firefox/146.0" version="29.3.4">
+  <diagram name="Page-1" id="X2xTOUbmgKyeeDzMQbkG">
+    <mxGraphModel dx="2066" dy="2356" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-1" parent="1" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=10;tabPosition=left;html=1;whiteSpace=wrap;" value="package" vertex="1">
+          <mxGeometry height="640" width="780" x="350" y="-70" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-2" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Joueur" vertex="1">
+          <mxGeometry height="190" width="240" x="60" y="80" as="geometry">
+            <mxRectangle height="30" width="80" x="270" y="170" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-3" parent="xKeJYedf-rsM5un1Y_rJ-2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;- bonne_réponse: mut usize&lt;/div&gt;&lt;div&gt;- mauvaise_réponse: mut usize&lt;/div&gt;&lt;div&gt;+ nom: &amp;amp;str&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="54" width="240" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-4" parent="xKeJYedf-rsM5un1Y_rJ-2" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="240" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-5" parent="xKeJYedf-rsM5un1Y_rJ-2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;+Joueur():&lt;/div&gt;&lt;div&gt;+ Joueur(&amp;amp;str):&amp;nbsp;&lt;/div&gt;&lt;div&gt;+ ajout_bonne_réponse():&amp;nbsp;&lt;/div&gt;&lt;div&gt;+ ajout_mauvaise_réponse():&lt;/div&gt;&lt;div&gt;+ combien_de_bonne_réponse(): usize&lt;/div&gt;&lt;div&gt;+combien_de_mauvaise_réponse():usize&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="102" width="240" y="88" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-6" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Question" vertex="1">
+          <mxGeometry height="210" width="220" x="630" y="-50" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-7" parent="xKeJYedf-rsM5un1Y_rJ-6" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;- curseur: mut usize&lt;/div&gt;&lt;div&gt;+ nombre_question: usize&lt;/div&gt;&lt;div&gt;- liste_définition: Definition&lt;/div&gt;&lt;div&gt;- liste_mot:Mot&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="64" width="220" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-8" parent="xKeJYedf-rsM5un1Y_rJ-6" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="220" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-9" parent="xKeJYedf-rsM5un1Y_rJ-6" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;+ Question():&lt;/div&gt;&lt;div&gt;+ Question(fichier: &amp;amp;str): bool&lt;/div&gt;&lt;div&gt;+ numéro_actuelle(): usize&lt;/div&gt;&lt;div&gt;+ question():&amp;amp;str&lt;/div&gt;&lt;div&gt;+ mot_actuel(): usize&lt;/div&gt;&lt;div&gt;+ definition_actuel(): usize&lt;/div&gt;&lt;div&gt;+ combien_de_duo(): usize&lt;/div&gt;" vertex="1">
+          <mxGeometry height="112" width="220" y="98" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-10" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Definition" vertex="1">
+          <mxGeometry height="120" width="300" x="780" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-11" parent="xKeJYedf-rsM5un1Y_rJ-10" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;- liste: [&amp;amp;str]&lt;/div&gt;- curseur: mut usize" vertex="1">
+          <mxGeometry height="44" width="300" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-12" parent="xKeJYedf-rsM5un1Y_rJ-10" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="300" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-13" parent="xKeJYedf-rsM5un1Y_rJ-10" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;+ définition():&amp;nbsp;&lt;/div&gt;&lt;div&gt;+ définition(fichier: &amp;amp;str): bool&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="42" width="300" y="78" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-14" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Mot" vertex="1">
+          <mxGeometry height="120" width="300" x="410" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-15" parent="xKeJYedf-rsM5un1Y_rJ-14" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;- liste: [&amp;amp;str]&lt;/div&gt;- curseur: mut usize" vertex="1">
+          <mxGeometry height="44" width="300" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-16" parent="xKeJYedf-rsM5un1Y_rJ-14" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="300" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-17" parent="xKeJYedf-rsM5un1Y_rJ-14" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;+ mot():&amp;nbsp;&lt;/div&gt;&lt;div&gt;+ mot(fichier: &amp;amp;str): bool&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="42" width="300" y="78" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-18" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center; text-decoration: underline;&quot;&gt;&lt;b&gt;Role&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;solitaire&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;hote&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;client&lt;/p&gt;" vertex="1">
+          <mxGeometry height="82" width="310" x="1230" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-19" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Jeux&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- joueur: mut Joueur&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- question: mut Question&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- mode: Mode&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- role: Role&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&amp;nbsp;" vertex="1">
+          <mxGeometry height="380" width="390" x="90" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-20" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Trait&amp;gt;&amp;gt;&lt;/i&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Mode&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;br&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ taille: Option&amp;lt;usize&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ indice: Option&amp;lt;&amp;amp;str&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ est_terminer(): bool&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ soumettre()&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ initialiser(Option&amp;lt;usize&amp;gt;):&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ pré_initialiser(): Option&amp;lt;&amp;amp;str&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ règle(): &amp;amp;str&lt;/p&gt;" vertex="1">
+          <mxGeometry height="190" width="380" x="1180" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-21" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Passerelle&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ jouer(mode: &amp;amp;dyn Mode, affichage:&amp;amp;dyn Interface_utilisateur, jeux:Jeux )&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ réglage():(mut Joueur, mut Question, &amp;amp;dyn Mode, Role)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="120" width="320" x="1000" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-22" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Interface_utilisateur&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; filter: none !important;&quot;&gt;+ afficher():&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ récéptionner(): &amp;amp;str&lt;/p&gt;" vertex="1">
+          <mxGeometry height="100" width="240" x="1390" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-23" edge="1" parent="1" source="xKeJYedf-rsM5un1Y_rJ-24" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;" target="xKeJYedf-rsM5un1Y_rJ-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-24" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Trait&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;Vocabulaire&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ suivant(): &amp;amp;str&lt;br&gt;+ quel_numéro(): usize&lt;/p&gt;" vertex="1">
+          <mxGeometry height="110" width="190" x="645" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="xKeJYedf-rsM5un1Y_rJ-25" edge="1" parent="1" source="xKeJYedf-rsM5un1Y_rJ-24" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.47;entryY=0.015;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=12;startSize=8;endSize=8;" target="xKeJYedf-rsM5un1Y_rJ-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="1twnB4iB0vHmnfeV50BQ-1" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Trait&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;Client&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ recevoir():&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+s_enregistre(String):&lt;/p&gt;" vertex="1">
+          <mxGeometry height="110" width="190" x="1210" y="-130" as="geometry" />
+        </mxCell>
+        <mxCell id="1twnB4iB0vHmnfeV50BQ-2" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center; text-decoration: underline;&quot;&gt;&lt;b&gt;Message&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Partie&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Points: Vec&amp;lt;(&amp;amp;str, usize, usize)&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Début&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Fin&lt;/p&gt;" vertex="1">
+          <mxGeometry height="90" width="200" x="910" y="-220" as="geometry" />
+        </mxCell>
+        <mxCell id="1twnB4iB0vHmnfeV50BQ-7" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Serveur&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ liste_client: Vec&amp;lt;&amp;amp;dyn Client&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ envoie(Message):&amp;nbsp;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="110" width="160" x="430" y="-260" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
