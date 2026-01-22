@@ -1,5 +1,5 @@
 use std::fs;
-
+use crate::question::vocabulaire::Vocabulaire;
 
 pub struct Definition{
     liste: Vec<String>,
@@ -18,18 +18,32 @@ impl Definition{
     ///
     /// # Comportement
     /// - Crée un itérateur de définition tiré du fichier passer en paramètre
-    fn nouveau(fichier: &str){
+    pub fn nouveau(fichier: &str) -> Definition{
         Definition{
         liste : fs::read_to_string(fichier)
             .expect("Je n'arrive pas a lire la définition")
             .lines()
-            .split(":")
+            .flat_map(|ligne| ligne.split(":"))
             .skip(1)
             .step_by(2)
             .map(|v| v.to_string())
             .collect::<Vec<String>>(),
         curseur : 0
         }
+    }
+
+    /// Fonction renvoyant le nombre de définition disponible
+    ///
+    /// # Paramètre
+    /// - Prend en paramètre un chemin de fichier
+    ///
+    /// # Retour
+    /// - Retour un nombre, celui du nombre de définition disponible
+    ///
+    /// # Comportement
+    /// - Renvoie simplement le nombre de définition disponible (en tous)
+    pub fn nombre_définition(&self) -> usize{
+        self.liste.len()
     }
 }
 
@@ -61,3 +75,33 @@ impl Iterator for Definition{
         }
     }
 }
+
+
+/// Definition utilise le trait Vocabulaire
+impl Vocabulaire for Definition{
+
+    /// Fonction renvoyant la question suivante, en faisant avancer le curseur
+    fn suivant(&mut self) -> Option<String>{
+        self.next()
+    }
+
+    /// Fonction renvoyant le numéro de la question
+    fn quel_numéro(&self) -> usize{
+        self.curseur
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
