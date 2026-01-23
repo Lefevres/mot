@@ -25,6 +25,7 @@ impl Mot{
         Ok(Mot{
         liste : fichier
             .lines()
+            .filter(|l| !l.trim().is_empty())
             .flat_map(|ligne| ligne.split(":")) 
             .step_by(2)
             .map(|v| v.trim().to_string())
@@ -36,7 +37,7 @@ impl Mot{
     /// Fonction renvoyant le nombre de mot disponible
     ///
     /// # Paramètre
-    /// - Prend en paramètre un chemin de fichier
+    /// - Prend en paramètre un [Mot] en lecture
     ///
     /// # Retour
     /// - Retour un nombre, celui du nombre de mot disponible

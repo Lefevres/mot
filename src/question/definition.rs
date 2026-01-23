@@ -25,6 +25,7 @@ impl Definition{
         Ok(Definition{
         liste: fichier
             .lines()
+            .filter(|l| !l.trim().is_empty())
             .flat_map(|ligne| ligne.split(":"))
             .skip(1)
             .step_by(2)
@@ -37,7 +38,7 @@ impl Definition{
     /// Fonction renvoyant le nombre de définition disponible
     ///
     /// # Paramètre
-    /// - Prend en paramètre un chemin de fichier
+    /// - Prend en paramètre une [Definition] en lecture 
     ///
     /// # Retour
     /// - Retour un nombre, celui du nombre de définition disponible
