@@ -1,6 +1,7 @@
 
 
-
+/// Structure servant a représenter un joueur
+/// Un joueur est un nom, un nombre de bonne réponse et un nombre de mauvaise réponse
 pub struct Joueur<'a>{
     bonne_réponse: usize,
     mauvaise_réponse: usize,

@@ -3,6 +3,9 @@ use std::io;
 use crate::question::vocabulaire::Vocabulaire;
 use std::path::PathBuf;
 
+/// Structure représentant l'ensemble des mot a trouver
+/// Elle lit dans un fichier l'ensemble des mots
+/// et en fait un itérateur.
 pub struct Mot{
     liste: Vec<String>,
     curseur: usize,

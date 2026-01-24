@@ -3,6 +3,9 @@ use std::io;
 use crate::question::vocabulaire::Vocabulaire;
 use std::path::PathBuf;
 
+/// Structure représentant l'ensemble des définitions
+/// Elle lit dans un fichier toute les définitions 
+/// et en fait un itérateur.
 pub struct Definition{
     liste: Vec<String>,
     curseur: usize,

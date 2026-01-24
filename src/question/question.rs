@@ -5,7 +5,9 @@ use std::env::home_dir;
 use std::io;
 use std::path::PathBuf;
 
-
+/// Structure représentant la partie devinette
+/// Elle extrait d'un fichier les définitions comme les mot a trouver, puis les distribues un par un.
+/// Elle utilise pour cela [Definition] et [Mot]
 pub struct Question{
     curseur: usize,
     nombre_question: usize,
