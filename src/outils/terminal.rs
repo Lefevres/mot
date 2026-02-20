@@ -16,7 +16,7 @@ pub fn afficher_en_tete(){
 
 
 pub fn afficher_nb_lettre(nb_lettre: usize){
-    println!("\nC’est un mot de {} lettres", nb_lettre);
+    println!("\nC’est un mot de {} caractères", nb_lettre);
 }
 
 pub fn afficher_question(question : &str){  //renvoie le mot attendu

@@ -73,7 +73,7 @@ fn conv_vec_char_vers_string(chaine: &Vec<char>) -> String{
 /// - la réponse, sous forme de booléen. Oui pour rejouer, non sinon
 pub fn rejouer() -> bool{
     loop{
-        let réponse = demander(Some("rejouer"));
+        let réponse = demander(Some("rejouer ?"));
         match réponse.as_str() {
             "oui" | "o" =>  return true,
             "non" | "n" => return false,
