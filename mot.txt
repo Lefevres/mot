@@ -265,7 +265,7 @@ infant : Titre donné aux enfants des rois d’Espagne et du Portugal qui n’é
 déshérence : Situation dans laquelle se trouve un bien ou un patrimoine lorsque son propriétaire est décédé sans laisser d’héritier connu
 dévot : Qui est sincèrement attaché à une religion et à ses pratiques
 libelle : Court écrit satirique, diffamatoire
-entresol : Espace d’un batiment entre le rez-de-chaussée et le premien étage
+entresol : Espace d’un batiment entre le rez-de-chaussée et le premier étage
 pourvoyeur : Personne qui fournit
 attique : La partie supérieure qui vient couronner une construction
 entablement : Saillie au sommet des murs, qui supporte la charpente de la toiture
@@ -290,10 +290,10 @@ chantre : Chanteur dans un service religieux
 saisine : Prérogative de saisir pour faire exercer un droit
 prérogative : Avantage ou droit attaché à une fonction, un état
 ab initio : depuis le début (locution latine)
-in medias res : Procédé littéraire qui consiste à placer le lecteur sans beaucoup de préalables au milieu de l'action (locution latino)
+in medias res : Procédé littéraire qui consiste à placer le lecteur sans beaucoup de préalables au milieu de l'action (locution latine)
 myosotis : Plante à petites fleurs généralement bleues qui croît dans les lieux humides
 numéraire : Monnaie ayant cours légal
-ad nauseam : sophisme fondé sur la répétition d'une affirmation (locution latino)
+ad nauseam : sophisme fondé sur la répétition d'une affirmation (locution latine)
 sophisme : Raisonnement fallacieux ouvertement absurde destiné à tromper l'interlocuteur
 quorum : Nombre minimum de membres présents pour qu'une assemblé puisse valablement délibérer
 chaland : Bateau à fond plat pour le transport des marchandises
@@ -449,3 +449,17 @@ trapp : Grand empilement de roches volcaniques.
 pendeloque : Bijou suspendu à une boucle d'oreille, un bracelet.
 pendeloque : Ornement suspendu à un lustre.
 bigarré : Présenter des couleurs vives et variées.
+veni, vidi, vici : Je suis venu, j'ai vu, j'ai vaincu. (locution latine)
+voie de fait : Action de l'administration réalisée sans droit qui porte matériellement et illégalement une atteinte  grave à une liberté fondamentale ou à un droit de propriété.
+agit-prop : Manifeste dénonciateur qui appelle à l'action.
+chiasme : Figure de rhétorique consistant à inverser deux groupes de mots.
+rachet : Courson à bois que l'on garde au pied du cep, sur la souche, de façon à donner du bois de remplacement l'année d'après.
+courson : Branche d'arbre fruitier taillé court pour que la sève s'y concentre.
+cep : Pied de vigne.
+solipsisme : Théorie d'après laquelle il n'y aurait pour le sujet pensant d'autre réalité que lui-même.
+ineffable : Qui ne peut être exprimé par des paroles.
+nemo censetur ignorare legem : Nul n'est censé ignorer la loi. (locution latine)
+ignorantia juris non excusat : L'ignorance de la loi n'excuse pas. (locution latine)
+garde-chiourme : Surveillant des galériens, des forçats.
+chrématistique : Qui se rapporte à la production des richesses.
+écobuer : Enlever les mottes, la terre, les racines de , et les brûler.
