@@ -463,3 +463,63 @@ ignorantia juris non excusat : L'ignorance de la loi n'excuse pas. (locution lat
 garde-chiourme : Surveillant des galériens, des forçats.
 chrématistique : Qui se rapporte à la production des richesses.
 écobuer : Enlever les mottes, la terre, les racines de , et les brûler.
+apocope: Chute d’un ou plusieurs phonèmes à la fin d’un mot.
+aphérèse: Chute d’un ou plusieurs phonèmes au début d’un mot.
+pérégrin: Dans la Rome antique, toute personne libre qui ne possédait pas la citoyenneté romaine.
+casus belli: Acte de nature à motiver une déclaration de guerre. (locution latine)
+sine die: Sans fixer de jour. (locution latine)
+épître: Lettre écrite en vers.
+broue: Mousse formée sur la surface de la bière.
+bateleur: Personne qui fait des tours d’acrobatie, d’escamotage, sur les places publiques, dans les foires.
+enfléchure: Échelon de cordage, établi horizontalement et à intervalles réguliers entre les haubans, pour permettre de monter le long des mâts.
+falot: Grande lanterne.
+exégèse: Interprétation philosophique et doctrinale d’un texte dont le sens, la portée sont obscurs.
+hâbleur: Personne qui a l’habitude de parler beaucoup, en exagérant, en se vantant.
+aptonyme: Nom de famille qui semble refléter plaisamment l’occupation, professionnelle notamment, de quelqu’un.
+puerpéral: Relatif à la période qui suit l’accouchement.
+princeps: Première édition.
+badin: Qui aime à rire, à plaisanter.
+obédience: Fidélité à une puissance spirituelle, politique.
+ânonner: Lire ou réciter un texte d’une façon laborieuse et monotone.
+dialectique: Ensemble des moyens mis en œuvre dans la discution en vue de démontrer, réfuter.
+musarder: Perdre son temps à des riens.
+eschatologie: Étude des fins dernières de l’humanité et du monde.
+rotor: Partie mobile d’un mécanisme rotatif.
+stator: Partie fixe d’un générateur, d’un moteur électrique, d’une turbine.
+écheveau: Assemblage de fils replié et réunis par un fil de liage.
+sardonique: Qui exprime une moquerie amère, froide et méchante.
+philistin: Personne de goût vulgaire, fermée aux arts et aux lettres, aux nouveautés.
+émacié: Très amaigri.
+pastoral: Relatif aux bergers.
+pergélisol: Sol gelé en permanence et absolument imperméable des régions arctiques.
+tripode: Tourniquet à trois branches réglant l’accès des voyageurs au quai d’une gare ou d’un métro.
+isotrope: Qui présente les mêmes propriétés dans toutes les directions.
+apex: Sommet ou pointe (d’un organe).
+taoïsme: Doctrine religieuse et philosophique chinoise fondée par Lao Tseu, qui enseigne la solidarité totale entre la nature et l’être humain.
+acre: Ancienne mesure agraire.
+interférométrie: Technique de mesure utilisant les interférences.
+délayer: Exposer trop longuement, de manière diffuse.
+syzygie: Position de la Lune (ou planet)  en conjonction ou en opposition avec le Soleil.
+autodafé: Action de détruire par le feu.
+flagorner: Flatter bassement, avec insistance.
+vivat: Acclamation.
+précession: Mouvement de rotation autour d’un axe fixe, de l’axe d’un gyroscope.
+jobine: Petit boulot, travail provisoire et peu valorisant.
+jovien: Relatif à la planète Jupiter.
+guérite: Baraque aménagée pour abriter un travailleur, faire office de bureau sur un chantier…
+tertre: Petite éminence isolée à sommer aplati.
+adobe: Brique de terre crue comprimée et séchée au soleil.
+bollard: Grosse bitte d’amarrage en bordure de quai.
+vilebrequin: Outil formé d’une mèche que l’on fait tourner à l’aide d’une manivelle coudée, et qui sert à percer des trous.
+gabegie: Désordre résultant d’une mauvaise gestion.
+méson: Particule de masse intermédiaire entre celle de l’électron et celles du proton et du neutron.
+sycophante: Délateur; espion.
+primesautier: Qui obéit au premier mouvement, agit, parle spontanément.
+déprédation: Vol ou pillage accompagné de dégât.
+parsec: Unité de mesure de longueur valant 3,26 années-lumière.
+vespéral: Livre contenant les prières et offices du soir.
+arantèle: Réseau de fils que sécrètent les araignées pour y prendre au piège ses proies.
+cooptation: Nomination d’un membre nouveau, dans une assemblée, par les membres qui en font déjà partie.
+thésaurier: Amasser de l’argent pour le garder, sans le faire circuler ni le placer.
+vagissement: Cri de l’enfant nouveau-né.
+sclérotique: Membrane fibreuse qui entoure le globe oculaire et s’ouvre, à l’avant, sur la cornée.
