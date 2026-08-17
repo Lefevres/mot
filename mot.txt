@@ -523,3 +523,40 @@ cooptation: Nomination d’un membre nouveau, dans une assemblée, par les membr
 thésaurier: Amasser de l’argent pour le garder, sans le faire circuler ni le placer.
 vagissement: Cri de l’enfant nouveau-né.
 sclérotique: Membrane fibreuse qui entoure le globe oculaire et s’ouvre, à l’avant, sur la cornée.
+démiurge: Personne qui crée quelque chose d’important.
+gynoïde: Robot conçu à l’image d’une femme.
+estriqueux: Instrument utilisé pour retirer les bavures des pipes démoulées.
+œcuménique: Qui a le caractère universel.
+hubris: Outrance dans le comportement inspirée par l’orgueil; démesure.
+propinquité: Proximité géographique.
+autotélique: Qui n’est entrepris pour d’autre but qu’elle-même.
+rémouleur: Personne dont l’activité, souvent ambulante, consiste à aiguiser les lames d’instruments tranchants.
+sténopé: Petit trou percé dans une plaque très mince, faisant office d’objectif photographique.
+muselet: Armature de fil de fer dont on coiffe le bouchon des bouteilles de champagne, de mousseux, de cidre, de bière.
+ptôse: Descente ou position anormalement basse d’un organe, due au relâchement des muscles ou des ligaments qui le maintiennent.
+mélopée: Chant mélodie, musique assez monotone et triste.
+macis: Condiment constitué par l’arille qui entoure la noix de muscade.
+arille: Tégument charnu entourant la graine de certaines plantes avec laquelle il constitue un faux-fruit.
+tégument: Tissu ou ensemble de tissus recouvrant et enveloppant un organisme vivant.
+péristyle: Colonnade à plusieurs retours, sur le périmètre complet, ou presque complet, d’un bâtiment, d’une cour, d’une place, etc.
+duègne: Vieille femme revêche servant de chaperon.
+aspic: Entrée froide d’éléments divers enrobés de gelée…
+mnémonique: Relatif à la mémoire.
+cataplasme: Aliment épais et difficile à absorber et à digérer.
+vétille: Chose insignifiante, qui ne mérite pas qu’on s’y arrête.
+égrégore: Entité psychique collective émanant de la croyance ou de la volonté commune d’un groupe, assimilable à un ange ou à une manifestation de l’inconsciont collectif.
+exciper: Se prévaloir d’une exception, alléguer une excuse.
+récuser: Ne pas admettre l’autorité de quelqu’un, la valeur de quelque chose dans une décision.
+calame: Roseau taillé, utilisé dans l’Antiquité pour écrire sur le papyrus ou le parchemin.
+ornatrix: Décoratrice, celle qui orne.
+tonsor: Barbier, personne qui tond ou qui rase.
+hétaïre: Dans l’Antiquité grecque, courtisane de bonne éducation.
+héliée: Assemblée du peuple dans certaines cités grecques; à athènes, tribunal populaire.
+ecclésia: Assemblé du peuple dans les cités grecques et notamment à Athènes, réservée en principe aux seuls citoyens.
+attique: Construction élevée au-dessus de la corniche d’un entablement pour masquer la naissance du toit.
+sacristie: Annexe d’une église où l’on conserve les vases sacrés, les ornements d’église et où les ministres se préparent pour célébrer le service divin.
+péroraison: Conclusion d’un discours.
+asebeia: Infraction pénale dans la Grèce antique pour « profanation et moquerie des objets divins », pour « irrévérence envers les dieux de l’État » et manque de respect envers les parents et les ancêtres défunts.
+impiété: Mépris pour la religion.
+scholie: Remarque grammaticale, critique ou historique due à un commentateur ancien.
+
