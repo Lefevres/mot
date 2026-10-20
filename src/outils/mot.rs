@@ -1,5 +1,5 @@
 use std::{fs, path::PathBuf};
-use std::env::home_dir;
+use std::env::{self, home_dir};
 use std::string::ToString;
 use std::sync::LazyLock;
 use rand::prelude::SliceRandom;
@@ -38,7 +38,12 @@ impl Iterator for Question {
 }
 
 static CHEMIN: LazyLock<PathBuf> = LazyLock::new(|| {
-    home_dir().expect("Impossible de trouver le dossier home").join(".mot")
+    let variable = env::var("EMPLACEMENT_MOT");
+    if variable.is_err() {
+        return home_dir().expect("Impossible de trouver le dossier home").join(".mot");
+    } else {
+        return PathBuf::from(variable.unwrap());
+    }
 });
 static FICHIER: LazyLock<PathBuf> = LazyLock::new(|| CHEMIN.join("mot.txt")); //j'ai retirer //../../
 
@@ -56,7 +61,7 @@ pub fn nombre_de_question_max() -> usize{
         .count()
 }
 
-
+/// Panic si le fichier n’est pas trouver
 fn lis_fichier() -> Vec<String>{
     fs::read_to_string(FICHIER.clone())
         .expect("Erreur lecture fichier mot")
