@@ -12,8 +12,23 @@ Il se joue seul ou à plusieurs.
 Pour l’installer il est possible d’utiliser [imot](https://github.com/Lefevres/imot).
 
 ### Home-manager
-A faire.
-
+Pour installer ```mot``` avec home-manager il vous faudra utiliser une dérivation. Elle vous est déjà fournit dans ```mot.nix```. Pour l’utiliser il faut la déplacer dans le home-manager:
+```
+cp mot.nix ~/.config/home-manager/mot.nix
+```
+Puis l’appeler depuis ```home.nix``` avec :
+```
+{ pkgs, ... }:
+let 
+    mot = pkgs.callPackage ./mot.nix {};
+in 
+{
+    home.packages = [
+        mot
+    ];
+}
+```
+Ensuite home-manager ralera a cause des hash qui ne correspondent pas, il suffirat de modifier les ```lib.fakeHash``` par ceux qui vous serons donner.
 
 ### Façon classique
 Sinon il est possible de l’installer manuellement, pour cela il faut le cloner:
