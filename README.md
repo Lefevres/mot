@@ -3,7 +3,7 @@ README généré le: 20/10/26.
 Dernière mise à jour: 20/10/26.    
 
 ## Description
-Mot est un petit jeu terminal dont le but est de trouver un mot depuis ça définition.
+Mot est un petit jeu terminal dont le but est de trouver un mot depuis sa définition.
 Il se joue seul ou à plusieurs.
 
 ## Installation
