@@ -612,3 +612,47 @@ impetus: Force ou impulsion qui inite le mouvement ou l'action.
 da capo: Indique que l'interprète, parvenu à un point déteriné du morceau de musique, doit le réexécuter depuis le commencement jusqu'au mot fin (ou fine).
 vauvert: Lieu éloigné, souvent utilisé pour désigner un endroit imaginaire ou difficile d'accès.
 canéphore: En Grèce, jeune fille qui, dans les cérémonies religieuses, portait sur la tête les corbeilles sacrées contenant les offrandes et les instruments du sacrifice.      
+triptyque: Œuvre peinte et/ou sculptée, principalement faite de trois panneaux jointif latéraement.
+huisserie: Bâti dormant limitant une baie ouverte dans une cloison pour permettre le passage, et recevant ou non une porte.
+oreillard: Se dit d'un animal qui a les oreilles longues, basses, pendantes.
+soudard: Homme de guerre brutal et grossier.
+pertuisane: Ancienne arme d'hast avec un fer triangulaire pourvu à la base de deux orillons symétriques.
+archivolte: Front mouluré ou sculpté d'un arc ou d'une voussure.
+voussure: Monté ou portion de monté d'une voûte.
+spadassin: Tueur à gages.
+stuc: Matériau imitant le marbre, composé ordinairement de chaux éteinte, de plâtre fin, d'une colle et de poussière de marbre ou de craie.
+déristyle: Colonnade entourant la cour intérieure d'un édifice ou disposée autour d'un édifice.
+glyptothèque: Musée de sculptures.
+hanse: Association de marchands parfois groupés en guildes, dans le nord de l'Europe.
+corsèque: Arme d'hast munie d'une poine centrale longue et fine, flanquée de deux poines latérales plus courtes.
+retorte: Vase de laboratoire à long col courbé, utilisé pour la distillation.
+none: Dans la Rome antique, heure correspondant à peu près à nos 15-16h.
+exégèse: Explication philologique, historique ou doctrinale d'un texte obscur ou sujet à discussion.
+philologie: Étude d'une langue, fondée sur l'analyse critique de textes écrits dans cette langue.
+tomer: Séparer en plusieurs volumes.
+vétille: Chose insignifiante, qui ne mérite pas qu'on s'y arrête.
+obvie: Se dit en philosophie et en théologie du sens d'un terme ou d'un texte qui vient spontanément à l'esprit.
+pourridié: Pourriture des racines, entraînant le dépérissement et la mort des arbres et des arbustes, et due à l'action d'un champignon parasite.
+bigot: Qui est d'une dévotion étroite et excessive.
+compassé: Dont le comportement est affecté et guindé.
+cabale: Science occulte tendant à la communication avec le monde surnaturel.
+gloses: Critiques malveillantes.
+goï: Terme par lequel, depuis l'époque biblique, les Juifs désignent les non-Juifs.
+apostasie: Renonciation publique à une doctrine, à un parti.
+agathodémoniste: Personne modérée dans sa consommation d'alcool.
+chaperon: Bourrelet circulaire placé sur l'épaule gauche des robes de magistrats, docteurs et professeurs, d'où pend, devant et derrière, une bande d'étoffe garnie d'hermine aux extrémités.
+érubescent: Qui rougit, devient rouge.
+hennin: Haut bonnet pointu et rigide porté, avec des voiles, par les femmes au XVe siècle en Occident.
+prosaïque: Se dit d'une remarque bassement matérielle, réaliste.
+miasme: Émanation malsaine considérée dans l'Antiquité comme la source de maladies contagieuses.
+fruste: Dont le comportement ou le discours manque de finesse.
+vitupérer: Proférer des injures, des récriminations contre quelqu'un, quelque chose, les blâmer avec force.
+huche: Coffre haut et étroit dans lequel on conserve le pain.
+bouif: Cordonnier.
+rade: Grand bassin, naturel ou artificiel, ayant issue libre vers la mer et où les navires peuvent mouiller.
+quinquet: Œil.
+paro: Fou, névrosé.
+énouer: Synonyme de épinceter.
+somatique: Relatif au soma.
+coquecigrue: Baliverne, absurdité.
+fieffé: Qui a un défaut au plus haut degré.
