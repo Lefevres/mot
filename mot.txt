@@ -656,3 +656,32 @@ paro: Fou, névrosé.
 somatique: Relatif au soma.
 coquecigrue: Baliverne, absurdité.
 fieffé: Qui a un défaut au plus haut degré.
+bardiche: Hache d'arme à long manche, utilisé principalement au Moyen Âge.
+falciforme: Se dit des organes animaux ayant la forme d'une faux.
+pérorer: Discourir d'une façon prolixe et prétentieuse.
+prolixe: Qui est trop long, diffus, chargé de détails inutiles.
+lapti: Espadrille tressé en écorce de tille ou de bouleau.
+guisarme: Arme d'hast semblable à la hallebarde, utilisé par l'infanterie entre le XIIe et le XVe siècle.
+bure: Grosse étoffe de laine, de coloration brune, dont on se sert pour la confection des vêtements de certains ordres religieux.
+troussequin: Partie arrière d'une selle.
+guingois: Qui est de travers, qui ne présente pas une forme ou une position normalement droite ou alignée.
+onomastique: Branche de la lexicologie qui étudie l'origine des nom propres.
+anthroponyme: Nom de personne désignant un être humain ou un ensemble d'être humains.
+toponomastique: Branche de l'onomastique qui étudie les noms de lieux.
+oncotique: Se dit de la pression osmotique propre des protéines, qui est indépendante de la concentration des ions.
+carabin: Étudiant en médecine.
+impavide: Qui ne manifeste aucune crainte, aucune peur.
+lippe: Lèvre inférieure épaisse et proéminente.
+expectorer: Rejeter vers la bouche.
+aphorisme: Phrase, sentence qui résume en quelques mots une vérité fondamentale.
+apophtegme: Parole, sentence mémorable, exprimée de façon concise et claire.
+confabulation: Trouble de la mémoire se manifestant comme une fabulation dite «compensatrice» des lacunes amnésiques intéressant surtout le présent ou le passé récent, lors des amnésies globales du type syndrome de Korsakov.
+faconde: Grande facilité de parole ou bavardage abondant, excessif.
+proitrinière: Pièce de métier à tisser spécifique à la rubannerie, conçue comme une traverse contre laquelle l'artisan s'appuie avec sa poitrine pour travailler.
+tubulure: Sur une enceinte ou un récipient, ouverture en forme de court cylindre sur lequel on peut raccorder un conduit.
+ridelle: Balustrade, pleine ou à claire-voie, placée sur les côtés du tablier d'une charette, d'une remorque, d'un camion ou d'un chariot de manutention, et destinée à contenir les marchandises.
+castelet: Petit théâtre de marionnettes.
+dodeliner: Se balancer doucement.
+chambard: Bouleversement, désordre.
+smog: Mélange de fumée et de brouillard stagnant parfois au-dessus des concentrations urbaines et industrielles.
+nosographie: Description, classification des maladies.
