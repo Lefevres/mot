@@ -685,3 +685,84 @@ dodeliner: Se balancer doucement.
 chambard: Bouleversement, désordre.
 smog: Mélange de fumée et de brouillard stagnant parfois au-dessus des concentrations urbaines et industrielles.
 nosographie: Description, classification des maladies.
+esthète: Personne qui considère l'art comme une valeur essentielle.
+anathème: Dans le christianisme, excommunication qui exclit celui qui en est l'objet de la société des fidèles.
+munificient: Très généreux.
+obèle: Marque utilisée pour noter un passage douteux ou interpolé dans les anciens manuscrits.
+terril: Entassement des stériles au jour.
+grisou: Gaz inflammable, constitué généralement de méthane presque pur, qui se dégage principalement dans les mines de charbon.
+épicène: Se dit d'un nom qui peut désigner indifféremment un mâle ou une femelle.
+vilipender: Traiter quelqu'un, quelque chose avec beaucoup de mépris.
+circonspection: Prudence qui incite à ne négliger aucune circonstance avant d'agir.
+réification: En philosophie, processus par lequel on transforme quelque chose de mouvant, de dynamique en être fixe, statique.
+hyperconflit: Conflit d'une intensité extrême, souvent de nature armée.
+aut libri, aut liberi: Soit des livres, soit des enfants (locution latine).
+doucereux: D'une douceur fade et désagréable au goût; douceâtre.
+seing: Signature d'une personne sur un acte, pour en attester l'authenticité.
+ornière: Espace compris entre un rail et un contre-rail, dans un appareil de voie, un passage à niveau…
+dies iræ: Jour de colère (locution latine).
+affection societatis: Volonté commune entre plusieurs personnes physique ou morales de s'associer.
+ponceau: Petit pont.
+shunt: Passage anormal de sang d'une cavité à une autre.
+quote-part: Part que chacun doit payer ou recevoir dans la répartition d'une somme ou de quelque chose.
+syllabus: Énuération sommaire des questions tranchées par l'autorité ecclésiastique.
+innocuité: Caractère de ce qui n'est pas toxique, nocif.
+fuligineux: Noirâtre comme la suie.
+verbicruciste: Auteur de grilles de mots croisés.
+odonyme: Nom propre désignant une voie de communication.
+atrabilaire: Qui a un caractère désagréable, aire, irritable.
+égrégore: Esprit de groupe qui subirait l'influence de désirs communs de différentes personnes liées dans la poursuite d'un même objectif.
+parousie: Retour glorieux du Chrrist à la fin des temps en vue de l'établissement définitif du Royaume de Dieu.
+élytre: Aile antérieure des coléoptères, fortement sclérifiée, pouvant former un étui sous lequel se replie l'aile postérieure et protégeant celle-ci.
+sclérifié: Qualifie un tissu organique qui a subi un processus de durcissement.
+adouber: Aux échecs, aux dames, bouger une pièce en se réservant le droit de faire marche arrière.
+austral: Se dit de tout ce qui concerne la direction opposée à celle du nord.
+votif: Qui est exécuté ou offert pour acquitter un vœu.
+eucharistie: Communion au pain et au vin consacrés.
+gourmander: Réprimander quelqu'un avec sévérité.
+tancer: Réprimander sévèrement quelqu'un.
+morigéner: Réprimander quelqu'un en lui faisant une leçon de morale.
+décatir: Ôter l'aspect lustré que les opérations d'ennoblissement ont laissé sur une étoffe en laine.
+hoche: Brèche, brisure d'une lame.
+hoche: Marque apposée sur un morceau de bois taillé que les boulangers faisaient à chaque vente de pain à crédit.
+matras: Récipient à long col et de forme sphérique ou ovoïde.
+poulinière: Jument destinée à la reproduction.
+cardiotaphe: Monument funéraire destiné à contenir le cœur d'un défunt.
+zoïle: Critique envieux, méchant et partial.
+éphèbe: Jeune homme d'une grande beauté.
+orviétan: Électuaire initialement préparé par Lupi à Orvieto.
+électuaire: Médicament d'usage interne à consistance de pâte molle, constitué d'un mélange de poudres fines avec du sirop, du miel ou des résines liquides.
+ménade: Femme consacrée aux mystères du dieu Dionysos et adonnée aux transes sacrées.
+égoïne: Petite scie à poignée et à lame rigide.
+murmuration: Regroupement spectaculaire d'oiseaux en vol formant des figures complexes dans le ciel.
+regimber: Résister, se montrer récalcitrant.
+clamer: Autrefois, citer en justice.
+cabotin: Artiste médiocre, qui estime son talent au-dessus de sa valeur.
+somniloquie: Trouble faisant partie des parasomnies, c'est le fait de parler en dormant, plus ou moins fortement, allant de simples mots à de longues phrases plus ou moins compréhensibles.
+télésnober: Ignorer les personnes physiquement présentes en faveur de l'utilisation d'un téléphone ou d'un autre appareil mobile.
+agrypnie: Défaut de sommeil, insomnie prolongée.
+sclérotique: Membrane fibreuse blanchâtre, très résistante, qui enveloppe l'œil sur presque toute sa surface.
+ekphrasis: Description précise et détaillée d'œuvres d'art.
+rétif: Se dit d'un esprit qui ne répond pas aux sollicitations.
+mâtiné: Être mêlé, mélangé d'un autre type de chose ou d'être.
+aménité: Politesse, affabilité qui charme.
+scialytique: Dispositif d'éclairage intense, sans ombre portée, utilisé en chirurgie.
+batucada: Musique inspirée de la samba et exécutée par un ensemble d'instruments à percussion.
+hâve: Qui est pâle et amaigri par la maladie, la faim.
+dais: Couronnement de trône, de stalle, de chaire, de lit.
+chaire: Tribune ou siège élevé d'où parle le professeur.
+cathèdre: Siège liturgique de l'évêque dans sa cathédrale.
+solférinologue: Personne experte ou spécialisée dans l'étude des affaires internes et des dynamiques politiques du Parti socialiste français, souvent utilisée de manière ironique.
+protovestiaire: Haut dignitaire de la cour des empereurs byzantins.
+darder: Dresser quelque chose de pointu.
+carette: Cadre qui faisait partie du métier à tisser les étoffes.
+contrit: Qui se repent d'une faute.
+exsudat: Liquide suitant naturellement ou accidentellement d'un végétal.
+amphitryon: Personne chez qui ou aux frais de qui on dîne.
+intuitu personæ: En fonction de la persionne (locution latine).
+rasséréner: Rendre sa sérénité, son calme.
+immarcescible: Qui ne peut se flétrir.
+échauguette: Guérite de guet généralement placée en surplomb sur une muraille fortifiée, une tour…
+atone: Qui manque d'énergie, de dynamisme, de vitalité.
+élingues: Anneaux métalliques dont on se serveait pour soulever un canon sans anses.
+mânes: Aïeux considérés comme vivant dans l'au-delà.
